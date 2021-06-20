@@ -2,6 +2,9 @@
 .idea/
 .vscode/
 
+# downloaded models
+kgr10.plain.skipgram.dim300.neg10.bin
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
