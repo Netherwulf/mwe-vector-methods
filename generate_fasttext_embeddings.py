@@ -74,7 +74,7 @@ def main(args):
 
     for file_index, mwe_file_path in enumerate([correct_mwe_file_path, incorrect_mwe_file_path]):
         are_mwes_incorrect = file_index == 1
-        mwe_list = read_mwe(mwe_file_path)
+        mwe_list = read_mwe(mwe_file_path, incorrect_mwe_file=are_mwes_incorrect)
         mwe_embeddings = generate_embeddings(ft_model, mwe_list, incorrect_mwe_list=are_mwes_incorrect)
         print(f'mwe_embeddings shape: {mwe_embeddings.shape}')
         embeddings_arr = np.append(embeddings_arr, mwe_embeddings)
