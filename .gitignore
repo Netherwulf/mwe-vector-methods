@@ -5,6 +5,9 @@
 # downloaded models
 kgr10.plain.skipgram.dim300.neg10.bin
 
+# temp generated datasets files
+mwe_dataset.npy
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
