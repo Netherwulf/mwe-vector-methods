@@ -42,14 +42,14 @@ def read_mwe(file_path, incorrect_mwe_file=False):
 
 
 def generate_embeddings(ft_model, mwe_list, incorrect_mwe_list=False):
-    embeddings_arr = np.empty((len(mwe_list), 4), dtype=np.float32)
+    embeddings_arr = np.empty((len(mwe_list), 901), dtype=np.float32)
 
     for mwe_index, mwe_words in enumerate(mwe_list):
-        embeddings_arr[mwe_index][0] = ft_model.get_word_vector(mwe_words[0])
-        embeddings_arr[mwe_index][1] = ft_model.get_word_vector(mwe_words[1])
+        embeddings_arr[mwe_index][0: 300] = ft_model.get_word_vector(mwe_words[0])
+        embeddings_arr[mwe_index][300: 600] = ft_model.get_word_vector(mwe_words[1])
         embeddings_arr[mwe_index][
-            2] = embeddings_arr[mwe_index][0] - embeddings_arr[mwe_index][1]
-        embeddings_arr[mwe_index][3] = 0.0 if incorrect_mwe_list else 1.0
+            2] = embeddings_arr[mwe_index][600: 900] - embeddings_arr[mwe_index][1]
+        embeddings_arr[mwe_index][900] = 0.0 if incorrect_mwe_list else 1.0
 
     return embeddings_arr
 
@@ -70,7 +70,7 @@ def main(args):
 
     ft_model = load_fasttext(ft_model_path)
 
-    embeddings_arr = np.empty((0, 4), dtype=np.float32)
+    embeddings_arr = np.empty((0, 901), dtype=np.float32)
     print(f'embeddings_arr basic shape: {embeddings_arr.shape}')
 
     for file_index, mwe_file_path in enumerate([correct_mwe_file_path, incorrect_mwe_file_path]):
