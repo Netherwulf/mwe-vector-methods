@@ -24,9 +24,10 @@ def read_mwe(file_path, incorrect_mwe_file=False):
                 mwe = line.strip().split(',')[1]
             else:
                 mwe = line.strip().split('\t')[3]
+
             mwe_words = mwe.split(' ')
 
-            if len(mwe_words) > 2:
+            if len(mwe_words) != 2:
                 continue
 
             first_word = mwe_words[0]
