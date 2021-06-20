@@ -47,8 +47,7 @@ def generate_embeddings(ft_model, mwe_list, incorrect_mwe_list=False):
     for mwe_index, mwe_words in enumerate(mwe_list):
         embeddings_arr[mwe_index][0: 300] = ft_model.get_word_vector(mwe_words[0])
         embeddings_arr[mwe_index][300: 600] = ft_model.get_word_vector(mwe_words[1])
-        embeddings_arr[mwe_index][
-            2] = embeddings_arr[mwe_index][600: 900] - embeddings_arr[mwe_index][1]
+        embeddings_arr[mwe_index][600: 900] = embeddings_arr[mwe_index][0: 300] - embeddings_arr[mwe_index][300: 600]
         embeddings_arr[mwe_index][900] = 0.0 if incorrect_mwe_list else 1.0
 
     return embeddings_arr
