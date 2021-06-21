@@ -41,13 +41,12 @@ def read_mwe(file_path, incorrect_mwe_file=False):
 
     # clean mwe_list from the dummy elements
     mwe_list = [mwe for mwe in mwe_list if mwe[0] != '*' * 200]
-    print(f'mwe_list len: {len(mwe_list)}')
+
     return mwe_list
 
 
 def generate_embeddings(ft_model, mwe_list, incorrect_mwe_list=False):
     embeddings_arr = np.empty((len(mwe_list), 901), dtype=np.float32)
-    print(f'len of mwe_list: {len(mwe_list)}')
 
     for mwe_index, mwe_words in enumerate(mwe_list):
         embeddings_arr[mwe_index][0: 300] = ft_model.get_word_vector(mwe_words[0])
@@ -75,16 +74,16 @@ def main(args):
     ft_model = load_fasttext(ft_model_path)
 
     embeddings_arr = np.empty((0, 901), dtype=np.float32)
-    print(f'embeddings_arr basic shape: {embeddings_arr.shape}')
 
     for file_index, mwe_file_path in enumerate([correct_mwe_file_path, incorrect_mwe_file_path]):
         are_mwes_incorrect = file_index == 1
+
         mwe_list = read_mwe(mwe_file_path, incorrect_mwe_file=are_mwes_incorrect)
+
         mwe_embeddings = generate_embeddings(ft_model, mwe_list, incorrect_mwe_list=are_mwes_incorrect)
-        print(f'mwe_embeddings shape: {mwe_embeddings.shape}')
+
         embeddings_arr = np.concatenate((embeddings_arr, mwe_embeddings), axis=0)
 
-    print(f'embeddings_arr shape: {embeddings_arr.shape}')
     save_mwe_embeddings(output_file_name, embeddings_arr)
 
 
