@@ -43,7 +43,8 @@ def get_evaluation_report(y_true, y_pred):
 
 
 def main(args):
-    dataset_filepath = 'mwe_dataset.npy'
+    #dataset_filepath = 'mwe_dataset.npy'
+    dataset_filepath = 'mwe_dataset_domain_balanced.npy'
 
     X_train, X_test, y_train, y_test = load_data(dataset_filepath)
 

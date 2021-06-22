@@ -7,6 +7,8 @@ kgr10.plain.skipgram.dim300.neg10.bin
 
 # temp generated datasets files
 mwe_dataset.npy
+mwe_dataset_type_balanced.npy
+mwe_dataset_domain_balanced.npy
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -41,13 +41,110 @@ def read_mwe(file_path, incorrect_mwe_file=False):
 
     # clean mwe_list from the dummy elements
     mwe_list = [mwe for mwe in mwe_list if mwe[0] != '*' * 200]
-    print(f'mwe_list len: {len(mwe_list)}')
+
+    return mwe_list
+
+
+def get_count_dict(file_path, incorrect_mwe_file=False, type_based=False):
+    with open(file_path, 'r', encoding='utf-8') as correct_mwe_file:
+        content = correct_mwe_file.readlines()
+
+        count_dict = {}
+
+        for line_index, line in enumerate(content):
+            if line_index == 0:
+                continue
+
+            if incorrect_mwe_file:
+                if ',' not in line or len(line.split(',')) < 4:
+                    continue
+
+                if type_based:
+                    domain = line.strip().split(',')[3]
+                else:
+                    print(f'Line: {line}')
+                    domain = line.strip().split(',')[2]
+            else:
+                if type_based:
+                    domain = line.strip().split('\t')[1]
+                else:
+                    domain = line.strip().split('\t')[2]
+
+            if domain in count_dict.keys():
+                count_dict[domain] += 1
+
+            else:
+                count_dict[domain] = 1
+
+    return count_dict
+
+
+def read_mwe_balanced(file_path, count_dict, final_sample_size=4064, incorrect_mwe_file=False, type_based=False):
+    imbalanced_sample_size = 0
+
+    for domain in count_dict.keys():
+        imbalanced_sample_size += count_dict[domain]
+
+    with open(file_path, 'r', encoding='utf-8') as correct_mwe_file:
+        content = correct_mwe_file.readlines()
+
+        mwe_list = [('*' * 200, '*' * 200) for _ in range(len(content))]
+
+        mwe_index = 0
+
+        mwe_domain_dict = {}
+
+        for line_index, line in enumerate(content):
+            if line_index == 0:
+                continue
+
+            if incorrect_mwe_file:
+                if ',' not in line or len(line.split(',')) < 4:
+                    continue
+
+                mwe = line.strip().split(',')[1].replace("\"", '')
+
+                if type_based:
+                    domain = line.strip().split(',')[3]
+                else:
+                    domain = line.strip().split(',')[2]
+
+            else:
+                mwe = line.strip().split('\t')[3].replace("\"", '')
+
+                if type_based:
+                    domain = line.strip().split('\t')[1]
+                else:
+                    domain = line.strip().split('\t')[2]
+
+            if domain in mwe_domain_dict.keys() \
+                    and mwe_domain_dict[domain] >= int((count_dict[domain] / imbalanced_sample_size) * final_sample_size):
+                continue
+
+            mwe_words = mwe.split(' ')
+
+            if len(mwe_words) != 2:
+                continue
+
+            first_word = mwe_words[0]
+            second_word = mwe_words[1]
+
+            mwe_list[mwe_index] = (first_word, second_word)
+            mwe_index += 1
+
+            if domain in mwe_domain_dict.keys():
+                mwe_domain_dict[domain] += 1
+            else:
+                mwe_domain_dict[domain] = 1
+
+    # clean mwe_list from the dummy elements
+    mwe_list = [mwe for mwe in mwe_list if mwe[0] != '*' * 200]
+
     return mwe_list
 
 
 def generate_embeddings(ft_model, mwe_list, incorrect_mwe_list=False):
     embeddings_arr = np.empty((len(mwe_list), 901), dtype=np.float32)
-    print(f'len of mwe_list: {len(mwe_list)}')
 
     for mwe_index, mwe_words in enumerate(mwe_list):
         embeddings_arr[mwe_index][0: 300] = ft_model.get_word_vector(mwe_words[0])
@@ -70,21 +167,28 @@ def main(args):
     ft_model_path = "kgr10.plain.skipgram.dim300.neg10.bin"
     correct_mwe_file_path = 'correct_mwe.tsv'
     incorrect_mwe_file_path = 'incorrect_MWE_kompozycyjne_polaczenia_plWN.csv'
-    output_file_name = 'mwe_dataset.npy'
+    # change output file name depending on the domain/type balance strategy
+    output_file_name = 'mwe_dataset_type_balanced.npy'
 
     ft_model = load_fasttext(ft_model_path)
 
     embeddings_arr = np.empty((0, 901), dtype=np.float32)
-    print(f'embeddings_arr basic shape: {embeddings_arr.shape}')
 
     for file_index, mwe_file_path in enumerate([correct_mwe_file_path, incorrect_mwe_file_path]):
         are_mwes_incorrect = file_index == 1
-        mwe_list = read_mwe(mwe_file_path, incorrect_mwe_file=are_mwes_incorrect)
+
+        # imbalanced mwe dataset generation
+        # mwe_list = read_mwe(mwe_file_path, incorrect_mwe_file=are_mwes_incorrect)
+
+        # domain balanced or type balanced mwe dataset generation
+        count_dict = get_count_dict(mwe_file_path, incorrect_mwe_file=are_mwes_incorrect, type_based=True)
+        mwe_list = read_mwe_balanced(mwe_file_path, count_dict, final_sample_size=4064,
+                                     incorrect_mwe_file=are_mwes_incorrect, type_based=True)
+
         mwe_embeddings = generate_embeddings(ft_model, mwe_list, incorrect_mwe_list=are_mwes_incorrect)
-        print(f'mwe_embeddings shape: {mwe_embeddings.shape}')
+
         embeddings_arr = np.concatenate((embeddings_arr, mwe_embeddings), axis=0)
 
-    print(f'embeddings_arr shape: {embeddings_arr.shape}')
     save_mwe_embeddings(output_file_name, embeddings_arr)
 
 
