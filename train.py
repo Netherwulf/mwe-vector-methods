@@ -2,7 +2,8 @@ import sys
 
 import numpy as np
 
-from sklearn.linear_model import LogisticRegression
+from logistic_regression import create_lr_model, train_lr_model, get_lr_model_predictions
+
 from sklearn.metrics import classification_report
 from sklearn.model_selection import train_test_split
 
@@ -20,22 +21,6 @@ def load_data(dataset_file):
     return X_train, X_test, y_train, y_test
 
 
-def create_model():
-
-    return LogisticRegression(random_state=0, max_iter=2000, verbose=1)
-
-
-def train(model, X, y):
-    model.fit(X, y)
-
-    return model
-
-
-def get_test_predictions(model, X_test):
-
-    return model.predict(X_test)
-
-
 def get_evaluation_report(y_true, y_pred):
     target_names = ['Incorrect MWE', 'Correct MWE']
 
@@ -43,16 +28,16 @@ def get_evaluation_report(y_true, y_pred):
 
 
 def main(args):
-    #dataset_filepath = 'mwe_dataset.npy'
+    # dataset_filepath = 'mwe_dataset.npy'
     dataset_filepath = 'mwe_dataset_domain_balanced.npy'
 
     X_train, X_test, y_train, y_test = load_data(dataset_filepath)
 
-    lr_model = create_model()
+    lr_model = create_lr_model()
 
-    lr_model = train(lr_model, X_train, y_train)
+    lr_model = train_lr_model(lr_model, X_train, y_train)
 
-    y_pred = get_test_predictions(lr_model, X_test)
+    y_pred = get_lr_model_predictions(lr_model, X_test)
 
     get_evaluation_report(y_test, y_pred)
 
