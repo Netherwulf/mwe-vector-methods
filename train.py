@@ -11,12 +11,15 @@ from sklearn.model_selection import train_test_split
 def load_data(dataset_file):
     dataset = np.load(dataset_file)
 
-    X = np.array([elem[: 900] for elem in dataset])
+    X = np.array([elem[:900] for elem in dataset])
 
     y = np.array([elem[900] for elem in dataset])
     y = y.astype(int)
 
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=42)
+    X_train, X_test, y_train, y_test = train_test_split(X,
+                                                        y,
+                                                        test_size=0.20,
+                                                        random_state=42)
 
     return X_train, X_test, y_train, y_test
 
