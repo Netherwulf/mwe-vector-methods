@@ -23,8 +23,8 @@ def create_cnn_model():
     return model
 
 
-def train_cnn_model(model, X, y):
-    epochs = 10
+def train_cnn_model(model, X, y, epoch_num):
+    epochs = epoch_num
 
     history = model.fit(
         X,

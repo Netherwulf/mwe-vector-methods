@@ -3,6 +3,7 @@ import sys
 import numpy as np
 
 from logistic_regression import create_lr_model, train_lr_model, get_lr_model_predictions
+from cnn import create_cnn_model, train_cnn_model, get_cnn_model_predictions
 
 from sklearn.metrics import classification_report
 from sklearn.model_selection import train_test_split
