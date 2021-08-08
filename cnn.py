@@ -29,7 +29,7 @@ def train_cnn_model(model, X, y, epoch_num):
 
     # callback = EarlyStopping(monitor='loss', patience=10)
 
-    checkpoint_filepath = 'checkpoint_epoch_{epoch:02d}_val_{val_loss:.2f}.hdf5'
+    checkpoint_filepath = 'models/checkpoint_epoch_{epoch:04d}_val_{val_loss:.2f}.hdf5'
 
     model_checkpoint_callback = ModelCheckpoint(
         filepath=checkpoint_filepath,
