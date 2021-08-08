@@ -1,5 +1,5 @@
 from tensorflow.keras import datasets, layers, models
-from tensorflow.keras.callbacks import EarlyStopping
+from tensorflow.keras.callbacks import ModelCheckpoint, EarlyStopping
 
 
 def create_cnn_model():
@@ -29,9 +29,9 @@ def train_cnn_model(model, X, y, epoch_num):
 
     # callback = EarlyStopping(monitor='loss', patience=10)
 
-    checkpoint_filepath = 'checkpoint.hdf5'
+    checkpoint_filepath = 'checkpoint_epoch_{epoch:02d}_val_{val_loss:.2f}.hdf5'
 
-    model_checkpoint_callback = tf.keras.callbacks.ModelCheckpoint(
+    model_checkpoint_callback = ModelCheckpoint(
         filepath=checkpoint_filepath,
         save_weights_only=True,
         monitor='val_accuracy',
@@ -43,7 +43,7 @@ def train_cnn_model(model, X, y, epoch_num):
     history = model.fit(
         X,
         y,
-        validation_ratio=0.2,
+        validation_split=0.2,
         epochs=epochs,
         callbacks=[model_checkpoint_callback])
 
@@ -59,9 +59,9 @@ def get_cnn_model_predictions(model, X_test):
 
 
 def get_cnn_model_pred(X_train, y_train, X_test):
-    lr_model = create_cnn_model()
+    cnn_model = create_cnn_model()
 
-    lr_model = train_cnn_model(lr_model, X_train, y_train, 1000)
+    cnn_model = train_cnn_model(cnn_model, X_train, y_train, 1000)
 
     y_pred = get_cnn_model_predictions(lr_model, X_test)
 

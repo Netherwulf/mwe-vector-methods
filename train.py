@@ -8,6 +8,8 @@ from logistic_regression import get_lr_model_pred
 from sklearn.metrics import classification_report
 from sklearn.model_selection import train_test_split
 
+from tensorflow import one_hot
+
 
 def load_data(dataset_file):
     dataset = np.load(dataset_file)
@@ -36,8 +38,12 @@ def main(args):
     dataset_filepath = 'mwe_dataset_domain_balanced.npy'
 
     X_train, X_test, y_train, y_test = load_data(dataset_filepath)
-
+    print(f'X_train SHAPE: {X_train.shape}')
     if 'cnn' in args:
+        X_train = np.reshape(X_train, [X_train.shape[0], 900, 1])
+        X_test = np.reshape(X_test, [X_test.shape[0], 900, 1])
+        y_train = one_hot(y_train, depth=2)
+
         y_pred = get_cnn_model_pred(X_train, y_train, X_test)
 
     elif 'lr' in args:
