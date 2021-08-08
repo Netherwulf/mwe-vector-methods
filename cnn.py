@@ -1,3 +1,5 @@
+import glob
+
 from tensorflow.keras import datasets, layers, models
 from tensorflow.keras.callbacks import ModelCheckpoint, EarlyStopping
 
@@ -23,13 +25,23 @@ def create_cnn_model():
 
     return model
 
+def find_best_checkpoint():
+    curr_loss = 0
+
+    for file in glob.glob("models/*.hdf5"):
+
+        if int(file.split('.')[-2]) > curr_loss:
+            best_checkpoint = file
+            curr_loss = int(file.split('.')[-2])
+
+    return best_checkpoint
 
 def train_cnn_model(model, X, y, epoch_num):
     epochs = epoch_num
 
     # callback = EarlyStopping(monitor='loss', patience=10)
 
-    checkpoint_filepath = 'models/checkpoint_epoch_{epoch:04d}_val_{val_loss:.2f}.hdf5'
+    checkpoint_filepath = 'models/checkpoint_epoch_{epoch:04d}_val_{val_accuracy:.4f}.hdf5'
 
     model_checkpoint_callback = ModelCheckpoint(
         filepath=checkpoint_filepath,
@@ -47,8 +59,10 @@ def train_cnn_model(model, X, y, epoch_num):
         epochs=epochs,
         callbacks=[model_checkpoint_callback])
 
+    best_checkpoint_filepath = find_best_checkpoint()
+
     # The model weights (that are considered the best) are loaded into the model.
-    model.load_weights(checkpoint_filepath)
+    model.load_weights(best_checkpoint_filepath)
 
     return model
 
