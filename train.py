@@ -2,8 +2,8 @@ import sys
 
 import numpy as np
 
-from logistic_regression import create_lr_model, train_lr_model, get_lr_model_predictions
-from cnn import create_cnn_model, train_cnn_model, get_cnn_model_predictions
+from cnn import get_cnn_model_pred
+from logistic_regression import get_lr_model_pred
 
 from sklearn.metrics import classification_report
 from sklearn.model_selection import train_test_split
@@ -37,11 +37,11 @@ def main(args):
 
     X_train, X_test, y_train, y_test = load_data(dataset_filepath)
 
-    lr_model = create_lr_model()
+    if 'cnn' in args:
+        y_pred = get_cnn_model_pred(X_train, y_train, X_test)
 
-    lr_model = train_lr_model(lr_model, X_train, y_train)
-
-    y_pred = get_lr_model_predictions(lr_model, X_test)
+    elif 'lr' in args:
+        y_pred = get_lr_model_pred(X_train, y_train, X_test)
 
     get_evaluation_report(y_test, y_pred)
 

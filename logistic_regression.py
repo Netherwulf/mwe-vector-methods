@@ -15,3 +15,13 @@ def train_lr_model(model, X, y):
 def get_lr_model_predictions(model, X_test):
 
     return model.predict(X_test)
+
+
+def get_lr_model_pred(X_train, y_train, X_test):
+    lr_model = create_lr_model()
+
+    lr_model = train_lr_model(lr_model, X_train, y_train)
+
+    y_pred = get_lr_model_predictions(lr_model, X_test)
+
+    return y_pred

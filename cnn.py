@@ -1,4 +1,5 @@
 from tensorflow.keras import datasets, layers, models
+from tensorflow.keras.callbacks import EarlyStopping
 
 
 def create_cnn_model():
@@ -26,11 +27,28 @@ def create_cnn_model():
 def train_cnn_model(model, X, y, epoch_num):
     epochs = epoch_num
 
+    # callback = EarlyStopping(monitor='loss', patience=10)
+
+    checkpoint_filepath = 'checkpoint.hdf5'
+
+    model_checkpoint_callback = tf.keras.callbacks.ModelCheckpoint(
+        filepath=checkpoint_filepath,
+        save_weights_only=True,
+        monitor='val_accuracy',
+        mode='max',
+        save_best_only=True)
+
+    # Model weights are saved at the end of every epoch, if it's the best seen
+    # so far.
     history = model.fit(
         X,
         y,
         validation_ratio=0.2,
-        epochs=epochs)
+        epochs=epochs,
+        callbacks=[model_checkpoint_callback])
+
+    # The model weights (that are considered the best) are loaded into the model.
+    model.load_weights(checkpoint_filepath)
 
     return model
 
@@ -38,3 +56,13 @@ def train_cnn_model(model, X, y, epoch_num):
 def get_cnn_model_predictions(model, X_test):
 
     return model.predict(X_test)
+
+
+def get_cnn_model_pred(X_train, y_train, X_test):
+    lr_model = create_cnn_model()
+
+    lr_model = train_cnn_model(lr_model, X_train, y_train, 1000)
+
+    y_pred = get_cnn_model_predictions(lr_model, X_test)
+
+    return y_pred
