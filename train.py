@@ -38,7 +38,6 @@ def main(args):
     dataset_filepath = 'mwe_dataset_domain_balanced.npy'
 
     X_train, X_test, y_train, y_test = load_data(dataset_filepath)
-    print(f'X_train SHAPE: {X_train.shape}')
     if 'cnn' in args:
         X_train = np.reshape(X_train, [X_train.shape[0], 900, 1])
         X_test = np.reshape(X_test, [X_test.shape[0], 900, 1])
@@ -56,8 +55,6 @@ def main(args):
                                     model_path=model_path)
 
         y_pred = [np.argmax(probs) for probs in y_pred]
-
-        print(y_pred)
 
     elif 'lr' in args:
         y_pred = get_lr_model_pred(X_train, y_train, X_test)
