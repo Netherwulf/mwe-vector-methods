@@ -72,11 +72,15 @@ def get_cnn_model_predictions(model, X_test):
     return model.predict(X_test)
 
 
-def get_cnn_model_pred(X_train, y_train, X_test):
+def get_cnn_model_pred(X_train, y_train, X_test, eval_only=False, model_path=None):
     cnn_model = create_cnn_model()
 
-    cnn_model = train_cnn_model(cnn_model, X_train, y_train, 1000)
+    if eval_only:
+        cnn_model.load_weights(model_path)
 
-    y_pred = get_cnn_model_predictions(lr_model, X_test)
+    else:
+        cnn_model = train_cnn_model(cnn_model, X_train, y_train, 1000)
+
+    y_pred = get_cnn_model_predictions(cnn_model, X_test)
 
     return y_pred

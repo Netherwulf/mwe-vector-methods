@@ -44,7 +44,20 @@ def main(args):
         X_test = np.reshape(X_test, [X_test.shape[0], 900, 1])
         y_train = one_hot(y_train, depth=2)
 
-        y_pred = get_cnn_model_pred(X_train, y_train, X_test)
+        if 'eval' in args:
+            eval_only = True
+            model_path = args[2]
+        else:
+            eval_only = False
+            model_path = None
+
+        y_pred = get_cnn_model_pred(X_train, y_train, X_test,
+                                    eval_only=eval_only,
+                                    model_path=model_path)
+
+        y_pred = [np.argmax(probs) for probs in y_pred]
+
+        print(y_pred)
 
     elif 'lr' in args:
         y_pred = get_lr_model_pred(X_train, y_train, X_test)
