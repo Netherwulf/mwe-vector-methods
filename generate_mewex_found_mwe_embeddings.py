@@ -21,8 +21,14 @@ def read_mewex_found_mwe(filepath):
     mwe_list = np.array([('*' * 200, '*' * 200) for _ in range(len(df))])
 
     for i, mwe in enumerate(df.iloc[:, 2].tolist()):
+        #print(f'MWE: {mwe}')
         mwe_words = mwe.split(' ')
-        mwe_list[i] = (mwe_words[0], mwe_words[1])
+
+        if len(mwe_words) != 2:
+            mwe_list[i] = mwe_list[i - 1]
+
+        else:
+            mwe_list[i] = (mwe_words[0], mwe_words[1])
 
     return df, mwe_list
 
@@ -47,7 +53,8 @@ def main(args):
 
     df['is_correct'] = y_pred
     print('Saving final TSV file...')
-    df.to_csv('scaled_vector_association_measure_correct_mwe_best_f1_with_lr_prediction.tsv', sep='\t')
+    df.rename(columns={0: "assoc_measure", 1: "type", 2: "mwe"}, inplace=True)
+    df.to_csv('scaled_vector_association_measure_correct_mwe_best_f1_with_lr_prediction.tsv', index=False, sep='\t')
 
 
 if __name__ == '__main__':
