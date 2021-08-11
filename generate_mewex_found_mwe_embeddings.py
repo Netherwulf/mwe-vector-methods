@@ -30,7 +30,7 @@ def read_mewex_found_mwe(filepath):
 def main(args):
     ft_model_path = "kgr10.plain.skipgram.dim300.neg10.bin"
     lr_model_path = os.path.join('models', 'lr_model.pkl')
-    mewex_found_mwe_filepath = os.path.join('/data', 'netherwulf', 'kgr10_train_test_split',
+    mewex_found_mwe_filepath = os.path.join('/data4', 'netherwulf', 'kgr10_train_test_split',
                                             'scaled_vector_association_measure_correct_mwe_best_f1.tsv')
     print('Loading fasttext model...')
     ft_model = load_fasttext(ft_model_path)
