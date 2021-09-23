@@ -4,14 +4,14 @@ import sys
 import xml.etree.ElementTree as ET
 from typing import List
 
-# import morfeusz2
+import morfeusz2
 
 
 # read MWEs from Słowosieć tsv file
 def read_mwe_from_tsv(filepath, separator, column_index) -> []:
     with open(filepath, 'r', encoding="utf-8") as f:
-        content = list(csv.reader(f, delimiter=separator))
-        mwe_list = [sublist[column_index] for sublist in content[1:]]
+        content = list(csv.reader(f, delimiter=separator, quotechar='"'))
+        mwe_list = [sublist[column_index] for sublist in content[1:] if len(sublist) != 0]
 
         return mwe_list
 
@@ -62,12 +62,14 @@ def lemmatize_mwe(mwe_list, lemmatizer) -> List[str]:
 
 
 def main(args):
+    lemmatizer = init_lemmatizer()
+    correct_mwe_list = read_mwe_from_tsv('correct_mwe.tsv', '\t', 3)
+    incorrect_mwe_list = read_mwe_from_tsv('incorrect_MWE_kompozycyjne_polaczenia_plWN.csv', ',', 1)
+    lemmatized_correct_mwes = lemmatize_mwe(correct_mwe_list, lemmatizer)
+    lemmatized_incorrect_mwes = lemmatize_mwe(incorrect_mwe_list, lemmatizer)
+
     for filepath in args:
-        # lemmatizer = init_lemmatizer()
-        correct_mwe_list = read_mwe_from_tsv('correct_mwe.tsv', '\t', 3)
-        print(correct_mwe_list[:5])
-        incorrect_mwe_list = read_mwe_from_tsv('incorrect_MWE_kompozycyjne_polaczenia_plWN.csv', ',', 1)
-        print(incorrect_mwe_list[:5])
+        orths, lemmas = read_xml(filepath)
 
 
 if __name__ == '__main__':
