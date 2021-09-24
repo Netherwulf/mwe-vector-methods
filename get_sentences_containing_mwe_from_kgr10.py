@@ -95,7 +95,7 @@ def load_mwes(correct_mwes_file, incorrect_mwes_file):
 
 
 def get_restricted_words_list():
-    return ['się', 'ja', 'ten']
+    return ['się', 'ja', 'ten'] + list(string.punctuation)
 
 
 def create_empty_file(filepath):
