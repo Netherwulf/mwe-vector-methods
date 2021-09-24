@@ -136,6 +136,9 @@ def get_sentences_containing_mwe(output_file, correct_mwes, incorrect_mwes, lemm
                                  lemmatized_incorrect_mwes, sentences_orths, sentences_lemmas, restricted_words_list,
                                  dir_index, file_index):
     for sentence_ind, sentence in enumerate(sentences_lemmas):
+        if '/' in sentence:
+            continue
+
         word_in_complete_mwe_list = [False for _ in range(len(sentence))]
 
         for lemma_ind, lemma in enumerate(sentence):
