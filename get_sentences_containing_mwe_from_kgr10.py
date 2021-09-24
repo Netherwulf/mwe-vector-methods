@@ -2,13 +2,20 @@ import csv
 import string
 import sys
 import xml.etree.ElementTree as ET
+
+from glob import glob
 from typing import List
 
 import morfeusz2
 
 
-# read MWEs from Słowosieć tsv file
-def read_mwe_from_tsv(filepath, separator, column_index) -> []:
+# find morph.xml.ccl.xml files in dir recursively
+def find_xml(dir_path) -> List[str]:
+    return [filepath for filepath in glob(dir_path + '/**/*.ccl.xml', recursive=True)]
+
+
+# read MWEs from Słowosieć tsv or csv file
+def read_mwe(filepath, separator, column_index) -> []:
     with open(filepath, 'r', encoding="utf-8") as f:
         content = list(csv.reader(f, delimiter=separator, quotechar='"'))
         mwe_list = [sublist[column_index] for sublist in content[1:] if len(sublist) != 0]
@@ -61,15 +68,45 @@ def lemmatize_mwe(mwe_list, lemmatizer) -> List[str]:
     return lemmatized_mwe_list
 
 
-def main(args):
+def load_mwes(correct_mwes_file, incorrect_mwes_file):
     lemmatizer = init_lemmatizer()
-    correct_mwe_list = read_mwe_from_tsv('correct_mwe.tsv', '\t', 3)
-    incorrect_mwe_list = read_mwe_from_tsv('incorrect_MWE_kompozycyjne_polaczenia_plWN.csv', ',', 1)
+
+    correct_mwe_list = read_mwe(correct_mwes_file, '\t', 3)
+    incorrect_mwe_list = read_mwe(incorrect_mwes_file, ',', 1)
     lemmatized_correct_mwes = lemmatize_mwe(correct_mwe_list, lemmatizer)
     lemmatized_incorrect_mwes = lemmatize_mwe(incorrect_mwe_list, lemmatizer)
 
-    for filepath in args:
-        orths, lemmas = read_xml(filepath)
+    return correct_mwe_list, incorrect_mwe_list, lemmatized_correct_mwes, lemmatized_incorrect_mwes
+
+
+def create_empty_file(filepath):
+    with open(filepath, 'w') as f:
+        pass
+
+
+def get_sentences_containing_mwe(output_file, correct_mwes, incorrect_mwes, lemmatized_correct_mwes,
+                                 lemmatized_incorrect_mwes, sentences_orths, sentences_lemmas):
+    for sentence_ind, sentence in enumerate(sentences_orths):
+        for orth_ind, orth in enumerate(sentence):
+
+
+def main(args):
+    correct_mwes_filepath = 'correct_mwe.tsv'
+    incorrect_mwes_filepath = 'incorrect_MWE_kompozycyjne_polaczenia_plWN.csv'
+    output_file = 'sentences_containing_mwe_from_kgr10.tsv'
+
+    create_empty_file(output_file)
+
+    correct_mwe_list, incorrect_mwe_list, lemmatized_correct_mwes, lemmatized_incorrect_mwes = load_mwes(
+        correct_mwes_filepath, incorrect_mwes_filepath)
+
+    for dir_path in args:
+        xml_paths = find_xml(dir_path)
+
+        for xml_path in xml_paths:
+            orths, lemmas = read_xml(xml_path)
+            get_sentences_containing_mwe(output_file, correct_mwe_list, incorrect_mwe_list,
+                                         lemmatized_correct_mwes, lemmatized_incorrect_mwes, orths, lemmas)
 
 
 if __name__ == '__main__':
