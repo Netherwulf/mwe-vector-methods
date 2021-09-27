@@ -34,7 +34,7 @@ def get_word_vector(sent, idx, tokenizer, model, layers):
     return get_hidden_states(encoded, token_ids_word, model, layers)
 
 
-def main(model_name='bert-base-cased', layers=4):
+def main(model_name='allegro/herbert-base-cased', layers=4):  # bert-base-cased
     # Use last four layers by default
     # layers = [-4, -3, -2, -1] if layers is None else layers
     layers = [layer_num for layer_num in range(-1 * layers, 0, 1)]
