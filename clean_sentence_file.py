@@ -2,7 +2,7 @@ import sys
 
 
 def clean_sentence_file(filepath):
-    with open(filepath, 'r') as in_file:
+    with open(filepath, 'r', errors='replace') as in_file:
         content = in_file.readlines()
 
         out_file_name = filepath.split('/')[-1].split('.')[-2] + '_cleaned.tsv'
