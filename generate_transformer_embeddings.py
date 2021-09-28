@@ -37,7 +37,7 @@ def get_word_vector(sent, idx, tokenizer, model, layers):
 def main(model_name='allegro/herbert-base-cased', layers=4):  # bert-base-cased
     # Use last four layers by default
     # layers = [-4, -3, -2, -1] if layers is None else layers
-    layers = [layer_num for layer_num in range(-1 * layers, 0, 1)]
+    layers = [layer_num for layer_num in range(-1 * layers - 1, -1, 1)]  # [-2] or [-3, -2] or [-4, -3, -2] or more
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     model = AutoModel.from_pretrained(model_name, output_hidden_states=True)
 
@@ -46,7 +46,7 @@ def main(model_name='allegro/herbert-base-cased', layers=4):  # bert-base-cased
 
     word_embedding = get_word_vector(sent, idx, tokenizer, model, layers)
 
-    return word_embedding
+    print(word_embedding)
 
 
 if __name__ == '__main__':
