@@ -16,7 +16,8 @@ def init_lemmatizer():
 def get_word_idx(sent: str, word: str, lemmatizer):
     sent = [str(lemmatizer.analyse(word)[0][2][1]) if word not in string.punctuation else word for word in
             sent.split(' ')]
-    print(f'{word}\n{sent}\n')
+    word = lemmatizer.analyse(word)[0][2][1]
+
     return sent.index(word)
 
 
