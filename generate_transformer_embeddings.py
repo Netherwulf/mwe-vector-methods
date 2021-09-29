@@ -144,7 +144,7 @@ def read_tsv(filepath, tokenizer, model, layers, lemmatizer):
                       f'first_word_mwe_emb_diff: {type(first_word_mwe_emb_diff)}', sep='\n')
 
                 write_line_to_file(complete_mwe_in_sent_output_file, '\t'.join(
-                    [first_word_embedding.numpy().tostring(), ','.join(mwe_embedding),
+                    [','.join(map(str, first_word_embedding.numpy())), ','.join(mwe_embedding),
                      ','.join(first_word_mwe_emb_diff), is_correct]))
 
 
