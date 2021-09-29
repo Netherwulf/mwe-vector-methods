@@ -126,7 +126,8 @@ def read_tsv(filepath, tokenizer, model, layers, lemmatizer):
                                             zip(mwe_embedding, second_word_only_embedding)]
 
                 write_line_to_file(complete_mwe_in_sent_output_file, '\t'.join(
-                    [','.join(mwe_embedding), ','.join(first_word_only_embedding), ','.join(second_word_only_embedding), ','.join(first_word_mwe_emb_diff),
+                    [','.join(mwe_embedding.tolist()), ','.join(first_word_only_embedding.tolist()),
+                     ','.join(second_word_only_embedding.tolist()), ','.join(first_word_mwe_emb_diff),
                      ','.join(second_word_mwe_emb_diff), is_correct]))
 
             # only part of MWE appears in the sentence
@@ -139,7 +140,8 @@ def read_tsv(filepath, tokenizer, model, layers, lemmatizer):
                                            zip(mwe_embedding, first_word_embedding)]
 
                 write_line_to_file(complete_mwe_in_sent_output_file, '\t'.join(
-                    [','.join(first_word_embedding), ','.join(mwe_embedding), ','.join(first_word_mwe_emb_diff), is_correct]))
+                    [','.join(first_word_embedding.tolist()), ','.join(mwe_embedding.tolist()),
+                     ','.join(first_word_mwe_emb_diff), is_correct]))
 
 
 def main(args):
