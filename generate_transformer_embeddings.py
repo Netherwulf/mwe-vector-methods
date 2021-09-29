@@ -77,7 +77,7 @@ def substitute_and_embed(sentence, old_word, new_word, tokenizer, model, layers,
                zip(first_word_emb, second_word_emb)]
 
     else:
-        emb = get_word_embedding(sentence, new_word, tokenizer, model, layers)
+        emb = get_word_embedding(sentence, new_word, tokenizer, model, layers, lemmatizer)
 
     return emb
 
