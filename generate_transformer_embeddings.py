@@ -7,6 +7,7 @@ from transformers import AutoTokenizer, AutoModel
 
 
 def get_word_idx(sent: str, word: str):
+    print(f'{sent}\n{word}')
     return sent.split(" ").index(word)
 
 
@@ -85,7 +86,7 @@ def read_tsv(filepath, tokenizer, model, layers):
     with open(filepath, 'r', errors='replace') as in_file:
         content = in_file.readlines()
 
-        for line in content:
+        for line in content[1:]:
             line = line.strip()
 
             line_attributes = line.split('\t')
