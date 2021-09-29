@@ -78,12 +78,14 @@ def substitute_and_embed(sentence, old_word, new_word, tokenizer, model, layers,
     if len(new_word.split(' ')) > 1:
         first_word, second_word = new_word.split(' ')
 
-        first_word_emb, word_occured = get_word_embedding(sentence, first_word, tokenizer, model, layers, lemmatizer)
+        first_word_emb = get_word_embedding(sentence, first_word, tokenizer, model, layers, lemmatizer)
+        # first_word_emb, word_occured = get_word_embedding(sentence, first_word, tokenizer, model, layers, lemmatizer)
 
         # if not word_occured:
         #     return False
 
-        second_word_emb, word_occured = get_word_embedding(sentence, second_word, tokenizer, model, layers, lemmatizer)
+        second_word_emb = get_word_embedding(sentence, second_word, tokenizer, model, layers, lemmatizer)
+        # second_word_emb, word_occured = get_word_embedding(sentence, second_word, tokenizer, model, layers, lemmatizer)
 
         # if not word_occured:
         #     return False
