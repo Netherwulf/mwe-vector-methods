@@ -58,16 +58,28 @@ def get_word_embedding(sentence, word, tokenizer, model, layers):
 def substitute_and_embed(sentence, old_word, new_word, tokenizer, model, layers):
     sentence = sentence.replace(old_word, new_word)
 
-    return get_word_embedding(sentence, new_word, tokenizer, model, layers)
+    if len(new_word.split(' ')) > 1:
+        first_word, second_word = new_word.split(' ')
+
+        first_word_emb = get_word_embedding(sentence, first_word, tokenizer, model, layers)
+        second_word_emb = get_word_embedding(sentence, second_word, tokenizer, model, layers)
+
+        emb = [(first_word_elem + second_word_elem) / 2 for first_word_elem, second_word_elem in
+               zip(first_word_emb, second_word_emb)]
+
+    else:
+        emb = get_word_embedding(sentence, new_word, tokenizer, model, layers)
+
+    return emb
 
 
 def read_tsv(filepath, tokenizer, model, layers):
-    complete_mwe_in_sent_output_file = filepath.split('/')[-1].split('.')[
-                                           0] + f'_embeddings_{len(layers)}_layers_complete_mwe_in_sent.tsv'
+    filepath_name = filepath.split('/')[-1].split('.')[0]
+
+    complete_mwe_in_sent_output_file = filepath_name + f'_embeddings_{len(layers)}_layers_complete_mwe_in_sent.tsv'
     create_empty_file(complete_mwe_in_sent_output_file)
 
-    incomplete_mwe_in_sent_output_file = filepath.split('/')[-1].split('.')[
-                                             0] + f'_embeddings_{len(layers)}_layers_incomplete_mwe_in_sent.tsv'
+    incomplete_mwe_in_sent_output_file = filepath_name + f'_embeddings_{len(layers)}_layers_incomplete_mwe_in_sent.tsv'
     create_empty_file(incomplete_mwe_in_sent_output_file)
 
     with open(filepath, 'r', errors='replace') as in_file:
@@ -87,11 +99,36 @@ def read_tsv(filepath, tokenizer, model, layers):
 
             # complete MWE appears in the sentence
             if complete_mwe_in_sent == '1':
-                write_line_to_file(complete_mwe_in_sent_output_file, '')
+                first_word_embedding = get_word_embedding(sentence, first_word, tokenizer, model, layers)
+                second_word_embedding = get_word_embedding(sentence, second_word, tokenizer, model, layers)
+
+                mwe_embedding = [(first_word_elem + second_word_elem) / 2 for first_word_elem, second_word_elem in
+                                 zip(first_word_embedding, second_word_embedding)]
+
+                first_word_only_embedding = substitute_and_embed(sentence, mwe, first_word, tokenizer, model, layers)
+                second_word_only_embedding = substitute_and_embed(sentence, mwe, second_word, tokenizer, model, layers)
+
+                first_word_mwe_emb_diff = [mwe_elem - first_word_elem for mwe_elem, first_word_elem in
+                                           zip(mwe_embedding, first_word_only_embedding)]
+
+                second_word_mwe_emb_diff = [mwe_elem - second_word_elem for mwe_elem, second_word_elem in
+                                            zip(mwe_embedding, second_word_only_embedding)]
+
+                write_line_to_file(complete_mwe_in_sent_output_file, '\t'.join(
+                    [mwe_embedding, first_word_only_embedding, second_word_only_embedding, first_word_mwe_emb_diff,
+                     second_word_mwe_emb_diff, is_correct]))
 
             # only part of MWE appears in the sentence
             else:
-                write_line_to_file(incomplete_mwe_in_sent_output_file, '')
+                first_word_embedding = get_word_embedding(sentence, first_word, tokenizer, model, layers)
+
+                mwe_embedding = substitute_and_embed(sentence, first_word, mwe, tokenizer, model, layers)
+
+                first_word_mwe_emb_diff = [mwe_elem - first_word_elem for mwe_elem, first_word_elem in
+                                           zip(mwe_embedding, first_word_embedding)]
+
+                write_line_to_file(complete_mwe_in_sent_output_file, '\t'.join(
+                    [first_word_embedding, mwe_embedding, first_word_mwe_emb_diff, is_correct]))
 
 
 def main(args):
