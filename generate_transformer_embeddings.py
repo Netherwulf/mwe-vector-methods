@@ -1,14 +1,22 @@
+import string
 import sys
 
+import morfeusz2
 import numpy as np
 import torch
 
 from transformers import AutoTokenizer, AutoModel
 
 
-def get_word_idx(sent: str, word: str):
-    print(f'{sent}\n{word}')
-    return sent.split(" ").index(word)
+# init Morfeusz2 lemmatizer
+def init_lemmatizer():
+    return morfeusz2.Morfeusz()  # initialize Morfeusz object
+
+
+def get_word_idx(sent: str, word: str, lemmatizer):
+    sent = [str(lemmatizer.analyse(word)[0][2][1]) if word not in string.punctuation else word for word in
+            sent.split(' ')]
+    return sent.index(word)
 
 
 def get_hidden_states(encoded, token_ids_word, model, layers):
@@ -48,22 +56,22 @@ def write_line_to_file(filepath, line):
         f.write(f'{line}\n')
 
 
-def get_word_embedding(sentence, word, tokenizer, model, layers):
-    idx = get_word_idx(sentence, word)
+def get_word_embedding(sentence, word, tokenizer, model, layers, lemmatizer):
+    idx = get_word_idx(sentence, word, lemmatizer)
 
     word_embedding = get_word_vector(sentence, idx, tokenizer, model, layers)
 
     return word_embedding
 
 
-def substitute_and_embed(sentence, old_word, new_word, tokenizer, model, layers):
+def substitute_and_embed(sentence, old_word, new_word, tokenizer, model, layers, lemmatizer):
     sentence = sentence.replace(old_word, new_word)
 
     if len(new_word.split(' ')) > 1:
         first_word, second_word = new_word.split(' ')
 
-        first_word_emb = get_word_embedding(sentence, first_word, tokenizer, model, layers)
-        second_word_emb = get_word_embedding(sentence, second_word, tokenizer, model, layers)
+        first_word_emb = get_word_embedding(sentence, first_word, tokenizer, model, layers, lemmatizer)
+        second_word_emb = get_word_embedding(sentence, second_word, tokenizer, model, layers, lemmatizer)
 
         emb = [(first_word_elem + second_word_elem) / 2 for first_word_elem, second_word_elem in
                zip(first_word_emb, second_word_emb)]
@@ -74,7 +82,7 @@ def substitute_and_embed(sentence, old_word, new_word, tokenizer, model, layers)
     return emb
 
 
-def read_tsv(filepath, tokenizer, model, layers):
+def read_tsv(filepath, tokenizer, model, layers, lemmatizer):
     filepath_name = filepath.split('/')[-1].split('.')[0]
 
     complete_mwe_in_sent_output_file = filepath_name + f'_embeddings_{len(layers)}_layers_complete_mwe_in_sent.tsv'
@@ -100,14 +108,16 @@ def read_tsv(filepath, tokenizer, model, layers):
 
             # complete MWE appears in the sentence
             if complete_mwe_in_sent == '1':
-                first_word_embedding = get_word_embedding(sentence, first_word, tokenizer, model, layers)
-                second_word_embedding = get_word_embedding(sentence, second_word, tokenizer, model, layers)
+                first_word_embedding = get_word_embedding(sentence, first_word, tokenizer, model, layers, lemmatizer)
+                second_word_embedding = get_word_embedding(sentence, second_word, tokenizer, model, layers, lemmatizer)
 
                 mwe_embedding = [(first_word_elem + second_word_elem) / 2 for first_word_elem, second_word_elem in
                                  zip(first_word_embedding, second_word_embedding)]
 
-                first_word_only_embedding = substitute_and_embed(sentence, mwe, first_word, tokenizer, model, layers)
-                second_word_only_embedding = substitute_and_embed(sentence, mwe, second_word, tokenizer, model, layers)
+                first_word_only_embedding = substitute_and_embed(sentence, mwe, first_word, tokenizer, model, layers,
+                                                                 lemmatizer)
+                second_word_only_embedding = substitute_and_embed(sentence, mwe, second_word, tokenizer, model, layers,
+                                                                  lemmatizer)
 
                 first_word_mwe_emb_diff = [mwe_elem - first_word_elem for mwe_elem, first_word_elem in
                                            zip(mwe_embedding, first_word_only_embedding)]
@@ -121,9 +131,9 @@ def read_tsv(filepath, tokenizer, model, layers):
 
             # only part of MWE appears in the sentence
             else:
-                first_word_embedding = get_word_embedding(sentence, first_word, tokenizer, model, layers)
+                first_word_embedding = get_word_embedding(sentence, first_word, tokenizer, model, layers, lemmatizer)
 
-                mwe_embedding = substitute_and_embed(sentence, first_word, mwe, tokenizer, model, layers)
+                mwe_embedding = substitute_and_embed(sentence, first_word, mwe, tokenizer, model, layers, lemmatizer)
 
                 first_word_mwe_emb_diff = [mwe_elem - first_word_elem for mwe_elem, first_word_elem in
                                            zip(mwe_embedding, first_word_embedding)]
@@ -143,8 +153,10 @@ def main(args):
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     model = AutoModel.from_pretrained(model_name, output_hidden_states=True)
 
+    lemmatizer = init_lemmatizer()
+
     for filepath in args:
-        read_tsv(filepath, tokenizer, model, layers)
+        read_tsv(filepath, tokenizer, model, layers, lemmatizer)
 
 
 if __name__ == '__main__':
