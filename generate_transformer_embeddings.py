@@ -140,7 +140,7 @@ def read_tsv(filepath, tokenizer, model, layers, lemmatizer):
                                            zip(mwe_embedding, first_word_embedding)]
 
                 write_line_to_file(complete_mwe_in_sent_output_file, '\t'.join(
-                    [','.join(first_word_embedding), mwe_embedding.numpy().tostring(),
+                    [first_word_embedding.numpy().tostring(), mwe_embedding.numpy().tostring(),
                      ','.join(first_word_mwe_emb_diff), is_correct]))
 
 
