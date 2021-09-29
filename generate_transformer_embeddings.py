@@ -116,17 +116,18 @@ def read_tsv(filepath, tokenizer, model, layers, lemmatizer):
 
                 first_word_only_embedding = substitute_and_embed(sentence, mwe, first_word, tokenizer, model, layers,
                                                                  lemmatizer)
-                first_word_only_embedding = [str(elem) for elem in first_word_only_embedding]
 
                 second_word_only_embedding = substitute_and_embed(sentence, mwe, second_word, tokenizer, model, layers,
                                                                   lemmatizer)
-                second_word_only_embedding = [str(elem) for elem in second_word_only_embedding]
 
                 first_word_mwe_emb_diff = [mwe_elem - first_word_elem for mwe_elem, first_word_elem in
                                            zip(mwe_embedding, first_word_only_embedding)]
 
                 second_word_mwe_emb_diff = [mwe_elem - second_word_elem for mwe_elem, second_word_elem in
                                             zip(mwe_embedding, second_word_only_embedding)]
+
+                first_word_only_embedding = [str(elem) for elem in first_word_only_embedding]
+                second_word_only_embedding = [str(elem) for elem in second_word_only_embedding]
 
                 write_line_to_file(complete_mwe_in_sent_output_file, '\t'.join(
                     [','.join(mwe_embedding), ','.join(first_word_only_embedding),
@@ -136,14 +137,15 @@ def read_tsv(filepath, tokenizer, model, layers, lemmatizer):
             # only part of MWE appears in the sentence
             else:
                 first_word_embedding = get_word_embedding(sentence, first_word, tokenizer, model, layers, lemmatizer)
-                first_word_embedding = [str(elem) for elem in first_word_embedding]
 
                 mwe_embedding = substitute_and_embed(sentence, first_word, mwe, tokenizer, model, layers, lemmatizer)
 
                 first_word_mwe_emb_diff = [mwe_elem - first_word_elem for mwe_elem, first_word_elem in
                                            zip(mwe_embedding, first_word_embedding)]
 
-                print(f'first_word_embedding: {type(first_word_embedding.numpy())}',
+                first_word_embedding = [str(elem) for elem in first_word_embedding]
+
+                print(f'first_word_embedding: {type(first_word_embedding)}',
                       f'mwe_embedding: {type(mwe_embedding)}',
                       f'first_word_mwe_emb_diff: {type(first_word_mwe_emb_diff)}', sep='\n')
 
