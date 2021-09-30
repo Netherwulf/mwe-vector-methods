@@ -139,6 +139,9 @@ def get_sentences_containing_mwe(output_file, correct_mwes, incorrect_mwes, lemm
                                  dir_index, file_index):
     for sentence_ind, sentence in enumerate(sentences_lemmas):
         if len(sentences_orths[sentence_ind]) != len(sentences_lemmas[sentence_ind]):
+            print(f'orths: {sentences_orths[sentence_ind]}',
+                  f'lemmas: {sentences_lemmas[sentence_ind]}',
+                  sep='\n')
             cleaned_sentence = [word for i, word in enumerate(sentences_lemmas[sentence_ind]) if
                                 i > 0 and sentences_lemmas[sentence_ind][i - 1].lower() != word.lower()]
             sentences_lemmas[sentence_ind] = cleaned_sentence
