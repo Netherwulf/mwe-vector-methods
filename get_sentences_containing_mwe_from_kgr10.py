@@ -117,11 +117,13 @@ def write_new_samples_to_file(output_file, matched_mwe_list, mwe_orth_list, lemm
     is_complete_mwe_value = '1' if is_complete_mwe else '0'
     second_word_index_value = str(second_word_index) if is_complete_mwe else '-1'
 
-    for mwe_ind in range(len(matched_mwe_list)):
-        print(f'Writing line for: {matched_mwe_list[mwe_ind]}')
-        mwe = mwe_orth_list[lemmatized_mwe_list.index(matched_mwe_list[mwe_ind])]
+    for mwe_ind, matched_mwe_lemma in enumerate(matched_mwe_list):
+        if mwe_ind > 0 and matched_mwe_lemma == matched_mwe_list[mwe_ind - 1]:
+            continue
+
+        mwe = mwe_orth_list[lemmatized_mwe_list.index(matched_mwe_lemma)]
         write_line_to_file(output_file, '\t'.join([mwe,
-                                                   matched_mwe_list[mwe_ind],
+                                                   matched_mwe_lemma,
                                                    is_correct_value,
                                                    is_complete_mwe_value,
                                                    str(first_word_index),
