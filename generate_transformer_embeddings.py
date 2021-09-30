@@ -13,18 +13,19 @@ def init_lemmatizer():
     return morfeusz2.Morfeusz()  # initialize Morfeusz object
 
 
-def get_word_idx(sent: str, word: str, lemmatizer):
-    sentence = sent[:]
-    sentence = [str(lemmatizer.analyse(word_elem)[0][2][1]) if word_elem not in string.punctuation else word_elem for
-                word_elem in sentence.split(' ')]
-    word_lemma = lemmatizer.analyse(word)[0][2][1]
-
-    if word_lemma in sentence:
-        return sentence.index(word_lemma), True
-
-    else:
-        print(f'word: {word_lemma} doesnt occur in sentence: \n{sentence}')
-        return -1, False
+def get_word_idx(sent: str, word: str):  # (sent: str, word: str, lemmatizer)
+    return sent.index(word)
+    # sentence = sent[:]
+    # sentence = [str(lemmatizer.analyse(word_elem)[0][2][1]) if word_elem not in string.punctuation else word_elem for
+    #             word_elem in sentence.split(' ')]
+    # word_lemma = lemmatizer.analyse(word)[0][2][1]
+    #
+    # if word_lemma in sentence:
+    #     return sentence.index(word_lemma), True
+    #
+    # else:
+    #     print(f'word: {word_lemma} doesnt occur in sentence: \n{sentence}')
+    #     return -1, False
 
 
 def get_hidden_states(encoded, token_ids_word, model, layers):
@@ -65,7 +66,7 @@ def write_line_to_file(filepath, line):
 
 
 def get_word_embedding(sentence, word, tokenizer, model, layers, lemmatizer):
-    idx = get_word_idx(sentence, word, lemmatizer)
+    idx = get_word_idx(sentence, word)  # (sentence, word, lemmatizer)
     # idx, word_occured = get_word_idx(sentence, word, lemmatizer)
 
     word_embedding = get_word_vector(sentence, idx, tokenizer, model, layers)
@@ -74,19 +75,19 @@ def get_word_embedding(sentence, word, tokenizer, model, layers, lemmatizer):
 
 
 def substitute_and_embed(sentence, old_word, new_word, tokenizer, model, layers, lemmatizer):
-    sentence_to_substitute = sentence[:]
+    sentence_to_substitute = sentence
     sentence_to_substitute = sentence_to_substitute.replace(old_word, new_word)
 
     if len(new_word.split(' ')) > 1:
         first_word, second_word = new_word.split(' ')
 
-        first_word_emb = get_word_embedding(sentence_to_substitute[:], first_word, tokenizer, model, layers, lemmatizer)
+        first_word_emb = get_word_embedding(sentence_to_substitute, first_word, tokenizer, model, layers, lemmatizer)
         # first_word_emb, word_occured = get_word_embedding(sentence, first_word, tokenizer, model, layers, lemmatizer)
 
         # if not word_occured:
         #     return False
 
-        second_word_emb = get_word_embedding(sentence_to_substitute[:], second_word, tokenizer, model, layers,
+        second_word_emb = get_word_embedding(sentence_to_substitute, second_word, tokenizer, model, layers,
                                              lemmatizer)
         # second_word_emb, word_occured = get_word_embedding(sentence, second_word, tokenizer, model, layers, lemmatizer)
 
@@ -97,7 +98,7 @@ def substitute_and_embed(sentence, old_word, new_word, tokenizer, model, layers,
                zip(first_word_emb, second_word_emb)]
 
     else:
-        emb = get_word_embedding(sentence_to_substitute[:], new_word, tokenizer, model, layers, lemmatizer)
+        emb = get_word_embedding(sentence_to_substitute, new_word, tokenizer, model, layers, lemmatizer)
 
     return emb
 
@@ -120,11 +121,12 @@ def read_tsv(filepath, tokenizer, model, layers, lemmatizer):
             line_attributes = line.split('\t')
 
             mwe = line_attributes[0]
+            mwe_lemma = line_attributes[1]
             is_correct = line_attributes[2]
             complete_mwe_in_sent = line_attributes[3]
             first_word = line_attributes[5]
-            second_word = line_attributes[7]
-            sentence = line_attributes[10]
+            second_word = line_attributes[8]
+            sentence = line_attributes[12]
 
             # complete MWE appears in the sentence
             if complete_mwe_in_sent == '1':
@@ -134,10 +136,10 @@ def read_tsv(filepath, tokenizer, model, layers, lemmatizer):
                 mwe_embedding = [(first_word_elem + second_word_elem) / 2 for first_word_elem, second_word_elem in
                                  zip(first_word_embedding, second_word_embedding)]
 
-                first_word_only_embedding = substitute_and_embed(sentence[:], mwe, first_word, tokenizer, model, layers,
+                first_word_only_embedding = substitute_and_embed(sentence, mwe, first_word, tokenizer, model, layers,
                                                                  lemmatizer)
 
-                second_word_only_embedding = substitute_and_embed(sentence[:], mwe, second_word, tokenizer, model,
+                second_word_only_embedding = substitute_and_embed(sentence, mwe, second_word, tokenizer, model,
                                                                   layers, lemmatizer)
 
                 first_word_mwe_emb_diff = [str(mwe_elem - first_word_elem) for mwe_elem, first_word_elem in
