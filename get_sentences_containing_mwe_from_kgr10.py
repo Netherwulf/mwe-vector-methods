@@ -118,6 +118,7 @@ def write_new_samples_to_file(output_file, matched_mwe_list, mwe_orth_list, lemm
     second_word_index_value = str(second_word_index) if is_complete_mwe else '-1'
 
     for mwe_ind in range(len(matched_mwe_list)):
+        print(f'Writing line for: {matched_mwe_list[mwe_ind]}')
         mwe = mwe_orth_list[lemmatized_mwe_list.index(matched_mwe_list[mwe_ind])]
         write_line_to_file(output_file, '\t'.join([mwe,
                                                    matched_mwe_list[mwe_ind],
@@ -139,9 +140,6 @@ def get_sentences_containing_mwe(output_file, correct_mwes, incorrect_mwes, lemm
                                  dir_index, file_index):
     for sentence_ind, sentence in enumerate(sentences_lemmas):
         if len(sentences_orths[sentence_ind]) != len(sentences_lemmas[sentence_ind]):
-            print(f'orths: {sentences_orths[sentence_ind]}',
-                  f'lemmas: {sentences_lemmas[sentence_ind]}',
-                  sep='\n')
             cleaned_sentence = [word for i, word in enumerate(sentences_lemmas[sentence_ind]) if
                                 i > 0 and sentences_lemmas[sentence_ind][i - 1].lower() != word.lower()]
             sentence = cleaned_sentence
