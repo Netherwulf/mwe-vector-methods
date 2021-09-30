@@ -144,7 +144,7 @@ def get_sentences_containing_mwe(output_file, correct_mwes, incorrect_mwes, lemm
                   sep='\n')
             cleaned_sentence = [word for i, word in enumerate(sentences_lemmas[sentence_ind]) if
                                 i > 0 and sentences_lemmas[sentence_ind][i - 1].lower() != word.lower()]
-            sentences_lemmas[sentence_ind] = cleaned_sentence
+            sentence = cleaned_sentence
 
         if '/' in sentence:
             continue
