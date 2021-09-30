@@ -140,6 +140,10 @@ def get_sentences_containing_mwe(output_file, correct_mwes, incorrect_mwes, lemm
     for sentence_ind, sentence in enumerate(sentences_lemmas):
         print(f'sentence orths len: {len(sentences_orths[sentence_ind])}',
               f'sentence lemmas len: {len(sentences_lemmas[sentence_ind])}')
+        if len(sentences_orths[sentence_ind]) != len(sentences_lemmas[sentence_ind]):
+            print(f'sentence orths: {sentences_orths[sentence_ind]}',
+                  f'sentence lemmas: {sentences_lemmas[sentence_ind]}',
+                  sep='\n')
         if '/' in sentence:
             continue
 
