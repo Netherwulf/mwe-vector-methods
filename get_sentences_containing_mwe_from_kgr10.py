@@ -111,22 +111,24 @@ def write_line_to_file(filepath, line):
 
 
 def write_new_samples_to_file(output_file, matched_mwe_list, mwe_orth_list, lemmatized_mwe_list, is_correct,
-                              is_complete_mwe, first_word_index, first_word, second_word_index, second_word, dir_index,
-                              file_index, sentence):
+                              is_complete_mwe, first_word_index, first_word_orth, first_word_lemma, second_word_index,
+                              second_word_orth, second_word_lemma, dir_index, file_index, sentence):
     is_correct_value = '1' if is_correct else '0'
     is_complete_mwe_value = '1' if is_complete_mwe else '0'
     second_word_index_value = str(second_word_index) if is_complete_mwe else '-1'
 
-    for mwe_lemma in matched_mwe_list:
-        mwe = mwe_orth_list[lemmatized_mwe_list.index(mwe_lemma)]
+    for mwe_ind in range(len(matched_mwe_list)):
+        mwe = mwe_orth_list[lemmatized_mwe_list.index(matched_mwe_list[mwe_ind])]
         write_line_to_file(output_file, '\t'.join([mwe,
-                                                   mwe_lemma,
+                                                   matched_mwe_list[mwe_ind],
                                                    is_correct_value,
                                                    is_complete_mwe_value,
                                                    str(first_word_index),
-                                                   first_word,
+                                                   first_word_orth,
+                                                   first_word_lemma,
                                                    second_word_index_value,
-                                                   second_word,
+                                                   second_word_orth,
+                                                   second_word_lemma,
                                                    str(dir_index),
                                                    str(file_index),
                                                    sentence]))
@@ -142,7 +144,7 @@ def get_sentences_containing_mwe(output_file, correct_mwes, incorrect_mwes, lemm
         word_in_complete_mwe_list = [False for _ in range(len(sentence))]
 
         for lemma_ind, lemma in enumerate(sentence):
-            if lemma in restricted_words_list:
+            if lemma in restricted_words_list or word_in_complete_mwe_list[lemma_ind]:
                 continue
             # check if word is part of complete MWE occurring in the sentence
             if not word_in_complete_mwe_list[lemma_ind] and lemma_ind != len(sentence) - 1:
@@ -154,8 +156,10 @@ def get_sentences_containing_mwe(output_file, correct_mwes, incorrect_mwes, lemm
 
                 if len(matching_corr_mwes) != 0 or len(matching_incorr_mwes) != 0:
                     word_in_complete_mwe_list[lemma_ind] = True
+                    word_in_complete_mwe_list[lemma_ind + 1] = True
                 else:
                     word_in_complete_mwe_list[lemma_ind] = False
+                    word_in_complete_mwe_list[lemma_ind + 1] = False
 
                 for i, matching_mwe_list in enumerate([matching_corr_mwes, matching_incorr_mwes]):
                     mwes_correctness = True if i == 0 else False
@@ -169,8 +173,10 @@ def get_sentences_containing_mwe(output_file, correct_mwes, incorrect_mwes, lemm
                                               mwes_correctness,
                                               True,
                                               str(lemma_ind),
+                                              sentences_orths[lemma_ind],
                                               sentence[lemma_ind],
                                               str(lemma_ind + 1),
+                                              sentences_orths[lemma_ind + 1],
                                               sentence[lemma_ind + 1],
                                               dir_index,
                                               file_index,
@@ -197,8 +203,10 @@ def get_sentences_containing_mwe(output_file, correct_mwes, incorrect_mwes, lemm
                                               mwes_correctness,
                                               False,
                                               str(lemma_ind),
+                                              sentences_orths[lemma_ind],
                                               sentence[lemma_ind],
                                               '-1',
+                                              'null',
                                               'null',
                                               dir_index,
                                               file_index,
@@ -224,7 +232,8 @@ def main(args):
 
         create_empty_file(output_file)
         write_line_to_file(output_file, '\t'.join(['mwe', 'mwe_lemma', 'is_correct', 'complete_mwe_in_sent',
-                                                   'first_word_index', 'first_word', 'second_word_index', 'second_word',
+                                                   'first_word_index', 'first_word_orth', 'first_word_lemma',
+                                                   'second_word_index', 'second_word_orth', 'second_word_lemma',
                                                    'dir_index', 'file_index', 'sentence']))
 
         xml_paths = find_xml(dir_path)
