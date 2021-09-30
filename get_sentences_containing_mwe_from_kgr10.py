@@ -149,8 +149,8 @@ def get_sentences_containing_mwe(output_file, correct_mwes, incorrect_mwes, lemm
                                 i > 0 and sentences_lemmas[sentence_ind][i - 1].lower() != word.lower()]
             sentence = cleaned_sentence
 
+            # if the sentence can't be simply repaired by removing dupplicated word then skip the sentence
             if len(sentence) != len(sentences_orths[sentence_ind]):
-                print('Skipping sentence...')
                 continue
 
         if '/' in sentence:
