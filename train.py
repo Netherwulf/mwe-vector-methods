@@ -59,6 +59,9 @@ def main(args):
     elif 'lr' in args:
         y_pred = get_lr_model_pred(X_train, y_train, X_test)
 
+    elif 'rf' in args:
+        y_pred = get_lr_model_pred(X_train, y_train, X_test)
+
     get_evaluation_report(y_test, y_pred)
 
 
