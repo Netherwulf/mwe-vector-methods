@@ -4,6 +4,7 @@ import numpy as np
 
 from cnn import get_cnn_model_pred
 from logistic_regression import get_lr_model_pred
+from random_forest import get_rf_model_pred
 
 from sklearn.metrics import classification_report
 from sklearn.model_selection import train_test_split
