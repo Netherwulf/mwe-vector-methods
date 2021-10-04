@@ -23,7 +23,7 @@ def create_cnn_model():
 
     model.compile(optimizer='adam',
                   loss='binary_crossentropy',
-                  metrics=['accuracy'])
+                  metrics=['AUC', 'accuracy'])
     model.summary()
 
     return model
@@ -44,12 +44,12 @@ def train_cnn_model(model, X, y, epoch_num):
 
     # callback = EarlyStopping(monitor='loss', patience=10)
 
-    checkpoint_filepath = 'models/checkpoint_epoch_{epoch:04d}_val_{val_accuracy:.4f}.hdf5'
+    checkpoint_filepath = 'models/checkpoint_epoch_{epoch:04d}_val_{val_auc:.4f}.hdf5'
 
     model_checkpoint_callback = ModelCheckpoint(
         filepath=checkpoint_filepath,
         save_weights_only=True,
-        monitor='val_accuracy',
+        monitor='val_auc',
         mode='max',
         save_best_only=True)
 
@@ -82,7 +82,7 @@ def get_cnn_model_pred(X_train, y_train, X_test, eval_only=False, model_path=Non
         cnn_model.load_weights(model_path)
 
     else:
-        cnn_model = train_cnn_model(cnn_model, X_train, y_train, 1000)
+        cnn_model = train_cnn_model(cnn_model, X_train, y_train, 15)  # 1000 epochs
 
     y_pred = get_cnn_model_predictions(cnn_model, X_test)
 
