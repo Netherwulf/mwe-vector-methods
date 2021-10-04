@@ -12,11 +12,12 @@ def download(url):
         for chunk in get_response.iter_content(chunk_size=1024):
             if chunk:  # filter out keep-alive new chunks
                 totalbits += 1024
-                print("Downloaded", totalbits * 1025, "KB...")
+                print("Downloaded", totalbits, "KB...")
                 f.write(chunk)
 
 
 if __name__ == "__main__":
-    url = 'https://nextcloud.clarin-pl.eu/index.php/s/luubhnS0AvjmtQc/download?path=%2F&files=kgr10.plain.skipgram.dim300.neg10.bin'
+    # url = 'https://nextcloud.clarin-pl.eu/index.php/s/luubhnS0AvjmtQc/download?path=%2F&files=kgr10.plain.skipgram.dim300.neg10.bin'
+    url_cbow = 'https://nextcloud.clarin-pl.eu/index.php/s/luubhnS0AvjmtQc/download?path=%2F&files=kgr10.plain.cbow.dim300.neg10.bin'
 
-    download(url)
+    download(url_cbow)

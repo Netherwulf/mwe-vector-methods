@@ -164,11 +164,13 @@ def save_mwe_embeddings(output_file_name, mwe_embeddings) -> None:
 
 
 def main(args):
-    ft_model_path = "kgr10.plain.skipgram.dim300.neg10.bin"
+    # ft_model_path = "kgr10.plain.skipgram.dim300.neg10.bin"
+    ft_model_path = "kgr10.plain.cbow.dim300.neg10.bin"
     correct_mwe_file_path = 'correct_mwe.tsv'
     incorrect_mwe_file_path = 'incorrect_MWE_kompozycyjne_polaczenia_plWN.csv'
     # change output file name depending on the domain/type balance strategy
-    output_file_name = 'mwe_dataset_type_balanced.npy'
+    # output_file_name = 'mwe_dataset_type_balanced.npy'
+    output_file_name = 'mwe_dataset_type_balanced_cbow.npy'
 
     ft_model = load_fasttext(ft_model_path)
 
