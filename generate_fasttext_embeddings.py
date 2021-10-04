@@ -170,7 +170,7 @@ def main(args):
     incorrect_mwe_file_path = 'incorrect_MWE_kompozycyjne_polaczenia_plWN.csv'
     # change output file name depending on the domain/type balance strategy
     # output_file_name = 'mwe_dataset_type_balanced.npy'
-    output_file_name = 'mwe_dataset_type_balanced_cbow.npy'
+    output_file_name = 'mwe_dataset_cbow.npy'
 
     ft_model = load_fasttext(ft_model_path)
 
@@ -180,12 +180,12 @@ def main(args):
         are_mwes_incorrect = file_index == 1
 
         # imbalanced mwe dataset generation
-        # mwe_list = read_mwe(mwe_file_path, incorrect_mwe_file=are_mwes_incorrect)
+        mwe_list = read_mwe(mwe_file_path, incorrect_mwe_file=are_mwes_incorrect)
 
         # domain balanced or type balanced mwe dataset generation
-        count_dict = get_count_dict(mwe_file_path, incorrect_mwe_file=are_mwes_incorrect, type_based=True)
-        mwe_list = read_mwe_balanced(mwe_file_path, count_dict, final_sample_size=4064,
-                                     incorrect_mwe_file=are_mwes_incorrect, type_based=True)
+        # count_dict = get_count_dict(mwe_file_path, incorrect_mwe_file=are_mwes_incorrect, type_based=True)
+        # mwe_list = read_mwe_balanced(mwe_file_path, count_dict, final_sample_size=4064,
+        #                              incorrect_mwe_file=are_mwes_incorrect, type_based=True)
 
         mwe_embeddings = generate_embeddings(ft_model, mwe_list, incorrect_mwe_list=are_mwes_incorrect)
 

@@ -5,7 +5,8 @@ from sklearn.ensemble import RandomForestClassifier
 
 def create_rf_model():
 
-    return RandomForestClassifier(random_state=0, verbose=1, class_weight='balanced')
+    return RandomForestClassifier(random_state=0, max_depth=13,
+                                  verbose=1, class_weight='balanced')
 
 
 def train_rf_model(model, X, y):
