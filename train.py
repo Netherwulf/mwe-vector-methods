@@ -31,7 +31,7 @@ def load_data(dataset_file):
 
 
 def load_transformer_embeddings_data(dataset_file):
-    print(f'Reading file: {dataset_file.splt("/")}[-1]')
+    print(f'Reading file: {dataset_file.split("/")[-1]}')
     df = pd.read_csv(dataset_file, sep='\t', header=None)
 
     print('Generating embeddings list...')
