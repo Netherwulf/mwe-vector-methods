@@ -13,10 +13,10 @@ def create_cnn_model():
     model.add(layers.Conv1D(512, 5, activation='relu'))
     model.add(layers.MaxPooling1D(3))
     model.add(layers.Dropout(0.2))
-    #model.add(layers.Conv1D(256, 5, activation='relu'))
-    #model.add(layers.MaxPooling1D(3))
-    #model.add(layers.Dropout(0.2))
-    model.add(layers.Conv1D(256, 5, activation='relu')) # 256
+    # model.add(layers.Conv1D(256, 5, activation='relu'))
+    # model.add(layers.MaxPooling1D(3))
+    # model.add(layers.Dropout(0.2))
+    model.add(layers.Conv1D(256, 5, activation='relu'))  # 256
     model.add(layers.GlobalMaxPooling1D())
     model.add(layers.Flatten())
     model.add(layers.Dense(2, activation='softmax'))
@@ -28,6 +28,7 @@ def create_cnn_model():
 
     return model
 
+
 def find_best_checkpoint():
     curr_loss = 0
 
@@ -38,6 +39,7 @@ def find_best_checkpoint():
             curr_loss = int(file.split('.')[-2])
 
     return best_checkpoint
+
 
 def train_cnn_model(model, X, y, epoch_num):
     epochs = epoch_num
@@ -71,7 +73,6 @@ def train_cnn_model(model, X, y, epoch_num):
 
 
 def get_cnn_model_predictions(model, X_test):
-
     return model.predict(X_test)
 
 
