@@ -4,10 +4,10 @@ from tensorflow.keras import datasets, layers, models
 from tensorflow.keras.callbacks import ModelCheckpoint, EarlyStopping
 
 
-def create_cnn_model():
+def create_cnn_model(input_shape=(900, 1)):
     model = models.Sequential()
 
-    model.add(layers.Conv1D(1024, 5, activation='relu', input_shape=(900, 1)))
+    model.add(layers.Conv1D(1024, 5, activation='relu', input_shape=input_shape))
     model.add(layers.MaxPooling1D(3))
     model.add(layers.Dropout(0.2))
     model.add(layers.Conv1D(512, 5, activation='relu'))
@@ -76,8 +76,8 @@ def get_cnn_model_predictions(model, X_test):
     return model.predict(X_test)
 
 
-def get_cnn_model_pred(X_train, y_train, X_test, eval_only=False, model_path=None):
-    cnn_model = create_cnn_model()
+def get_cnn_model_pred(X_train, y_train, X_test, eval_only=False, model_path=None, input_shape=(900, 1)):
+    cnn_model = create_cnn_model(input_shape=input_shape)
 
     if eval_only:
         cnn_model.load_weights(model_path)
