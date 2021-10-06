@@ -38,8 +38,12 @@ def load_transformer_embeddings_data(dataset_file):
     df[4] = df[0] + ',' + df[1] + ',' + df[2]
 
     embeddings_list = [elem.split(',') for elem in df[4].tolist()]
-
-    embeddings_list = [float(re.findall(r"[-+]?\d*\.\d+|\d+", elem)[0]) for elem in embeddings_list]
+    print(f'embeddings_list[0] len: {len(embeddings_list[0])}')
+    for sentence in embeddings_list:
+        for val in sentence:
+            print(f'val: {val}')
+            print(float(re.findall(r"[-+]?\d*\.\d+|\d+", val)[0]))
+    embeddings_list = [[float(re.findall(r"[-+]?\d*\.\d+|\d+", val)[0]) for val in sentence] for sentence in embeddings_list[:-1]]
 
     X = np.array(embeddings_list)
 
