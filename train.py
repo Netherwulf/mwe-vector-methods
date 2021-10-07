@@ -8,9 +8,11 @@ from cnn import get_cnn_model_pred
 from logistic_regression import get_lr_model_pred
 from random_forest import get_rf_model_pred
 
+from imblearn.over_sampling import SMOTE, BorderlineSMOTE, SVMSMOTE, ADASYN
+from imblearn.under_sampling import RandomUnderSampler
+from imblearn.pipeline import Pipeline
 from sklearn.metrics import classification_report
 from sklearn.model_selection import train_test_split
-
 from tensorflow import one_hot
 
 
@@ -74,6 +76,29 @@ def main(args):
         # dataset_filepath = 'mwe_dataset_domain_balanced.npy'  # domain-balanced dataset
 
         X_train, X_test, y_train, y_test = load_data(dataset_filepath)
+
+    if 'smote' in args:
+        oversample = SMOTE()
+        X_train, y_train = oversample.fit_resample(X_train, y_train)
+
+    if 'pipeline' in args:
+        over = SMOTE(sampling_strategy=0.1)
+        under = RandomUnderSampler(sampling_strategy=0.5)
+        steps = [('o', over), ('u', under)]
+        pipeline = Pipeline(steps=steps)
+        X_train, y_train = pipeline.fit_resample(X_train, y_train)
+
+    if 'borderline_smote' in args:
+        oversample = BorderlineSMOTE()
+        X_train, y_train = oversample.fit_resample(X_train, y_train)
+
+    if 'svm_smote' in args:
+        oversample = SVMSMOTE()
+        X_train, y_train = oversample.fit_resample(X_train, y_train)
+
+    if 'adasyn' in args:
+        oversample = ADASYN()
+        X_train, y_train = oversample.fit_resample(X_train, y_train)
 
     if 'cnn' in args:
         print(f'X_train shape: {X_train.shape}')
