@@ -38,17 +38,15 @@ def load_transformer_embeddings_data(dataset_file):
     df[4] = df[0] + ',' + df[1] + ',' + df[2]
 
     embeddings_list = [elem.split(',') for elem in df[4].tolist()]
-    print(f'embeddings_list[0] len: {len(embeddings_list[0])}')
-    for sentence in embeddings_list:
-        for val in sentence:
-            print(f'val: {val}')
-            print(float(re.findall(r"[-+]?\d*\.\d+|\d+", val)[0]))
-    embeddings_list = [[float(re.findall(r"[-+]?\d*\.\d+|\d+", val)[0]) for val in sentence] for sentence in embeddings_list[:-1]]
 
-    X = np.array(embeddings_list)
+    embeddings_list = [([float(re.findall(r"[-+]?\d*\.\d+|\d+", val)[0]) for val in sentence], label) for sentence, label in zip(embeddings_list, df[3].tolist()) if 'tensor(nan)' not in sentence]
 
-    y = df[3].tolist()
+    X = np.array([elem[0] for elem in embeddings_list])
+
+    y = np.array([elem[1] for elem in embeddings_list])
     y = y.astype(int)
+
+    # save dataset and labels to numpy files
 
     X_train, X_test, y_train, y_test = train_test_split(X,
                                                         y,
@@ -78,6 +76,7 @@ def main(args):
         X_train, X_test, y_train, y_test = load_data(dataset_filepath)
 
     if 'cnn' in args:
+        print(f'X_train shape: {X_train.shape}')
         X_train = np.reshape(X_train, [X_train.shape[0], X_train.shape[1], 1])
         X_test = np.reshape(X_test, [X_test.shape[0], X_train.shape[1], 1])
         y_train = one_hot(y_train, depth=2)

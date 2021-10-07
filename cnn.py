@@ -1,5 +1,8 @@
 import glob
 
+import numpy as np
+
+from tensorflow import keras
 from tensorflow.keras import datasets, layers, models
 from tensorflow.keras.callbacks import ModelCheckpoint, EarlyStopping
 
@@ -21,9 +24,9 @@ def create_cnn_model(input_shape=(900, 1)):
     model.add(layers.Flatten())
     model.add(layers.Dense(2, activation='softmax'))
 
-    model.compile(optimizer='adam',
+    model.compile(optimizer=keras.optimizers.Adam(learning_rate=1e-4),
                   loss='binary_crossentropy',
-                  metrics=['AUC', 'accuracy'])
+                  metrics=['AUC', 'accuracy', keras.metrics.Precision(), keras.metrics.Recall()])
     model.summary()
 
     return model
@@ -39,6 +42,19 @@ def find_best_checkpoint():
             curr_loss = int(file.split('.')[-2])
 
     return best_checkpoint
+
+
+def get_class_weights(train_labels):
+    unique, counts = np.unique(train_labels, return_counts=True)
+
+    class_counts = dict(zip(unique, counts))
+
+    class_weights = dict()
+
+    for class_label in class_counts.keys():
+        class_weights[class_label] = train_labels.shape[0] / (len(class_counts.keys()) * class_counts[class_label])
+
+    return class_weights
 
 
 def train_cnn_model(model, X, y, epoch_num):
@@ -60,8 +76,10 @@ def train_cnn_model(model, X, y, epoch_num):
     history = model.fit(
         X,
         y,
+        batch_size=64,
         validation_split=0.2,
         epochs=epochs,
+        class_weight = get_class_weights(y),
         callbacks=[model_checkpoint_callback])
 
     best_checkpoint_filepath = find_best_checkpoint()

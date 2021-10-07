@@ -5,7 +5,7 @@ from sklearn.linear_model import LogisticRegression
 
 def create_lr_model():
 
-    return LogisticRegression(random_state=0, max_iter=2000, verbose=1, class_weight='balanced')
+    return LogisticRegression(random_state=0, max_iter=4000, verbose=1, class_weight='balanced')
 
 
 def train_lr_model(model, X, y):

@@ -15,6 +15,8 @@ def count_support(filepath):
           f'correct / incorrect: {round(correct_count / incorrect_count, 2)}',
           f'correct / all: {round(correct_count / len(df[3]), 2)}',
           f'incorrect / all: {round(incorrect_count / len(df[3]), 2)}',
+          f'incorrect (0) class weight: {len(df[3]) / (2 * incorrect_count)}',
+          f'correct (1) class weight: {len(df[3]) / (2 * correct_count)}',
           sep='\n')
 
 
