@@ -1,4 +1,5 @@
 import glob
+import os
 
 import numpy as np
 
@@ -32,14 +33,14 @@ def create_cnn_model(input_shape=(900, 1)):
     return model
 
 
-def find_best_checkpoint():
+def find_best_checkpoint(dir_name):
     curr_loss = 0
 
-    for file in glob.glob("models/*.hdf5"):
+    for filepath in glob.glob(f"{dir_name}/*.hdf5"):
 
-        if int(file.split('.')[-2]) > curr_loss:
-            best_checkpoint = file
-            curr_loss = int(file.split('.')[-2])
+        if int(filepath.split('.')[-2]) > curr_loss:
+            best_checkpoint = filepath
+            curr_loss = int(filepath.split('.')[-2])
 
     return best_checkpoint
 
@@ -57,12 +58,29 @@ def get_class_weights(train_labels):
     return class_weights
 
 
+def get_dir_num():
+    last_dir_num = 0
+
+    if len(glob.glob('models_*')):
+        return last_dir_num
+
+    else:
+        for filepath in glob.glob('models_*'):
+            if int(filepath.split('_')[-1]) > last_dir_num:
+                last_dir_num = int(filepath.split('_')[-1])
+
+        return last_dir_num + 1
+
+
 def train_cnn_model(model, X, y, epoch_num):
     epochs = epoch_num
 
     # callback = EarlyStopping(monitor='loss', patience=10)
+    dir_name = f'models_{get_dir_num()}'
 
-    checkpoint_filepath = 'models/checkpoint_epoch_{epoch:04d}_val_{val_auc:.4f}.hdf5'
+    os.mkdir(dir_name)
+
+    checkpoint_filepath = dir_name + '/checkpoint_epoch_{epoch:04d}_val_{val_auc:.4f}.hdf5'
 
     model_checkpoint_callback = ModelCheckpoint(
         filepath=checkpoint_filepath,
@@ -82,7 +100,9 @@ def train_cnn_model(model, X, y, epoch_num):
         class_weight = get_class_weights(y),
         callbacks=[model_checkpoint_callback])
 
-    best_checkpoint_filepath = find_best_checkpoint()
+    best_checkpoint_filepath = find_best_checkpoint(dir_name)
+
+    print(f'Current directory index: {dir_name}')
 
     # The model weights (that are considered the best) are loaded into the model.
     model.load_weights(best_checkpoint_filepath)
