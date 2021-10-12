@@ -155,7 +155,7 @@ def read_tsv(filepath, tokenizer, model, layers, lemmatizer):
                 write_line_to_file(complete_mwe_in_sent_output_file, '\t'.join(
                     [','.join(mwe_embedding), ','.join(first_word_only_embedding),
                      ','.join(second_word_only_embedding), ','.join(first_word_mwe_emb_diff),
-                     ','.join(second_word_mwe_emb_diff), is_correct]))
+                     ','.join(second_word_mwe_emb_diff), is_correct, mwe]))
 
             # only part of MWE appears in the sentence
             else:
@@ -171,7 +171,7 @@ def read_tsv(filepath, tokenizer, model, layers, lemmatizer):
 
                 write_line_to_file(incomplete_mwe_in_sent_output_file, '\t'.join(
                     [','.join(first_word_embedding), ','.join(mwe_embedding),
-                     ','.join(first_word_mwe_emb_diff), is_correct]))
+                     ','.join(first_word_mwe_emb_diff), is_correct, mwe]))
 
 
 def main(args):
