@@ -40,7 +40,7 @@ def find_best_checkpoint(dir_name):
         loss_value = float(filepath.split('_')[-1].split('.')[0] + '.' + filepath.split('.')[-2])
         if loss_value > curr_loss:
             best_checkpoint = filepath
-            curr_loss = int(filepath.split('.')[-2])
+            curr_loss = loss_value
     print(f'Best checkpoint: {best_checkpoint}')
     return best_checkpoint
 
