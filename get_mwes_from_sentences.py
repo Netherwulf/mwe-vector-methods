@@ -1,12 +1,6 @@
 import sys
 
-import morfeusz2
 import numpy as np
-
-
-# init Morfeusz2 lemmatizer
-def init_lemmatizer():
-    return morfeusz2.Morfeusz()  # initialize Morfeusz object
 
 
 def create_empty_file(filepath):
