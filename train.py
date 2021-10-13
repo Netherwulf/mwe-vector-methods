@@ -1,4 +1,5 @@
 import re
+import statistics
 import sys
 
 import numpy as np
@@ -32,7 +33,25 @@ def load_data(dataset_file):
     return X_train, X_test, y_train, y_test
 
 
-def load_transformer_embeddings_data(dataset_file):
+def get_mwe(mwe_file, idx_list):
+    with open(mwe_file, 'r', errors='replace') as in_file:
+        content = in_file.readlines()
+
+        mwe_list = np.array([line.strip().split('\t')[0] for ind, line in enumerate(content) if ind in idx_list])
+
+        mwe_dict = {}
+
+        for mwe_ind, mwe in enumerate(mwe_list):
+            if mwe not in mwe_dict.keys():
+                mwe_dict[mwe] = np.array([mwe_ind])
+
+            else:
+                mwe_dict[mwe] = np.append(mwe_dict[mwe], mwe_ind)
+
+        return mwe_list, mwe_dict
+
+
+def load_transformer_embeddings_data(dataset_file, mwe_file):
     print(f'Reading file: {dataset_file.split("/")[-1]}')
     df = pd.read_csv(dataset_file, sep='\t', header=None)
 
@@ -41,21 +60,27 @@ def load_transformer_embeddings_data(dataset_file):
 
     embeddings_list = [elem.split(',') for elem in df[4].tolist()]
 
-    embeddings_list = [([float(re.findall(r"[-+]?\d*\.\d+|\d+", val)[0]) for val in sentence], label) for sentence, label in zip(embeddings_list, df[3].tolist()) if 'tensor(nan)' not in sentence]
+    correct_idx_list = np.array([ind for ind, sentence in enumerate(embeddings_list) if 'tensor(nan)' not in sentence])
+
+    embeddings_list = [([float(re.findall(r"[-+]?\d*\.\d+|\d+", val)[0]) for val in sentence], label) for
+                       sentence, label in zip(embeddings_list, df[3].tolist()) if 'tensor(nan)' not in sentence]
+
+    mwe_list, mwe_dict = get_mwe(mwe_file, correct_idx_list)
 
     X = np.array([elem[0] for elem in embeddings_list])
 
     y = np.array([elem[1] for elem in embeddings_list])
     y = y.astype(int)
 
-    # save dataset and labels to numpy files
+    indices = np.arange(X.shape[0])
 
-    X_train, X_test, y_train, y_test = train_test_split(X,
-                                                        y,
-                                                        test_size=0.20,
-                                                        random_state=42)
+    X_train, X_test, y_train, y_test, indices_train, indices_test = train_test_split(X,
+                                                                                     y,
+                                                                                     indices,
+                                                                                     test_size=0.20,
+                                                                                     random_state=42)
 
-    return X_train, X_test, y_train, y_test
+    return X_train, X_test, y_train, y_test, indices_train, indices_test, mwe_list, mwe_dict
 
 
 def get_evaluation_report(y_true, y_pred):
@@ -64,11 +89,26 @@ def get_evaluation_report(y_true, y_pred):
     print(classification_report(y_true, y_pred, target_names=target_names))
 
 
+def get_majority_voting(y_pred, mwe_dict, indices_test):
+    y_majority_pred = np.array([0 for _ in y_pred])
+
+    for pred_ind, prediction in enumerate(y_pred):
+        for ind_set in mwe_dict.values():
+            if pred_ind in ind_set:
+                predictions = [y_pred[label_ind] for label_ind in ind_set if label_ind in indices_test]
+                y_majority_pred[pred_ind] = statistics.mode(predictions)
+                break
+
+    return y_majority_pred
+
+
 def main(args):
     if 'transformer_embeddings' in args:
         dataset_filepath = 'sentences_containing_mwe_from_kgr10_group_0_embeddings_1_layers_incomplete_mwe_in_sent.tsv'
+        mwe_filepath = 'sentences_containing_mwe_from_kgr10_group_0_mwe_list_incomplete_mwe_in_sent.tsv'
 
-        X_train, X_test, y_train, y_test = load_transformer_embeddings_data(dataset_filepath)
+        X_train, X_test, y_train, y_test, indices_train, indices_test, mwe_list, mwe_dict = load_transformer_embeddings_data(
+            dataset_filepath, mwe_filepath)
 
     else:
         dataset_filepath = 'mwe_dataset.npy'
@@ -113,18 +153,21 @@ def main(args):
             eval_only = False
             model_path = None
 
-        y_pred = get_cnn_model_pred(X_train, y_train, X_test,
-                                    eval_only=eval_only,
-                                    model_path=model_path,
-                                    input_shape=(X_train.shape[1], 1))
+        y_pred_probs = get_cnn_model_pred(X_train, y_train, X_test,
+                                          eval_only=eval_only,
+                                          model_path=model_path,
+                                          input_shape=(X_train.shape[1], 1))
 
-        y_pred = [np.argmax(probs) for probs in y_pred]
+        y_pred = [np.argmax(probs) for probs in y_pred_probs]
 
     elif 'lr' in args:
         y_pred = get_lr_model_pred(X_train, y_train, X_test)
 
     elif 'rf' in args:
         y_pred = get_rf_model_pred(X_train, y_train, X_test)
+
+    if 'majority_voting' in args:
+        y_pred = get_majority_voting(y_pred, mwe_dict, indices_test)
 
     get_evaluation_report(y_test, y_pred)
 
