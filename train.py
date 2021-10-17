@@ -12,6 +12,7 @@ from random_forest import get_rf_model_pred
 from imblearn.over_sampling import SMOTE, BorderlineSMOTE, SVMSMOTE, ADASYN
 from imblearn.under_sampling import RandomUnderSampler
 from imblearn.pipeline import Pipeline
+from scipy import stats as s
 from sklearn.metrics import classification_report
 from sklearn.model_selection import train_test_split
 from tensorflow import one_hot
@@ -93,10 +94,18 @@ def get_majority_voting(y_pred, mwe_dict, indices_test):
     y_majority_pred = np.array([0 for _ in y_pred])
 
     for pred_ind, prediction in enumerate(y_pred):
+        mwe_ind = indices_test[pred_ind]
         for ind_set in mwe_dict.values():
-            if pred_ind in ind_set:
-                predictions = [y_pred[label_ind] for label_ind in ind_set if label_ind in indices_test]
-                y_majority_pred[pred_ind] = statistics.mode(predictions)
+            if mwe_ind in ind_set:
+                #print(f'y_pred idx: {pred_ind}',
+                      #f'y_pred value: {prediction}',
+                      #f'mwe_ind: {mwe_ind}',
+                      #f'ind_set containing mwe_ind: {ind_set}',
+                      #sep = '\n')
+
+                predictions = [y_pred[indices_test.tolist().index(label_ind)] for label_ind in ind_set if label_ind in indices_test]
+                #y_majority_pred[pred_ind] = statistics.mode(predictions)
+                y_majority_pred[pred_ind] = int(s.mode(predictions)[0])
                 break
 
     return y_majority_pred
