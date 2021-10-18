@@ -29,6 +29,11 @@ def get_lr_model_predictions(model, X_test):
     return model.predict(X_test)
 
 
+def get_lr_model_predictions_probs(model, X_test):
+
+    return model.predict_proba(X_test)
+
+
 def get_lr_model_pred(X_train, y_train, X_test):
     lr_model = create_lr_model()
 
@@ -38,4 +43,6 @@ def get_lr_model_pred(X_train, y_train, X_test):
 
     y_pred = get_lr_model_predictions(lr_model, X_test)
 
-    return y_pred
+    y_probs = get_lr_model_predictions_probs(lr_model, X_test)
+
+    return y_pred, y_probs

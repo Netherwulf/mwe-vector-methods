@@ -97,15 +97,40 @@ def get_majority_voting(y_pred, mwe_dict, indices_test):
         mwe_ind = indices_test[pred_ind]
         for ind_set in mwe_dict.values():
             if mwe_ind in ind_set:
-                #print(f'y_pred idx: {pred_ind}',
-                      #f'y_pred value: {prediction}',
-                      #f'mwe_ind: {mwe_ind}',
-                      #f'ind_set containing mwe_ind: {ind_set}',
-                      #sep = '\n')
+                # print(f'y_pred idx: {pred_ind}',
+                # f'y_pred value: {prediction}',
+                # f'mwe_ind: {mwe_ind}',
+                # f'ind_set containing mwe_ind: {ind_set}',
+                # sep = '\n')
 
-                predictions = [y_pred[indices_test.tolist().index(label_ind)] for label_ind in ind_set if label_ind in indices_test]
-                #y_majority_pred[pred_ind] = statistics.mode(predictions)
+                predictions = [y_pred[indices_test.tolist().index(label_ind)] for label_ind in ind_set if
+                               label_ind in indices_test]
+                # y_majority_pred[pred_ind] = statistics.mode(predictions)
                 y_majority_pred[pred_ind] = int(s.mode(predictions)[0])
+                break
+
+    return y_majority_pred
+
+
+def get_weighted_voting(y_pred, y_pred_max_probs, mwe_dict, indices_test):
+    y_majority_pred = np.array([0 for _ in y_pred])
+
+    for pred_ind, prediction in enumerate(y_pred):
+        mwe_ind = indices_test[pred_ind]
+        for ind_set in mwe_dict.values():
+            if mwe_ind in ind_set:
+                predictions_with_probs = [(y_pred[indices_test.tolist().index(label_ind)],
+                                           y_pred_max_probs[indices_test.tolist().index(label_ind)]) for label_ind in
+                                          ind_set if
+                                          label_ind in indices_test]
+
+                weights_per_class = []
+
+                for class_id in range(2):
+                    weights_per_class[class_id] = sum([elem[1] for elem in predictions_with_probs if elem[0] == class_id])
+
+                y_majority_pred[pred_ind] = int(np.argmax(weights_per_class))
+
                 break
 
     return y_majority_pred
@@ -167,16 +192,25 @@ def main(args):
                                           model_path=model_path,
                                           input_shape=(X_train.shape[1], 1))
 
+        y_pred_max_probs = [max(probs) for probs in y_pred_probs]
+
         y_pred = [np.argmax(probs) for probs in y_pred_probs]
 
     elif 'lr' in args:
-        y_pred = get_lr_model_pred(X_train, y_train, X_test)
+        y_pred, y_pred_probs = get_lr_model_pred(X_train, y_train, X_test)
+
+        y_pred_max_probs = [max(probs) for probs in y_pred_probs]
 
     elif 'rf' in args:
-        y_pred = get_rf_model_pred(X_train, y_train, X_test)
+        y_pred, y_pred_probs = get_rf_model_pred(X_train, y_train, X_test)
+
+        y_pred_max_probs = [max(probs) for probs in y_pred_probs]
 
     if 'majority_voting' in args:
         y_pred = get_majority_voting(y_pred, mwe_dict, indices_test)
+
+    if 'weighted_voting':
+        y_pred = get_weighted_voting(y_pred, y_pred_max_probs, mwe_dict, indices_test)
 
     get_evaluation_report(y_test, y_pred)
 

@@ -30,6 +30,11 @@ def get_rf_model_predictions(model, X_test):
     return model.predict(X_test)
 
 
+def get_rf_model_predictions_probs(model, X_test):
+
+    return model.predict_proba(X_test)
+
+
 def get_rf_model_pred(X_train, y_train, X_test):
     rf_model = create_rf_model()
 
@@ -39,4 +44,6 @@ def get_rf_model_pred(X_train, y_train, X_test):
 
     y_pred = get_rf_model_predictions(rf_model, X_test)
 
-    return y_pred
+    y_probs = get_rf_model_predictions_probs(rf_model, X_test)
+
+    return y_pred, y_probs
