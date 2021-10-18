@@ -121,12 +121,11 @@ def get_weighted_voting(y_pred, y_pred_max_probs, mwe_dict, indices_test):
             if mwe_ind in ind_set:
                 predictions_with_probs = [(y_pred[indices_test.tolist().index(label_ind)],
                                            y_pred_max_probs[indices_test.tolist().index(label_ind)]) for label_ind in
-                                          ind_set if
-                                          label_ind in indices_test]
+                                          ind_set if label_ind in indices_test]
 
-                weights_per_class = []
+                weights_per_class = [0.0 for _ in range(2)]
 
-                for class_id in range(2):
+                for class_id in range(len(weights_per_class)):
                     weights_per_class[class_id] = sum([elem[1] for elem in predictions_with_probs if elem[0] == class_id])
 
                 y_majority_pred[pred_ind] = int(np.argmax(weights_per_class))
