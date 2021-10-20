@@ -135,6 +135,26 @@ def get_weighted_voting(y_pred, y_pred_max_probs, mwe_dict, indices_test):
     return y_majority_pred
 
 
+def get_treshold_voting(y_pred, y_pred_max_probs, mwe_dict, indices_test, class_tresholds):
+    y_majority_pred = np.array([0 for _ in y_pred])
+
+    for pred_ind, prediction in enumerate(y_pred):
+        mwe_ind = indices_test[pred_ind]
+        for ind_set in mwe_dict.values():
+            if mwe_ind in ind_set:
+                predictions_with_probs = [(y_pred[indices_test.tolist().index(label_ind)],
+                                           y_pred_max_probs[indices_test.tolist().index(label_ind)]) for label_ind in
+                                          ind_set if label_ind in indices_test]
+
+                predictions = [elem[0] for elem in predictions_with_probs if elem[1] > class_tresholds[elem[0]]]
+
+                y_majority_pred[pred_ind] = int(s.mode(predictions)[0])
+
+                break
+
+    return y_majority_pred
+
+
 def main(args):
     if 'transformer_embeddings' in args:
         dataset_filepath = 'sentences_containing_mwe_from_kgr10_group_0_embeddings_1_layers_incomplete_mwe_in_sent.tsv'
@@ -208,10 +228,24 @@ def main(args):
     if 'majority_voting' in args:
         y_pred = get_majority_voting(y_pred, mwe_dict, indices_test)
 
-    if 'weighted_voting':
+    if 'weighted_voting' in args:
         y_pred = get_weighted_voting(y_pred, y_pred_max_probs, mwe_dict, indices_test)
 
-    get_evaluation_report(y_test, y_pred)
+    if 'treshold_voting' in args:
+        for first_class_treshold in [0.05 * n for n in range(0, 20)]:
+            for second_class_treshold in [0.05 * n for n in range(0, 20)]:
+                print(f'Evaluation results for tresholds:',
+                      f'incorrect MWE treshold: {first_class_treshold}',
+                      f'correct MWE treshold: {second_class_treshold}',
+                      sep='\n')
+
+                class_tresholds = [first_class_treshold, second_class_treshold]
+
+                y_pred = get_treshold_voting(y_pred, y_pred_max_probs, mwe_dict, indices_test, class_tresholds)
+
+                get_evaluation_report(y_test, y_pred)
+    else:
+        get_evaluation_report(y_test, y_pred)
 
 
 if __name__ == '__main__':
