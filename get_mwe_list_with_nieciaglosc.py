@@ -16,13 +16,18 @@ def get_mwe_list(filepath):
         return mwe_list
 
 
-def save_mwe_to_file:
-
+def save_mwe_to_file(mwe_list, output_filepath):
+    with open(output_filepath, 'w') as out_file:
+        for mwe in mwe_list:
+            out_file.write(f'{mwe}\n')
 
 
 def main(args):
     for filepath in args:
         mwe_list = get_mwe_list(filepath)
+        output_filepath = filepath.split('.') + 'found_mwe.csv'
+
+        save_mwe_to_file(mwe_list, output_filepath)
 
 
 if __name__ == '__main__':
