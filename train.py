@@ -148,7 +148,12 @@ def get_treshold_voting(y_pred, y_pred_max_probs, mwe_dict, indices_test, class_
 
                 predictions = [elem[0] for elem in predictions_with_probs if elem[1] > class_tresholds[elem[0]]]
 
-                y_majority_pred[pred_ind] = int(s.mode(predictions)[0])
+                # return class 0 if there aren't any predictions above treshold
+                if len(predictions) == 0:
+                    y_majority_pred[pred_ind] = 0
+
+                else:
+                    y_majority_pred[pred_ind] = int(s.mode(predictions)[0])
 
                 break
 
@@ -232,8 +237,8 @@ def main(args):
         y_pred = get_weighted_voting(y_pred, y_pred_max_probs, mwe_dict, indices_test)
 
     if 'treshold_voting' in args:
-        for first_class_treshold in [0.05 * n for n in range(0, 20)]:
-            for second_class_treshold in [0.05 * n for n in range(0, 20)]:
+        for first_class_treshold in [0.1 * n for n in range(9, 0, -1)]:
+            for second_class_treshold in [0.1 * n for n in range(9, 0, -1)]:
                 print(f'Evaluation results for tresholds:',
                       f'incorrect MWE treshold: {first_class_treshold}',
                       f'correct MWE treshold: {second_class_treshold}',
