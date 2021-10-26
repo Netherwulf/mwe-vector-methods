@@ -126,7 +126,8 @@ def get_weighted_voting(y_pred, y_pred_max_probs, mwe_dict, indices_test):
                 weights_per_class = [0.0 for _ in range(2)]
 
                 for class_id in range(len(weights_per_class)):
-                    weights_per_class[class_id] = sum([elem[1] for elem in predictions_with_probs if elem[0] == class_id])
+                    weights_per_class[class_id] = sum(
+                        [elem[1] for elem in predictions_with_probs if elem[0] == class_id])
 
                 y_majority_pred[pred_ind] = int(np.argmax(weights_per_class))
 
