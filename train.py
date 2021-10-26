@@ -237,8 +237,8 @@ def main(args):
         y_pred = get_weighted_voting(y_pred, y_pred_max_probs, mwe_dict, indices_test)
 
     if 'treshold_voting' in args:
-        for first_class_treshold in [0.1 * n for n in range(9, 0, -1)]:
-            for second_class_treshold in [0.1 * n for n in range(9, 0, -1)]:
+        for first_class_treshold in [0.1 * n for n in range(4, 10, 1)]:
+            for second_class_treshold in [0.1 * n for n in range(4, 10, 1)]:
                 print(f'Evaluation results for tresholds:',
                       f'incorrect MWE treshold: {first_class_treshold}',
                       f'correct MWE treshold: {second_class_treshold}',
