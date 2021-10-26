@@ -40,6 +40,8 @@ def get_mwe(mwe_file, idx_list):
 
         mwe_list = np.array([line.strip().split('\t')[0] for ind, line in enumerate(content) if ind in idx_list])
 
+        mwe_metadata = np.array([line.strip().split('\t') for ind, line in enumerate(content) if ind in idx_list])
+
         mwe_dict = {}
 
         for mwe_ind, mwe in enumerate(mwe_list):
@@ -49,7 +51,7 @@ def get_mwe(mwe_file, idx_list):
             else:
                 mwe_dict[mwe] = np.append(mwe_dict[mwe], mwe_ind)
 
-        return mwe_list, mwe_dict
+        return mwe_list, mwe_dict, mwe_metadata
 
 
 def load_transformer_embeddings_data(dataset_file, mwe_file):
@@ -66,7 +68,7 @@ def load_transformer_embeddings_data(dataset_file, mwe_file):
     embeddings_list = [([float(re.findall(r"[-+]?\d*\.\d+|\d+", val)[0]) for val in sentence], label) for
                        sentence, label in zip(embeddings_list, df[3].tolist()) if 'tensor(nan)' not in sentence]
 
-    mwe_list, mwe_dict = get_mwe(mwe_file, correct_idx_list)
+    mwe_list, mwe_dict, mwe_metadata = get_mwe(mwe_file, correct_idx_list)
 
     X = np.array([elem[0] for elem in embeddings_list])
 
@@ -81,16 +83,50 @@ def load_transformer_embeddings_data(dataset_file, mwe_file):
                                                                                      test_size=0.20,
                                                                                      random_state=42)
 
-    return X_train, X_test, y_train, y_test, indices_train, indices_test, mwe_list, mwe_dict
+    return X_train, X_test, y_train, y_test, indices_train, indices_test, mwe_list, mwe_dict, mwe_metadata
 
 
-def get_evaluation_report(y_true, y_pred):
+def create_empty_file(filepath):
+    with open(filepath, 'w') as f:
+        column_names_line = '\t'.join(['mwe', 'first_word_index', 'first_word_orth', 'first_word_lemma', 'sentence',
+                                       'is_correct', 'model_prediction'])
+        f.write(f"{column_names_line}\n")
+        pass
+
+
+def write_line_to_file(filepath, line):
+    with open(filepath, 'a') as f:
+        f.write(f'{line}\n')
+
+
+def write_prediction_result_to_file(filepath, mwe_ind, mwe_metadata, prediction):
+    sample_metadata = mwe_metadata[mwe_ind]
+
+    mwe = sample_metadata[0]
+    is_correct = sample_metadata[1]
+    first_word_idx = sample_metadata[2]
+    first_word_orth = sample_metadata[3]
+    first_word_lemma = sample_metadata[4]
+    sentence = sample_metadata[5]
+
+    sample_description = '\t'.join([mwe, first_word_idx, first_word_orth, first_word_lemma, sentence, is_correct,
+                                    prediction])
+
+    write_line_to_file(filepath, sample_description)
+
+
+def get_evaluation_report(y_true, y_pred, indices_test, mwe_metadata, filepath):
     target_names = ['Incorrect MWE', 'Correct MWE']
+
+    for pred_ind, prediction in enumerate(y_pred):
+        mwe_ind = indices_test[pred_ind]
+
+        write_prediction_result_to_file(filepath, mwe_ind, mwe_metadata, prediction)
 
     print(classification_report(y_true, y_pred, target_names=target_names))
 
 
-def get_majority_voting(y_pred, mwe_dict, indices_test):
+def get_majority_voting(y_pred, mwe_dict, indices_test, mwe_metadata, filepath):
     y_majority_pred = np.array([0 for _ in y_pred])
 
     for pred_ind, prediction in enumerate(y_pred):
@@ -106,13 +142,19 @@ def get_majority_voting(y_pred, mwe_dict, indices_test):
                 predictions = [y_pred[indices_test.tolist().index(label_ind)] for label_ind in ind_set if
                                label_ind in indices_test]
                 # y_majority_pred[pred_ind] = statistics.mode(predictions)
-                y_majority_pred[pred_ind] = int(s.mode(predictions)[0])
+
+                final_prediction = int(s.mode(predictions)[0])
+
+                y_majority_pred[pred_ind] = final_prediction
+
+                write_prediction_result_to_file(filepath, mwe_ind, mwe_metadata, final_prediction)
+
                 break
 
     return y_majority_pred
 
 
-def get_weighted_voting(y_pred, y_pred_max_probs, mwe_dict, indices_test):
+def get_weighted_voting(y_pred, y_pred_max_probs, mwe_dict, indices_test, mwe_metadata, filepath):
     y_majority_pred = np.array([0 for _ in y_pred])
 
     for pred_ind, prediction in enumerate(y_pred):
@@ -129,14 +171,18 @@ def get_weighted_voting(y_pred, y_pred_max_probs, mwe_dict, indices_test):
                     weights_per_class[class_id] = sum(
                         [elem[1] for elem in predictions_with_probs if elem[0] == class_id])
 
-                y_majority_pred[pred_ind] = int(np.argmax(weights_per_class))
+                final_prediction = int(np.argmax(weights_per_class))
+
+                y_majority_pred[pred_ind] = final_prediction
+
+                write_prediction_result_to_file(filepath, mwe_ind, mwe_metadata, final_prediction)
 
                 break
 
     return y_majority_pred
 
 
-def get_treshold_voting(y_pred, y_pred_max_probs, mwe_dict, indices_test, class_tresholds):
+def get_treshold_voting(y_pred, y_pred_max_probs, mwe_dict, indices_test, class_tresholds, mwe_metadata, filepath):
     y_majority_pred = np.array([0 for _ in y_pred])
 
     for pred_ind, prediction in enumerate(y_pred):
@@ -151,10 +197,14 @@ def get_treshold_voting(y_pred, y_pred_max_probs, mwe_dict, indices_test, class_
 
                 # return class 0 if there aren't any predictions above treshold
                 if len(predictions) == 0:
-                    y_majority_pred[pred_ind] = 0
+                    final_prediction = 0
 
                 else:
-                    y_majority_pred[pred_ind] = int(s.mode(predictions)[0])
+                    final_prediction = int(s.mode(predictions)[0])
+
+                y_majority_pred[pred_ind] = final_prediction
+
+                write_prediction_result_to_file(filepath, mwe_ind, mwe_metadata, final_prediction)
 
                 break
 
@@ -166,7 +216,7 @@ def main(args):
         dataset_filepath = 'sentences_containing_mwe_from_kgr10_group_0_embeddings_1_layers_incomplete_mwe_in_sent.tsv'
         mwe_filepath = 'sentences_containing_mwe_from_kgr10_group_0_mwe_list_incomplete_mwe_in_sent.tsv'
 
-        X_train, X_test, y_train, y_test, indices_train, indices_test, mwe_list, mwe_dict = load_transformer_embeddings_data(
+        X_train, X_test, y_train, y_test, indices_train, indices_test, mwe_list, mwe_dict, mwe_metadata = load_transformer_embeddings_data(
             dataset_filepath, mwe_filepath)
 
     else:
@@ -175,6 +225,10 @@ def main(args):
         # dataset_filepath = 'mwe_dataset_domain_balanced.npy'  # domain-balanced dataset
 
         X_train, X_test, y_train, y_test = load_data(dataset_filepath)
+
+    results_filepath = 'results_' + '_'.join(args) + '.tsv'
+
+    create_empty_file(results_filepath)
 
     if 'smote' in args:
         oversample = SMOTE()
