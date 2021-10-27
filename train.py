@@ -286,10 +286,10 @@ def main(args):
         y_pred_max_probs = [max(probs) for probs in y_pred_probs]
 
     if 'majority_voting' in args:
-        y_pred = get_majority_voting(y_pred, mwe_dict, indices_test)
+        y_pred = get_majority_voting(y_pred, mwe_dict, indices_test, mwe_metadata, results_filepath)
 
     if 'weighted_voting' in args:
-        y_pred = get_weighted_voting(y_pred, y_pred_max_probs, mwe_dict, indices_test)
+        y_pred = get_weighted_voting(y_pred, y_pred_max_probs, mwe_dict, indices_test, mwe_metadata, results_filepath)
 
     if 'treshold_voting' in args:
         for first_class_treshold in [0.1 * n for n in range(4, 10, 1)]:
@@ -301,11 +301,11 @@ def main(args):
 
                 class_tresholds = [first_class_treshold, second_class_treshold]
 
-                y_pred = get_treshold_voting(y_pred, y_pred_max_probs, mwe_dict, indices_test, class_tresholds)
+                y_pred = get_treshold_voting(y_pred, y_pred_max_probs, mwe_dict, indices_test, class_tresholds, mwe_metadata, results_filepath)
 
-                get_evaluation_report(y_test, y_pred)
+                get_evaluation_report(y_test, y_pred, indices_test, mwe_metadata, results_filepath)
     else:
-        get_evaluation_report(y_test, y_pred)
+        get_evaluation_report(y_test, y_pred, indices_test, mwe_metadata, results_filepath)
 
 
 if __name__ == '__main__':
