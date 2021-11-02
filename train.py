@@ -109,8 +109,10 @@ def write_prediction_result_to_file(filepath, mwe_ind, mwe_metadata, prediction)
     first_word_lemma = sample_metadata[4]
     sentence = sample_metadata[5]
 
-    sample_description = '\t'.join([mwe, first_word_idx, first_word_orth, first_word_lemma, sentence, is_correct,
-                                    prediction])
+    sample_description = '\t'.join([str(mwe), str(first_word_idx),
+                                    str(first_word_orth), str(first_word_lemma),
+                                    str(sentence), str(is_correct),
+                                    str(prediction)])
 
     write_line_to_file(filepath, sample_description)
 
