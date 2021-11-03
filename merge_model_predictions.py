@@ -1,6 +1,12 @@
 import sys
 
+import morfeusz2
 import pandas as pd
+
+
+# init Morfeusz2 lemmatizer
+def init_lemmatizer():
+    return morfeusz2.Morfeusz()  # initialize Morfeusz object
 
 
 def merge_prediction_results(filepath_list):
