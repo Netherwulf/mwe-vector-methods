@@ -10,7 +10,7 @@ def merge_prediction_results(filepath_list):
 
             df = df.rename(columns={df.columns[-1]: 'majority_cnn'})
 
-            df = df.iloc[:, [0, 3, 4, 5, 6]]
+            df = df.iloc[:, [0, 2, 4, 5, 6]]
 
         else:
             df_temp = pd.read_csv(filepath, sep='\t')
@@ -20,11 +20,16 @@ def merge_prediction_results(filepath_list):
             df[model_name] = df_temp['model_prediction']
 
     final_df = df[
-        (df['first_word_orth'] != 'po') & (df['first_word_lemma'] != 'po') & (
-                    df['first_word_lemma'].astype(str).str.len() > 2) & (
+        (df['first_word_orth'] != 'po') & (
                 df['first_word_orth'].astype(str).str.len() > 2) & (
-            ~df['first_word_orth'].astype(str).str.contains('http')) & (
-            ~df['first_word_lemma'].astype(str).str.contains('http'))]
+            ~df['first_word_orth'].astype(str).str.contains('http'))]
+
+    # final_df = df[
+    #     (df['first_word_orth'] != 'po') & (df['first_word_lemma'] != 'po') & (
+    #                 df['first_word_lemma'].astype(str).str.len() > 2) & (
+    #             df['first_word_orth'].astype(str).str.len() > 2) & (
+    #         ~df['first_word_orth'].astype(str).str.contains('http')) & (
+    #         ~df['first_word_lemma'].astype(str).str.contains('http'))]
 
     return final_df
 
