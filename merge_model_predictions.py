@@ -20,7 +20,7 @@ def merge_prediction_results(filepath_list):
             df[model_name] = df_temp['model_prediction']
 
     final_df = df[
-        (df['first_word_orth'] != 'po') & (
+        (df['mwe'].astype(str).str.contains('po')) & (df['first_word_orth'] != 'po') & (
                 df['first_word_orth'].astype(str).str.len() > 2) & (
             ~df['first_word_orth'].astype(str).str.contains('http'))]
 
