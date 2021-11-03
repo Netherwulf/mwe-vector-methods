@@ -10,6 +10,8 @@ def merge_prediction_results(filepath_list):
 
             df = df.rename(columns={df.columns[-1]: 'majority_cnn'})
 
+            df = df.iloc[:, [0, 3, 4, 5, 6]]
+
         else:
             df_temp = pd.read_csv(filepath, sep='\t')
 
