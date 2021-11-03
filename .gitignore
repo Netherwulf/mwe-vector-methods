@@ -2,7 +2,7 @@
 # temp directories
 .idea/
 .vscode/
-.DS_Store/
+.DS_Store
 
 # downloaded models
 kgr10.plain.skipgram.dim300.neg10.bin
