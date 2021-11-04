@@ -2,12 +2,12 @@ import sys
 
 from cnn import create_cnn_model
 
-from tensorflow import keras.models
+from tensorflow.keras import models
 from tensorflow.keras.utils import plot_model
 
 
 def load_model(filepath):
-    return keras.models.load_model(filepath)
+    return models.load_model(filepath)
 
 
 def visualize_model(filepath=None):
@@ -17,9 +17,8 @@ def visualize_model(filepath=None):
     else:
         model = load_model(filepath)
 
-    plot_model(model, to_file='model_visualization.png', show_shapes=True, show_dtype=False,
-        show_layer_names=True, rankdir='LR', expand_nested=False, dpi=300,
-        layer_range=None)
+    plot_model(model, to_file='model_visualization.png', show_shapes=True,
+        show_layer_names=True, rankdir='LR', expand_nested=False, dpi=300)
 
 def main(args):
     if len(args) == 0:
