@@ -17,8 +17,8 @@ def visualize_model(filepath=None):
     else:
         model = load_model(filepath)
 
-    plot_model(model, to_file='model_visualization.png', show_shapes=True,
-        show_layer_names=True, rankdir='LR', expand_nested=False, dpi=300)
+    plot_model(model, to_file='model_visualization.png', show_shapes=False,
+        show_layer_names=False, rankdir='TB', expand_nested=False, dpi=300)
 
 def main(args):
     if len(args) == 0:
