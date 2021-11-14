@@ -215,6 +215,8 @@ def get_treshold_voting(y_pred, y_pred_max_probs, mwe_dict, indices_test, class_
 
 
 def main(args):
+    write_results = False
+
     if 'transformer_embeddings' in args:
         dataset_filepath = 'sentences_containing_mwe_from_kgr10_group_0_embeddings_1_layers_incomplete_mwe_in_sent.tsv'
         mwe_filepath = 'sentences_containing_mwe_from_kgr10_group_0_mwe_list_incomplete_mwe_in_sent.tsv'
@@ -311,13 +313,9 @@ def main(args):
 
                     y_pred = get_treshold_voting(y_pred, y_pred_max_probs, mwe_dict, indices_test, class_tresholds, mwe_metadata, results_filepath)
 
-
-                    write_results = 'transformer_embeddings' in args
                     get_evaluation_report(y_test, y_pred, write_results, indices_test, mwe_metadata, results_filepath)
         else:
             print(f'EVALUATION RESULTS FOR PERCENTAGE: {percentage}% OF TRAIN DATASET')
-
-            write_results = 'transformer_embeddings' in args
 
             get_evaluation_report(y_test, y_pred, write_results, indices_test, mwe_metadata, results_filepath)
 
