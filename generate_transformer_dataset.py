@@ -1,22 +1,13 @@
+import csv
 import os
+import pickle as pkl
 import re
-import statistics
 import sys
 
 import numpy as np
 import pandas as pd
 
-from cnn import get_cnn_model_pred
-from logistic_regression import get_lr_model_pred
-from random_forest import get_rf_model_pred
-
-from imblearn.over_sampling import SMOTE, BorderlineSMOTE, SVMSMOTE, ADASYN
-from imblearn.under_sampling import RandomUnderSampler
-from imblearn.pipeline import Pipeline
-from scipy import stats as s
-from sklearn.metrics import classification_report
 from sklearn.model_selection import train_test_split
-from tensorflow import one_hot
 
 
 def load_data(dataset_file):
@@ -100,6 +91,29 @@ def write_line_to_file(filepath, line):
         f.write(f'{line}\n')
 
 
+def save_list_of_lists(filepath, list_of_lists):
+    with open(filepath, "w") as f:
+        wr = csv.writer(f)
+        wr.writerows(list_of_lists)
+
+
+def save_list(filepath, list_to_save):
+    list_string = ','.join([str(elem) for elem in list_to_save])
+
+    with open(filepath, "w") as f:
+        f.write(f'{list_string}\n')
+
+
+def save_dict(filepath, dict_to_save):
+    with open(filepath, 'wb') as f:
+        pkl.dump(dict_to_save, f)
+
+
+def load_dict(filepath):
+    with open(filepath, 'rb') as f:
+        loaded_dict = pkl.load(f)
+    return loaded_dict
+
 
 def main(args):
     dataset_filepath = 'sentences_containing_mwe_from_kgr10_group_0_embeddings_1_layers_incomplete_mwe_in_sent.tsv'
@@ -112,7 +126,21 @@ def main(args):
 
     os.mkdir(result_dir_name)
 
+    save_list_of_lists(os.path.join(result_dir_name, "X_train.csv"), X_train)
+    save_list(os.path.join(result_dir_name, "y_train.csv"), y_train)
 
+    save_list_of_lists(os.path.join(result_dir_name, "X_test.csv"), X_test)
+    save_list(os.path.join(result_dir_name, "y_test.csv"), y_test)
+
+    save_list(os.path.join(result_dir_name, "indices_train.csv"), indices_train)
+    save_list(os.path.join(result_dir_name, "indices_test.csv"), indices_test)
+
+    save_dict(os.path.join(result_dir_name, 'mwe_dict.pkl'), mwe_dict)
+
+    save_list(os.path.join(result_dir_name, 'mwe_list.csv'), mwe_list)
+
+
+    save_list_of_lists('mwe_metadata.csv', mwe_metadata)
 
 
 if __name__ == '__main__':
