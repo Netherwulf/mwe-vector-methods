@@ -316,7 +316,10 @@ def main(args):
                     # get_evaluation_report(y_test, y_pred, write_results, indices_test, mwe_metadata, results_filepath)
                     get_evaluation_report(y_test, y_pred, write_results)
         else:
-            print(f'EVALUATION RESULTS FOR PERCENTAGE: {percentage}% OF TRAIN DATASET')
+            print(f'EVALUATION RESULTS FOR PERCENTAGE: {percentage}% OF TRAIN DATASET',
+                  f'current_X_train length: {len(current_X_train)}',
+                  f'current_y_train length: {len(current_y_train)}',
+                  sep='\n')
 
             # get_evaluation_report(y_test, y_pred, write_results, indices_test, mwe_metadata, results_filepath)
             get_evaluation_report(y_test, y_pred, write_results)
