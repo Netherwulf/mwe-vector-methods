@@ -117,7 +117,7 @@ def write_prediction_result_to_file(filepath, mwe_ind, mwe_metadata, prediction)
     write_line_to_file(filepath, sample_description)
 
 
-def get_evaluation_report(y_true, y_pred, write_results, indices_test, mwe_metadata, filepath):
+def get_evaluation_report(y_true, y_pred, write_results, indices_test=None, mwe_metadata=None, filepath=None):
     target_names = ['Incorrect MWE', 'Correct MWE']
 
     if write_results:
