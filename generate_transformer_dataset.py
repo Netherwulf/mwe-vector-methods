@@ -126,20 +126,25 @@ def main(args):
 
     os.mkdir(result_dir_name)
 
+    print('Saving train data...')
     save_list_of_lists(os.path.join(result_dir_name, "X_train.csv"), X_train)
     save_list(os.path.join(result_dir_name, "y_train.csv"), y_train)
 
+    print('Saving test data...')
     save_list_of_lists(os.path.join(result_dir_name, "X_test.csv"), X_test)
     save_list(os.path.join(result_dir_name, "y_test.csv"), y_test)
 
+    print('Saving indices files...')
     save_list(os.path.join(result_dir_name, "indices_train.csv"), indices_train)
     save_list(os.path.join(result_dir_name, "indices_test.csv"), indices_test)
 
+    print('Saving mwe dict...')
     save_dict(os.path.join(result_dir_name, 'mwe_dict.pkl'), mwe_dict)
 
+    print('Saving mwe list...')
     save_list(os.path.join(result_dir_name, 'mwe_list.csv'), mwe_list)
 
-
+    print('Saving mwe metadata...')
     save_list_of_lists('mwe_metadata.csv', mwe_metadata)
 
 
