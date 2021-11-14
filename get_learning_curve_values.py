@@ -313,11 +313,13 @@ def main(args):
 
                     y_pred = get_treshold_voting(y_pred, y_pred_max_probs, mwe_dict, indices_test, class_tresholds, mwe_metadata, results_filepath)
 
-                    get_evaluation_report(y_test, y_pred, write_results, indices_test, mwe_metadata, results_filepath)
+                    # get_evaluation_report(y_test, y_pred, write_results, indices_test, mwe_metadata, results_filepath)
+                    get_evaluation_report(y_test, y_pred, write_results)
         else:
             print(f'EVALUATION RESULTS FOR PERCENTAGE: {percentage}% OF TRAIN DATASET')
 
-            get_evaluation_report(y_test, y_pred, write_results, indices_test, mwe_metadata, results_filepath)
+            # get_evaluation_report(y_test, y_pred, write_results, indices_test, mwe_metadata, results_filepath)
+            get_evaluation_report(y_test, y_pred, write_results)
 
 
 if __name__ == '__main__':
