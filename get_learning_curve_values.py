@@ -117,13 +117,14 @@ def write_prediction_result_to_file(filepath, mwe_ind, mwe_metadata, prediction)
     write_line_to_file(filepath, sample_description)
 
 
-def get_evaluation_report(y_true, y_pred, indices_test, mwe_metadata, filepath):
+def get_evaluation_report(y_true, y_pred, write_results, indices_test, mwe_metadata, filepath):
     target_names = ['Incorrect MWE', 'Correct MWE']
 
-    for pred_ind, prediction in enumerate(y_pred):
-        mwe_ind = indices_test[pred_ind]
+    if write_results:
+        for pred_ind, prediction in enumerate(y_pred):
+            mwe_ind = indices_test[pred_ind]
 
-        write_prediction_result_to_file(filepath, mwe_ind, mwe_metadata, prediction)
+            write_prediction_result_to_file(filepath, mwe_ind, mwe_metadata, prediction)
 
     print(classification_report(y_true, y_pred, target_names=target_names))
 
@@ -310,10 +311,15 @@ def main(args):
 
                     y_pred = get_treshold_voting(y_pred, y_pred_max_probs, mwe_dict, indices_test, class_tresholds, mwe_metadata, results_filepath)
 
-                    get_evaluation_report(y_test, y_pred, indices_test, mwe_metadata, results_filepath)
+
+                    write_results = 'transformer_embeddings' in args
+                    get_evaluation_report(y_test, y_pred, write_results, indices_test, mwe_metadata, results_filepath)
         else:
             print(f'EVALUATION RESULTS FOR PERCENTAGE: {percentage}% OF TRAIN DATASET')
-            get_evaluation_report(y_test, y_pred, indices_test, mwe_metadata, results_filepath)
+
+            write_results = 'transformer_embeddings' in args
+
+            get_evaluation_report(y_test, y_pred, write_results, indices_test, mwe_metadata, results_filepath)
 
 
 if __name__ == '__main__':
