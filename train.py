@@ -254,8 +254,8 @@ def load_list(filepath):
         return loaded_list
 
 
-def list_to_float(list_to_convert):
-    converted_list = np.array([float(elem) for elem in list_to_convert])
+def list_to_type(list_to_convert, type_func):
+    converted_list = np.array([type_func(elem) for elem in list_to_convert])
 
     return converted_list
 
@@ -277,15 +277,15 @@ def main(args):
 
         print('Loading train data...')
         X_train = list_of_lists_to_float(load_list_of_lists(os.path.join(data_dir, "X_train.csv")))
-        y_train = list_to_float(load_list(os.path.join(data_dir, "y_train.csv")))
+        y_train = list_to_type(load_list(os.path.join(data_dir, "y_train.csv")), float)
 
         print('Loading test data...')
         X_test = list_of_lists_to_float(load_list_of_lists(os.path.join(data_dir, "X_test.csv")))
-        y_test = list_to_float(load_list(os.path.join(data_dir, "y_test.csv")))
+        y_test = list_to_type(load_list(os.path.join(data_dir, "y_test.csv")), float)
 
         print('Loading indices files...')
-        indices_train = list_to_float(load_list(os.path.join(data_dir, "indices_train.csv")))
-        indices_test = list_to_float(load_list(os.path.join(data_dir, "indices_test.csv")))
+        indices_train = list_to_type(load_list(os.path.join(data_dir, "indices_train.csv")), int)
+        indices_test = list_to_type(load_list(os.path.join(data_dir, "indices_test.csv")), int)
 
         print('Loading mwe dict...')
         mwe_dict = load_dict(os.path.join(data_dir, 'mwe_dict.pkl'))
