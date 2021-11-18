@@ -283,12 +283,22 @@ def main(args):
         print('Loading mwe metadata...')
         mwe_metadata = load_list_of_lists(os.path.join(data_dir, 'mwe_metadata.csv'))
 
+        if 'diff_vector_only':
+            X_train = [embedding[768 * 2:] for embedding in X_train]
+            X_test = [embedding[768 * 2:] for embedding in X_test]
+
     else:
         dataset_filepath = 'mwe_dataset.npy'
         # dataset_filepath = 'mwe_dataset_cbow.npy'
         # dataset_filepath = 'mwe_dataset_domain_balanced.npy'  # domain-balanced dataset
 
         X_train, X_test, y_train, y_test = load_data(dataset_filepath)
+
+        if 'diff_vector_only':
+            X_train = [embedding[300 * 2:] for embedding in X_train]
+            X_test = [embedding[300 * 2:] for embedding in X_test]
+
+    print(f'X_train SHAPE: {X_train.shape}')
 
     results_filepath = 'results_' + '_'.join(args) + '.tsv'
 
