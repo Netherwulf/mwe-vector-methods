@@ -145,7 +145,7 @@ def main(args):
     save_list(os.path.join(result_dir_name, 'mwe_list.csv'), mwe_list)
 
     print('Saving mwe metadata...')
-    save_list_of_lists('mwe_metadata.csv', mwe_metadata)
+    save_list_of_lists(os.path.join(result_dir_name, 'mwe_metadata.csv'), mwe_metadata)
 
 
 if __name__ == '__main__':

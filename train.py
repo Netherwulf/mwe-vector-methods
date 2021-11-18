@@ -1,3 +1,5 @@
+import os
+import pickle as pkl
 import re
 import statistics
 import sys
@@ -213,13 +215,73 @@ def get_treshold_voting(y_pred, y_pred_max_probs, mwe_dict, indices_test, class_
     return y_majority_pred
 
 
+def save_list_of_lists(filepath, list_of_lists):
+    with open(filepath, "w") as f:
+        wr = csv.writer(f)
+        wr.writerows(list_of_lists)
+
+
+def save_list(filepath, list_to_save):
+    list_string = ','.join([str(elem) for elem in list_to_save])
+
+    with open(filepath, "w") as f:
+        f.write(f'{list_string}\n')
+
+
+def save_dict(filepath, dict_to_save):
+    with open(filepath, 'wb') as f:
+        pkl.dump(dict_to_save, f)
+
+
+def load_list_of_lists(filepath):
+    with open(filepath, 'r') as f:
+        loaded_list_of_lists = np.array([[float(elem) for elem in row.strip().split(',')] for row in f.readlines()])
+
+        return loaded_list_of_lists
+
+
+def load_list(filepath):
+    with open(filepath, 'r') as f:
+        loaded_list = np.array([float(elem) for elem in f.readline().strip().split(',')])
+
+        return loaded_list
+
+
+def load_dict(filepath):
+    with open(filepath, 'rb') as f:
+        loaded_dict = pkl.load(f)
+    return loaded_dict
+
+
 def main(args):
     if 'transformer_embeddings' in args:
-        dataset_filepath = 'sentences_containing_mwe_from_kgr10_group_0_embeddings_1_layers_incomplete_mwe_in_sent.tsv'
-        mwe_filepath = 'sentences_containing_mwe_from_kgr10_group_0_mwe_list_incomplete_mwe_in_sent.tsv'
+        # dataset_filepath = 'sentences_containing_mwe_from_kgr10_group_0_embeddings_1_layers_incomplete_mwe_in_sent.tsv'
+        # mwe_filepath = 'sentences_containing_mwe_from_kgr10_group_0_mwe_list_incomplete_mwe_in_sent.tsv'
+        #
+        # X_train, X_test, y_train, y_test, indices_train, indices_test, mwe_list, mwe_dict, mwe_metadata = load_transformer_embeddings_data(
+        #     dataset_filepath, mwe_filepath)
+        data_dir = 'transformer_embeddings_dataset'
 
-        X_train, X_test, y_train, y_test, indices_train, indices_test, mwe_list, mwe_dict, mwe_metadata = load_transformer_embeddings_data(
-            dataset_filepath, mwe_filepath)
+        print('Loading train data...')
+        X_train = load_list_of_lists(os.path.join(data_dir, "X_train.csv"))
+        y_train = load_list(os.path.join(data_dir, "y_train.csv"))
+
+        print('Loading test data...')
+        X_test = load_list_of_lists(os.path.join(data_dir, "X_test.csv"))
+        y_test = load_list(os.path.join(data_dir, "y_test.csv"))
+
+        print('Loading indices files...')
+        indices_train = load_list(os.path.join(data_dir, "indices_train.csv"))
+        indices_test = load_list(os.path.join(data_dir, "indices_test.csv"))
+
+        print('Loading mwe dict...')
+        mwe_dict = load_dict(os.path.join(data_dir, 'mwe_dict.pkl'))
+
+        print('Loading mwe list...')
+        mwe_list = load_list(os.path.join(data_dir, 'mwe_list.csv'))
+
+        print('Loading mwe metadata...')
+        mwe_metadata = load_list_of_lists(os.path.join(data_dir, 'mwe_metadata.csv'))
 
     else:
         dataset_filepath = 'mwe_dataset.npy'
