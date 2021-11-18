@@ -236,13 +236,13 @@ def save_dict(filepath, dict_to_save):
 
 def load_list_of_lists(filepath):
     with open(filepath, 'r') as f:
-        loaded_list_of_lists = np.array([[elem for elem in row.strip().split(',')] for row in f.readlines()])
+        loaded_list_of_lists = np.array([np.array([elem for elem in row.strip().split(',')]) for row in f.readlines()])
 
         return loaded_list_of_lists
 
 
 def list_of_lists_to_float(list_of_lists):
-    converted_list_of_lists = np.array([[float(elem) for elem in row] for row in list_of_lists])
+    converted_list_of_lists = np.array([np.array([float(elem) for elem in row]) for row in list_of_lists])
 
     return converted_list_of_lists
 
