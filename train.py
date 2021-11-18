@@ -311,8 +311,6 @@ def main(args):
             X_train = np.array([embedding[300 * 2:] for embedding in X_train])
             X_test = np.array([embedding[300 * 2:] for embedding in X_test])
 
-    print(f'X_train SHAPE: {X_train.shape}')
-
     results_filepath = 'results_' + '_'.join(args) + '.tsv'
 
     create_empty_file(results_filepath)
