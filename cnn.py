@@ -80,12 +80,12 @@ def train_cnn_model(model, X, y, epoch_num):
 
     os.mkdir(dir_name)
 
-    checkpoint_filepath = dir_name + '/checkpoint_epoch_{epoch:04d}_val_{val_auc:.4f}.hdf5'
+    checkpoint_filepath = dir_name + '/checkpoint_epoch_{epoch:04d}_val_{val_loss:.4f}.hdf5'
 
     model_checkpoint_callback = ModelCheckpoint(
         filepath=checkpoint_filepath,
         save_weights_only=True,
-        monitor='val_auc',
+        monitor='val_loss',  # val_auc
         mode='max',
         save_best_only=True)
 
