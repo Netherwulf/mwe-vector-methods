@@ -78,7 +78,13 @@ def load_dict(filepath):
 
 
 def get_fasttext_diff_vector(ft_model, mwe):
-    mwe_words = mwe.split(' ')
+    print(f'MWE: {mwe}')
+
+    if ' ' in mwe:
+        mwe_words = mwe.split(' ')
+
+    else:
+        mwe_words = mwe.split('-')
 
     first_word_emb = ft_model.get_word_vector(mwe_words[0])
     second_word_emb = ft_model.get_word_vector(mwe_words[1])
