@@ -241,6 +241,12 @@ def load_list_of_lists(filepath):
         return loaded_list_of_lists
 
 
+def preprocess_combined_embeddings(list_of_lists):
+    converted_list_of_lists = np.array([np.array([float(elem) for elem in row[1:]]) for row in list_of_lists[1:]])
+
+    return converted_list_of_lists
+
+
 def list_of_lists_to_float(list_of_lists):
     converted_list_of_lists = np.array([np.array([float(elem) for elem in row]) for row in list_of_lists])
 
@@ -299,6 +305,32 @@ def main(args):
         if 'diff_vector_only' in args:
             X_train = np.array([embedding[768 * 2:] for embedding in X_train])
             X_test = np.array([embedding[768 * 2:] for embedding in X_test])
+
+    elif 'fasttext_transformer_embeddings' in args:
+        data_dir = 'transformer_embeddings_dataset'
+
+        print('Loading train data...')
+        X_train = preprocess_combined_embeddings(
+            load_list_of_lists(os.path.join(data_dir, "transformer_fasttext_diff_vectors_X_train.tsv")))
+        y_train = list_to_type(load_list(os.path.join(data_dir, "y_train.csv")), float)
+
+        print('Loading test data...')
+        X_test = preprocess_combined_embeddings(
+            load_list_of_lists(os.path.join(data_dir, "transformer_fasttext_diff_vectors_X_test.tsv")))
+        y_test = list_to_type(load_list(os.path.join(data_dir, "y_test.csv")), float)
+
+        print('Loading indices files...')
+        indices_train = list_to_type(load_list(os.path.join(data_dir, "indices_train.csv")), int)
+        indices_test = list_to_type(load_list(os.path.join(data_dir, "indices_test.csv")), int)
+
+        print('Loading mwe dict...')
+        mwe_dict = load_dict(os.path.join(data_dir, 'mwe_dict.pkl'))
+
+        print('Loading mwe list...')
+        mwe_list = load_list(os.path.join(data_dir, 'mwe_list.csv'))
+
+        print('Loading mwe metadata...')
+        mwe_metadata = load_list_of_lists(os.path.join(data_dir, 'mwe_metadata.csv'))
 
     else:
         dataset_filepath = 'mwe_dataset.npy'
@@ -386,7 +418,8 @@ def main(args):
 
                 class_tresholds = [first_class_treshold, second_class_treshold]
 
-                y_pred = get_treshold_voting(y_pred, y_pred_max_probs, mwe_dict, indices_test, class_tresholds, mwe_metadata, results_filepath)
+                y_pred = get_treshold_voting(y_pred, y_pred_max_probs, mwe_dict, indices_test, class_tresholds,
+                                             mwe_metadata, results_filepath)
 
                 get_evaluation_report(y_test, y_pred, indices_test, mwe_metadata, results_filepath)
     else:
