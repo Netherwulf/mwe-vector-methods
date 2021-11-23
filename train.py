@@ -332,6 +332,36 @@ def main(args):
         print('Loading mwe metadata...')
         mwe_metadata = load_list_of_lists(os.path.join(data_dir, 'mwe_metadata.csv'), ',')
 
+    elif 'fasttext_embeddings' in args:
+        data_dir = 'transformer_embeddings_dataset'
+
+        print('Loading train data...')
+        X_train = preprocess_combined_embeddings(
+            load_list_of_lists(os.path.join(data_dir, "transformer_fasttext_diff_vectors_X_train.tsv"), '\t'))
+        print(f'len of first sample in train set after preprocessing: {len(X_train[0])}')
+        X_train = np.array([elem[1:301] for elem in X_train])
+        print(f'len of first sample in train set after preprocessing: {len(X_train[0])}')
+        y_train = list_to_type(load_list(os.path.join(data_dir, "fasttext_transformer_y_train.csv")), float)
+
+        print('Loading test data...')
+        X_test = preprocess_combined_embeddings(
+            load_list_of_lists(os.path.join(data_dir, "transformer_fasttext_diff_vectors_X_test.tsv"), '\t'))
+        X_test = np.array([elem[1:301] for elem in X_test])
+        y_test = list_to_type(load_list(os.path.join(data_dir, "fasttext_transformer_y_test.csv")), float)
+
+        print('Loading indices files...')
+        indices_train = list_to_type(load_list(os.path.join(data_dir, "fasttext_transformer_train_indices_list.csv")), int)
+        indices_test = list_to_type(load_list(os.path.join(data_dir, "fasttext_transformer_test_indices_list.csv")), int)
+
+        print('Loading mwe dict...')
+        mwe_dict = load_dict(os.path.join(data_dir, 'mwe_dict.pkl'))
+
+        print('Loading mwe list...')
+        mwe_list = load_list(os.path.join(data_dir, 'mwe_list.csv'))
+
+        print('Loading mwe metadata...')
+        mwe_metadata = load_list_of_lists(os.path.join(data_dir, 'mwe_metadata.csv'), ',')
+
     else:
         dataset_filepath = 'mwe_dataset.npy'
         # dataset_filepath = 'mwe_dataset_cbow.npy'
