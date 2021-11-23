@@ -84,8 +84,10 @@ def get_fasttext_diff_vector(ft_model, mwe_words):
     return first_word_emb - second_word_emb
 
 
-def generate_transformer_fasttext_embeddings(output_filepath, transformer_emb_list, indices_list, mwe_list, ft_model):
+def generate_transformer_fasttext_embeddings(output_filepath, transformer_emb_list, labels_list, indices_list, mwe_list, ft_model):
     create_empty_file(output_filepath)
+
+    ind_to_delete = []
 
     for ind, transfomer_emb in enumerate(transformer_emb_list):
         mwe = mwe_list[indices_list[ind]]
@@ -97,6 +99,7 @@ def generate_transformer_fasttext_embeddings(output_filepath, transformer_emb_li
             mwe_words = mwe.split('-')
 
         if len(mwe_words) != 2:
+            ind_to_delete.append(ind)
             continue
 
         fasttext_diff_vector = get_fasttext_diff_vector(ft_model, mwe_words)
@@ -111,6 +114,14 @@ def generate_transformer_fasttext_embeddings(output_filepath, transformer_emb_li
             print(f'{datetime.now().strftime("%H:%M:%S")}',
                   f'Processed {ind} samples')
 
+    indices_list = np.delete(indices_list, ind_to_delete)
+    labels_list = np.delete(labels_list, ind_to_delete)
+
+    split_type = output_filepath.split('/')[-1].split('_')[-1]
+
+    save_list('/'.join(output_filepath.split('/')[:-1]) + '/' + f'fasttext_transformer_{split_type}_indices_list.csv', indices_list)
+    save_list('/'.join(output_filepath.split('/')[:-1]) + '/' + f'fasttext_transformer_y_{split_type}.csv', labels_list)
+
 
 def main(args):
     ft_model_path = "kgr10.plain.skipgram.dim300.neg10.bin"
@@ -122,12 +133,16 @@ def main(args):
 
     print('Loading train data...')
     X_train = list_of_lists_to_float(load_list_of_lists(os.path.join(data_dir, "X_train.csv")))
+    y_train = list_to_type(load_list(os.path.join(data_dir, "y_train.csv")), float)
 
     # get diff vector only
     X_train = np.array([embedding[768 * 2:] for embedding in X_train])
 
     print('Loading test data...')
     X_test = list_of_lists_to_float(load_list_of_lists(os.path.join(data_dir, "X_test.csv")))
+    y_test = list_to_type(load_list(os.path.join(data_dir, "y_test.csv")), float)
+
+    # get diff vector only
     X_test = np.array([embedding[768 * 2:] for embedding in X_test])
 
     print('Loading indices files...')
@@ -143,10 +158,10 @@ def main(args):
     # print('Loading mwe metadata...')
     # mwe_metadata = load_list_of_lists(os.path.join(data_dir, 'mwe_metadata.csv'))
 
-    generate_transformer_fasttext_embeddings(data_dir + '/' + 'transformer_fasttext_diff_vectors_X_train.tsv', X_train,
+    generate_transformer_fasttext_embeddings(data_dir + '/' + 'transformer_fasttext_diff_vectors_X_train.tsv', X_train, y_train,
                                              indices_train, mwe_list, ft_model)
 
-    generate_transformer_fasttext_embeddings(data_dir + '/' + 'transformer_fasttext_diff_vectors_X_test.tsv', X_test,
+    generate_transformer_fasttext_embeddings(data_dir + '/' + 'transformer_fasttext_diff_vectors_X_test.tsv', X_test, y_test,
                                              indices_test, mwe_list, ft_model)
 
 
