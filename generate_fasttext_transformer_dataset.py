@@ -77,15 +77,7 @@ def load_dict(filepath):
     return loaded_dict
 
 
-def get_fasttext_diff_vector(ft_model, mwe):
-    print(f'MWE: {mwe}')
-
-    if ' ' in mwe:
-        mwe_words = mwe.split(' ')
-
-    else:
-        mwe_words = mwe.split('-')
-
+def get_fasttext_diff_vector(ft_model, mwe_words):
     first_word_emb = ft_model.get_word_vector(mwe_words[0])
     second_word_emb = ft_model.get_word_vector(mwe_words[1])
 
@@ -98,7 +90,16 @@ def generate_transformer_fasttext_embeddings(output_filepath, transformer_emb_li
     for ind, transfomer_emb in enumerate(transformer_emb_list):
         mwe = mwe_list[indices_list[ind]]
 
-        fasttext_diff_vector = get_fasttext_diff_vector(ft_model, mwe)
+        if ' ' in mwe:
+            mwe_words = mwe.split(' ')
+
+        else:
+            mwe_words = mwe.split('-')
+
+        if len(mwe_words) != 2:
+            continue
+
+        fasttext_diff_vector = get_fasttext_diff_vector(ft_model, mwe_words)
         fasttext_diff_vector = [str(elem) for elem in fasttext_diff_vector]
 
         transformer_diff_vector = [str(elem) for elem in transfomer_emb]
