@@ -234,9 +234,9 @@ def save_dict(filepath, dict_to_save):
         pkl.dump(dict_to_save, f)
 
 
-def load_list_of_lists(filepath):
+def load_list_of_lists(filepath, sep):
     with open(filepath, 'r') as f:
-        loaded_list_of_lists = np.array([np.array([elem for elem in row.strip().split(',')]) for row in f.readlines()])
+        loaded_list_of_lists = np.array([np.array([elem for elem in row.strip().split(sep)]) for row in f.readlines()])
 
         return loaded_list_of_lists
 
@@ -282,11 +282,11 @@ def main(args):
         data_dir = 'transformer_embeddings_dataset'
 
         print('Loading train data...')
-        X_train = list_of_lists_to_float(load_list_of_lists(os.path.join(data_dir, "X_train.csv")))
+        X_train = list_of_lists_to_float(load_list_of_lists(os.path.join(data_dir, "X_train.csv"), ','))
         y_train = list_to_type(load_list(os.path.join(data_dir, "y_train.csv")), float)
 
         print('Loading test data...')
-        X_test = list_of_lists_to_float(load_list_of_lists(os.path.join(data_dir, "X_test.csv")))
+        X_test = list_of_lists_to_float(load_list_of_lists(os.path.join(data_dir, "X_test.csv"), ','))
         y_test = list_to_type(load_list(os.path.join(data_dir, "y_test.csv")), float)
 
         print('Loading indices files...')
@@ -300,7 +300,7 @@ def main(args):
         mwe_list = load_list(os.path.join(data_dir, 'mwe_list.csv'))
 
         print('Loading mwe metadata...')
-        mwe_metadata = load_list_of_lists(os.path.join(data_dir, 'mwe_metadata.csv'))
+        mwe_metadata = load_list_of_lists(os.path.join(data_dir, 'mwe_metadata.csv'), ',')
 
         if 'diff_vector_only' in args:
             X_train = np.array([embedding[768 * 2:] for embedding in X_train])
@@ -311,12 +311,12 @@ def main(args):
 
         print('Loading train data...')
         X_train = preprocess_combined_embeddings(
-            load_list_of_lists(os.path.join(data_dir, "transformer_fasttext_diff_vectors_X_train.tsv")))
+            load_list_of_lists(os.path.join(data_dir, "transformer_fasttext_diff_vectors_X_train.tsv"), '\t'))
         y_train = list_to_type(load_list(os.path.join(data_dir, "y_train.csv")), float)
 
         print('Loading test data...')
         X_test = preprocess_combined_embeddings(
-            load_list_of_lists(os.path.join(data_dir, "transformer_fasttext_diff_vectors_X_test.tsv")))
+            load_list_of_lists(os.path.join(data_dir, "transformer_fasttext_diff_vectors_X_test.tsv"), '\t'))
         y_test = list_to_type(load_list(os.path.join(data_dir, "y_test.csv")), float)
 
         print('Loading indices files...')

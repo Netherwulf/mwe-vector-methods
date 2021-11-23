@@ -105,7 +105,7 @@ def generate_transformer_fasttext_embeddings(output_filepath, transformer_emb_li
         transformer_diff_vector = [str(elem) for elem in transfomer_emb]
 
         write_line_to_file(output_filepath,
-                           '\t'.join([mwe, ','.join(fasttext_diff_vector), ','.join(transformer_diff_vector)]))
+                           '\t'.join([mwe, '\t'.join(fasttext_diff_vector), '\t'.join(transformer_diff_vector)]))
 
         if ind % 10000 == 0:
             print(f'{datetime.now().strftime("%H:%M:%S")}',
