@@ -94,7 +94,7 @@ def load_mwes(mwe_file):
 
 def get_restricted_words_list():
     return ['się', 'ja', 'ten', 'od', 'do', 'bez', 'beze', 'chyba', 'co', 'dla', 'dzięki', 'dziela', 'gwoli', 'jako',
-            'kontra', 'krom', 'ku', 'miast', 'na', 'nad', 'nade', 'naokoło', 'o', 'z',
+            'kontra', 'krom', 'ku', 'miast', 'na', 'nad', 'nade', 'naokoło', 'o', 'z', 'po',
             'w', 'we'] + list(string.punctuation)
 
 
@@ -114,7 +114,7 @@ def write_new_samples_to_file(output_file, matched_mwe_list, mwe_orth_list, lemm
     is_complete_mwe_value = '1' if is_complete_mwe else '0'
     second_word_index_value = str(second_word_index) if is_complete_mwe else '-1'
 
-    for mwe_ind, matched_mwe_lemma in enumerate(lemmatized_mwe_list):
+    for mwe_ind, matched_mwe_lemma in enumerate(matched_mwe_list):
         if mwe_ind > 0 and matched_mwe_lemma == matched_mwe_list[mwe_ind - 1]:
             continue
 
@@ -145,7 +145,7 @@ def get_sentences_containing_mwe(output_file, mwe_list, lemmatized_mwes, sentenc
                                 i > 0 and sentences_lemmas[sentence_ind][i - 1].lower() != word.lower()]
             sentence = cleaned_sentence
 
-            # if the sentence can't be simply repaired by removing dupplicated word then skip the sentence
+            # if the sentence can't be simply repaired by removing duplicated word then skip the sentence
             if len(sentence) != len(sentences_orths[sentence_ind]):
                 continue
 
@@ -158,6 +158,10 @@ def get_sentences_containing_mwe(output_file, mwe_list, lemmatized_mwes, sentenc
             # if a word is detected as a part of MWE then don't classify it as an occurrence of another MWE
             # if lemma in restricted_words_list or word_in_complete_mwe_list[lemma_ind]:
             #     continue
+
+            # if word is a restricted word, then skip it
+            if lemma in restricted_words_list:
+                continue
 
             # check if word is part of complete MWE occurring in the sentence
             if not word_in_complete_mwe_list[lemma_ind] and lemma_ind != len(sentence) - 1:
