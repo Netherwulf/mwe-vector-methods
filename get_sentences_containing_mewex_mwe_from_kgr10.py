@@ -228,7 +228,7 @@ def main(args):
         output_file = f'{base_output_file_name.split(".")[0]}_{dir_path.split("/")[-1]}.tsv'
 
         create_empty_file(output_file)
-        write_line_to_file(output_file, '\t'.join(['mwe', 'mwe_lemma', 'is_correct', 'complete_mwe_in_sent',
+        write_line_to_file(output_file, '\t'.join(['mwe', 'mwe_lemma', 'complete_mwe_in_sent',
                                                    'first_word_index', 'first_word_orth', 'first_word_lemma',
                                                    'second_word_index', 'second_word_orth', 'second_word_lemma',
                                                    'dir_index', 'file_index', 'sentence']))
