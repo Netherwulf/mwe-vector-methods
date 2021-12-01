@@ -117,8 +117,7 @@ def write_new_samples_to_file(output_file, matched_mwe_list, mwe_orth_list, lemm
     for mwe_ind, matched_mwe_lemma in enumerate(matched_mwe_list):
         if mwe_ind > 0 and matched_mwe_lemma == matched_mwe_list[mwe_ind - 1]:
             continue
-        print(f'matched MWE list: {matched_mwe_list}',
-              sep='\n')
+        print(f'matched MWE list: {matched_mwe_list}', sep='\n')
         mwe = mwe_orth_list[lemmatized_mwe_list.index(matched_mwe_lemma)]
         write_line_to_file(output_file, '\t'.join([mwe,
                                                    matched_mwe_lemma,
@@ -166,56 +165,54 @@ def get_sentences_containing_mwe(output_file, mwe_list, lemmatized_mwes, sentenc
 
             # check if word is part of complete MWE occurring in the sentence
             if not word_in_complete_mwe_list[lemma_ind] and lemma_ind != len(sentence) - 1:
-                matching_mwes = [corr_mwe for corr_mwe in lemmatized_mwes if
+                matching_mwe_list = [corr_mwe for corr_mwe in lemmatized_mwes if
                                  ' '.join([sentence[lemma_ind], sentence[lemma_ind + 1]]) == corr_mwe]
 
-                if len(matching_mwes) != 0:
+                if len(matching_mwe_list) != 0:
                     word_in_complete_mwe_list[lemma_ind] = True
                     word_in_complete_mwe_list[lemma_ind + 1] = True
 
-                for i, matching_mwe_list in enumerate(matching_mwes):
-                    mwe_orths_list = mwe_list
-                    lemmatized_mwe_list = lemmatized_mwes
+                mwe_orths_list = mwe_list
+                lemmatized_mwe_list = lemmatized_mwes
 
-                    write_new_samples_to_file(output_file,
-                                              matching_mwe_list,
-                                              mwe_orths_list,
-                                              lemmatized_mwe_list,
-                                              True,
-                                              str(lemma_ind),
-                                              sentences_orths[sentence_ind][lemma_ind],
-                                              sentence[lemma_ind],
-                                              str(lemma_ind + 1),
-                                              sentences_orths[sentence_ind][lemma_ind + 1],
-                                              sentence[lemma_ind + 1],
-                                              dir_index,
-                                              file_index,
-                                              ' '.join(sentences_orths[sentence_ind]))
+                write_new_samples_to_file(output_file,
+                                          matching_mwe_list,
+                                          mwe_orths_list,
+                                          lemmatized_mwe_list,
+                                          True,
+                                          str(lemma_ind),
+                                          sentences_orths[sentence_ind][lemma_ind],
+                                          sentence[lemma_ind],
+                                          str(lemma_ind + 1),
+                                          sentences_orths[sentence_ind][lemma_ind + 1],
+                                          sentence[lemma_ind + 1],
+                                          dir_index,
+                                          file_index,
+                                          ' '.join(sentences_orths[sentence_ind]))
 
             # if word didn't occur in any complete MWE then
             # check if word occurs in sentence even if whole MWE doesn't occur in it
             if not word_in_complete_mwe_list[lemma_ind]:
-                matching_mwes = [corr_mwe for corr_mwe in lemmatized_mwes if
+                matching_mwe_list = [corr_mwe for corr_mwe in lemmatized_mwes if
                                  lemma == corr_mwe.split(' ')[0] or lemma == corr_mwe.split(' ')[1]]
 
-                for i, matching_mwe_list in enumerate(matching_mwes):
-                    mwe_orths_list = mwe_list
-                    lemmatized_mwe_list = lemmatized_mwes
+                mwe_orths_list = mwe_list
+                lemmatized_mwe_list = lemmatized_mwes
 
-                    write_new_samples_to_file(output_file,
-                                              matching_mwe_list,
-                                              mwe_orths_list,
-                                              lemmatized_mwe_list,
-                                              False,
-                                              str(lemma_ind),
-                                              sentences_orths[sentence_ind][lemma_ind],
-                                              sentence[lemma_ind],
-                                              '-1',
-                                              'null',
-                                              'null',
-                                              dir_index,
-                                              file_index,
-                                              ' '.join(sentences_orths[sentence_ind]))
+                write_new_samples_to_file(output_file,
+                                          matching_mwe_list,
+                                          mwe_orths_list,
+                                          lemmatized_mwe_list,
+                                          False,
+                                          str(lemma_ind),
+                                          sentences_orths[sentence_ind][lemma_ind],
+                                          sentence[lemma_ind],
+                                          '-1',
+                                          'null',
+                                          'null',
+                                          dir_index,
+                                          file_index,
+                                          ' '.join(sentences_orths[sentence_ind]))
 
 
 def main(args):
