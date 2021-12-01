@@ -20,7 +20,7 @@ def read_mwe(filepath, separator, column_index) -> []:
     with open(filepath, 'r', encoding="utf-8") as f:
         content = list(csv.reader(f, delimiter=separator, quotechar='"'))
         mwe_list = [sublist[column_index] for sublist in content[1:] if len(sublist) != 0]
-
+        mwe_list = [mwe for mwe in mwe_list if not any(character.isupper() for character in mwe)]
         return mwe_list
 
 
