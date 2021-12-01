@@ -114,7 +114,7 @@ def write_new_samples_to_file(output_file, matched_mwe_list, mwe_orth_list, lemm
     is_complete_mwe_value = '1' if is_complete_mwe else '0'
     second_word_index_value = str(second_word_index) if is_complete_mwe else '-1'
 
-    for mwe_ind, matched_mwe_lemma in enumerate(matched_mwe_list):
+    for mwe_ind, matched_mwe_lemma in enumerate(lemmatized_mwe_list):
         if mwe_ind > 0 and matched_mwe_lemma == matched_mwe_list[mwe_ind - 1]:
             continue
 
