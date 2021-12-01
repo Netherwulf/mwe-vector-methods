@@ -117,7 +117,8 @@ def write_new_samples_to_file(output_file, matched_mwe_list, mwe_orth_list, lemm
     for mwe_ind, matched_mwe_lemma in enumerate(matched_mwe_list):
         if mwe_ind > 0 and matched_mwe_lemma == matched_mwe_list[mwe_ind - 1]:
             continue
-
+        print(f'matched MWE list: {matched_mwe_list}',
+              sep='\n')
         mwe = mwe_orth_list[lemmatized_mwe_list.index(matched_mwe_lemma)]
         write_line_to_file(output_file, '\t'.join([mwe,
                                                    matched_mwe_lemma,
