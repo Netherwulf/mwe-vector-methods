@@ -3,6 +3,7 @@ import string
 import sys
 import xml.etree.ElementTree as ET
 
+from datetime import datetime
 from glob import glob
 from typing import List
 
@@ -216,15 +217,16 @@ def main(args):
     mwes_filepath = 'scaled_vector_association_measure_correct_mwe_best_f1.tsv'
     base_output_file_name = 'kgr10_sentences_containing_MeWeX_mwe.tsv'
 
-    print('Reading MWE files and lemmatizing...')
+    print(f'{datetime.now().time()} - Reading MWE files and lemmatizing...')
 
     mwe_list, lemmatized_mwes = load_mwes(mwes_filepath)
 
-    print('Finished reading MWE files and lemmatizing...')
+    print(f'{datetime.now().time()} - Finished reading MWE files and lemmatizing...')
 
     restricted_words_list = get_restricted_words_list()
 
     for dir_index, dir_path in enumerate(args):
+        print(f'{datetime.now().time()} - Reading files from {dir_path}')
         output_file = f'{base_output_file_name.split(".")[0]}_{dir_path.split("/")[-1]}.tsv'
 
         create_empty_file(output_file)
@@ -239,6 +241,9 @@ def main(args):
             orths, lemmas = read_xml(xml_path)
             get_sentences_containing_mwe(output_file, mwe_list, lemmatized_mwes, orths, lemmas, restricted_words_list,
                                          dir_index, file_index)
+
+            if file_index % 100000 == 0 and file_index > 0:
+                print(f'{datetime.now().time()} - Processed {file_index} files')
 
 
 if __name__ == '__main__':
