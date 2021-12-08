@@ -71,11 +71,14 @@ def count_mwe_occurrences(mwe_list, lemmatized_mwe_list, filepath):
         while line:
             line = in_file.readline()
 
+            if len(line.split('\t')) < 2:
+                continue
+
             lemmatized_mwe = line.split('\t')[1]
 
             mwe_dict[lemmatized_mwe] += 1
 
-            if line_idx % 100000 == 0 and line_idx > 0:
+            if line_idx % 10000000 == 0 and line_idx > 0:
                 print(f'{datetime.now().time()} - Processed {line_idx} files')
 
             line_idx += 1
@@ -89,6 +92,8 @@ def count_mwe_occurrences(mwe_list, lemmatized_mwe_list, filepath):
               f'Mean occurrences: {np.mean(mwe_occurrences)}',
               f'Min occurrences: {np.min(mwe_occurrences)}',
               f'Zero occurrences count: {len(empty_mwe_dict)}',
+              f'Total MWE count: {len(lemmatized_mwe_list)}',
+              f'Total MWE occurrences count: {line_idx}',
               sep='\n')
 
 
