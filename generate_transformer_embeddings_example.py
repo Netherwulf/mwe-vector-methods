@@ -132,7 +132,7 @@ def main(args):
 
     lemmatizer = init_lemmatizer()
 
-    sentence = 'Ala ma kota ala'
+    sentence = 'Ala ma, kota ala.'
     old_word = 'kota'
     new_word = 'banan'
 
