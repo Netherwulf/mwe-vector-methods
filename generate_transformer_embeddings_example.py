@@ -51,13 +51,20 @@ def get_hidden_states(encoded, token_ids_word, model, layers):
 def get_word_vector(sent, idx, tokenizer, model, layers):
     """Get a word vector by first tokenizing the input sentence, getting all token idxs
        that make up the word of interest, and then `get_hidden_states`."""
-    encoded = tokenizer.encode_plus(sent, return_tensors="pt")
+    encoded = tokenizer.encode_plus(sent,
+                                    padding='longest',
+                                    add_special_tokens=True,
+                                    return_tensors="pt",
+                                    return_offsets_mapping=True)
+    offset_mapping = encoded['offset_mapping']
+
+    encoded = {key: encoded[key] for key in encoded.keys() if key != 'offset_mapping'}
     # get all token idxs that belong to the word of interest
-    token_ids_word = np.where(np.array(encoded.word_ids()) == idx)
-    print(f'encoded = {encoded}',
-          f'token_ids_word = {token_ids_word}',
+    # token_ids_word = np.where(np.array(encoded.word_ids()) == idx)
+    print(f'encoded KEYS = {encoded.keys()}',
+          f'offset_mapping = {offset_mapping}',
           sep='\n')
-    return get_hidden_states(encoded, token_ids_word, model, layers)
+    return get_hidden_states(encoded, offset_mapping, model, layers)
 
 
 def create_empty_file(filepath):
@@ -75,7 +82,9 @@ def get_word_embedding(sentence, word, tokenizer, model, layers, lemmatizer):
     # idx, word_occured = get_word_idx(sentence, word, lemmatizer)
 
     word_embedding = get_word_vector(sentence, idx, tokenizer, model, layers)
-
+    print(f'word id = {idx}',
+          f'word embedding = {word_embedding}',
+          sep='\n')
     return word_embedding  # , word_occured
 
 
@@ -125,8 +134,10 @@ def main(args):
     old_word = 'kota'
     new_word = 'banan'
 
-    sentence.replace(old_word, new_word)
-
+    sentence = sentence.replace(old_word, new_word)
+    print(f'sentence = {sentence}',
+          f'new_word = {new_word}',
+          sep='\n')
     get_word_embedding(sentence, new_word, tokenizer, model, layers, lemmatizer)
 
 
