@@ -66,7 +66,7 @@ def get_hidden_states(encoded, offset_ids, model, layers):
           f'output = {output}',
           f'word_tokens_output = {word_tokens_output}',
           sep='\n')
-    return word_tokens_output.mean(dim=0)
+    return word_tokens_output.mean(dim=0).to('cpu').numpy()
 
 
 def get_word_vector(sent, word_id, tokenizer, model, layers):
