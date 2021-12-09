@@ -1,3 +1,4 @@
+import re
 import string
 import sys
 
@@ -28,7 +29,25 @@ def get_word_idx(sent: str, word: str):  # (sent: str, word: str, lemmatizer)
     #     return -1, False
 
 
-def get_hidden_states(encoded, token_ids_word, model, layers):
+def get_word_offset_ids(sentence, word_id, offset_mapping):
+    sent_offsets = [(ele.start(), ele.end()) for ele in re.finditer(r'\S+', sentence)]
+
+    word_offset = sent_offsets[word_id]
+
+    word_offset_mappings_ind = [ind for ind, elem in enumerate(offset_mapping) if
+                                elem[0] == word_offset[0] or elem[1] == word_offset[1]]
+
+    print(f'sentence = {sentence}',
+          f'word_id = {word_id}',
+          f'sent_offsets = {sent_offsets}',
+          f'word_offset = {word_offset}',
+          f'word_offset_mappings_ind = {word_offset_mappings_ind}',
+          sep='\n')
+
+    return word_offset_mappings_ind
+
+
+def get_hidden_states(encoded, offset_ids, model, layers):
     """Push input IDs through model. Stack and sum `layers` (last four by default).
        Select only those subword token outputs that belong to our word of interest
        and average them."""
@@ -40,7 +59,7 @@ def get_hidden_states(encoded, token_ids_word, model, layers):
     # Stack and sum all requested layers
     output = torch.stack([states[i] for i in layers]).sum(0).squeeze()
     # Only select the tokens that constitute the requested word
-    word_tokens_output = output[token_ids_word]
+    word_tokens_output = output[offset_ids]
     print(f'states = {states}',
           f'output = {output}',
           f'word_tokens_output = {word_tokens_output}',
@@ -48,7 +67,7 @@ def get_hidden_states(encoded, token_ids_word, model, layers):
     return word_tokens_output.mean(dim=0)
 
 
-def get_word_vector(sent, idx, tokenizer, model, layers):
+def get_word_vector(sent, word_id, tokenizer, model, layers):
     """Get a word vector by first tokenizing the input sentence, getting all token idxs
        that make up the word of interest, and then `get_hidden_states`."""
     encoded = tokenizer.encode_plus(sent,
@@ -58,6 +77,8 @@ def get_word_vector(sent, idx, tokenizer, model, layers):
                                     return_offsets_mapping=True)
     offset_mapping = encoded['offset_mapping']
 
+    offset_ids = get_word_offset_ids(sent, word_id, offset_mapping)
+
     encoded = {key: encoded[key] for key in encoded.keys() if key != 'offset_mapping'}
     # get all token idxs that belong to the word of interest
     # token_ids_word = np.where(np.array(encoded.word_ids()) == idx)
@@ -66,7 +87,7 @@ def get_word_vector(sent, idx, tokenizer, model, layers):
           f'input_ids = {encoded["input_ids"]}',
           f'decoded sentence = {tokenizer.decode(encoded["input_ids"][0])}',
           sep='\n')
-    return get_hidden_states(encoded, offset_mapping, model, layers)
+    return get_hidden_states(encoded, offset_ids, model, layers)
 
 
 def create_empty_file(filepath):
@@ -79,12 +100,12 @@ def write_line_to_file(filepath, line):
         f.write(f'{line}\n')
 
 
-def get_word_embedding(sentence, word, tokenizer, model, layers, lemmatizer):
-    idx = get_word_idx(sentence, word)  # (sentence, word, lemmatizer)
+def get_word_embedding(sentence, word_id, tokenizer, model, layers, lemmatizer):
+    # idx = get_word_idx(sentence, word)  # (sentence, word, lemmatizer)
     # idx, word_occured = get_word_idx(sentence, word, lemmatizer)
 
-    word_embedding = get_word_vector(sentence, idx, tokenizer, model, layers)
-    print(f'word id = {idx}',
+    word_embedding = get_word_vector(sentence, word_id, tokenizer, model, layers)
+    print(f'word id = {word_id}',
           f'word embedding = {word_embedding}',
           sep='\n')
     return word_embedding  # , word_occured
