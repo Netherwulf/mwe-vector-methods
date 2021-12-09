@@ -33,8 +33,10 @@ def get_word_offset_ids(sentence, word_id, offset_mapping):
     sent_offsets = [(ele.start(), ele.end()) for ele in re.finditer(r'\S+', sentence)]
 
     word_offset = sent_offsets[word_id]
-
-    word_offset_mappings_ind = [ind for ind, elem in enumerate(offset_mapping) if
+    print(f'word_offset = {word_offset}',
+          f'offset_mapping = {offset_mapping}',
+          sep='\n')
+    word_offset_mappings_ind = [ind for ind, elem in enumerate(offset_mapping[0]) if
                                 elem[0] == word_offset[0] or elem[1] == word_offset[1]]
 
     print(f'sentence = {sentence}',
@@ -156,12 +158,14 @@ def main(args):
     sentence = 'Ala ma, kota ala.'
     old_word = 'kota'
     new_word = 'banan'
+    changed_word_id = 2
 
     sentence = sentence.replace(old_word, new_word)
+
     print(f'sentence = {sentence}',
           f'new_word = {new_word}',
           sep='\n')
-    get_word_embedding(sentence, new_word, tokenizer, model, layers, lemmatizer)
+    get_word_embedding(sentence, changed_word_id, tokenizer, model, layers, lemmatizer)
 
 
 if __name__ == '__main__':
