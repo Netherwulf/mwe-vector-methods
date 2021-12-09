@@ -63,6 +63,8 @@ def get_word_vector(sent, idx, tokenizer, model, layers):
     # token_ids_word = np.where(np.array(encoded.word_ids()) == idx)
     print(f'encoded KEYS = {encoded.keys()}',
           f'offset_mapping = {offset_mapping}',
+          f'input_ids = {encoded["input_ids"]}',
+          f'decoded sentence = {tokenizer.decode(encoded["input_ids"][0])}',
           sep='\n')
     return get_hidden_states(encoded, offset_mapping, model, layers)
 
