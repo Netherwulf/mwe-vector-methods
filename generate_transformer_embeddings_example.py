@@ -30,6 +30,7 @@ def get_word_idx(sent: str, word: str):  # (sent: str, word: str, lemmatizer)
 
 
 def get_word_offset_ids(sentence, word_id, offset_mapping):
+    # sent_offsets = [(ele.start(), ele.end()) for ele in re.finditer(r'\S+', sentence)]  # ignore punctuation signs
     sent_offsets = [(ele.start(), ele.end()) for ele in re.finditer(r'\S+', sentence)]
 
     word_offset = sent_offsets[word_id]
@@ -155,10 +156,10 @@ def main(args):
 
     lemmatizer = init_lemmatizer()
 
-    sentence = 'Ala ma, kota ala.'
+    sentence = 'Ala ma , kota ala .'
     old_word = 'kota'
     new_word = 'banan'
-    changed_word_id = 2
+    changed_word_id = 3
 
     sentence = sentence.replace(old_word, new_word)
 
