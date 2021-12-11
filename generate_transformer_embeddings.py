@@ -29,7 +29,10 @@ def init_lemmatizer():
 
 def get_word_offset_ids(sentence, word_id, offset_mapping):
     sent_offsets = [(ele.start(), ele.end()) for ele in re.finditer(r'\S+', sentence)]
-
+    # print(f'sentence = {sentence}',
+          # f'sent_offsets = {sent_offsets}',
+          # f'word_id = {word_id}',
+          # sep='\n')
     word_offset = sent_offsets[word_id]
     # print(f'word_offset = {word_offset}',
     #       f'offset_mapping = {offset_mapping}',
@@ -38,11 +41,12 @@ def get_word_offset_ids(sentence, word_id, offset_mapping):
                                 elem[0] == word_offset[0] or elem[1] == word_offset[1]]
 
     # print(f'sentence = {sentence}',
-    #       f'word_id = {word_id}',
-    #       f'sent_offsets = {sent_offsets}',
-    #       f'word_offset = {word_offset}',
-    #       f'word_offset_mappings_ind = {word_offset_mappings_ind}',
-    #       sep='\n')
+          # f'word_id = {word_id}',
+          # f'sent_offsets = {sent_offsets}',
+          # f'word_offset = {word_offset}',
+          # f'offset_mapping = {offset_mapping}',
+          # f'word_offset_mappings_ind = {word_offset_mappings_ind}',
+          # sep='\n')
 
     return word_offset_mappings_ind
 
@@ -84,7 +88,7 @@ def get_word_vector(sent, word_id, tokenizer, model, layers):
     # token_ids_word = np.where(np.array(encoded.word_ids()) == idx)
     # print(f'encoded KEYS = {encoded.keys()}',
           # f'offset_mapping = {offset_mapping}',
-          # f'input_ids = {encoded["input_ids"]}',
+          # f'word_id = {encoded["input_ids"]}',
           # f'decoded sentence = {tokenizer.decode(encoded["input_ids"][0])}',
           # sep='\n')
     return get_hidden_states(encoded, offset_ids, model, layers)
@@ -112,22 +116,27 @@ def get_word_embedding(sentence, word_id, tokenizer, model, layers):
 
 
 def substitute_and_embed(sentence, old_word_id, new_word, tokenizer, model, layers):
-    sentence_to_substitute = sentence
+    #sentence_to_substitute = sentence[:]
+    sentence_words = sentence.split(' ')
     # only one MWE component appears in the sentence
     if len(old_word_id) == 1:
-        if old_word_id[0] == len(sentence_to_substitute.split(' ')) - 1:
-            sentence_to_substitute = sentence_to_substitute[:old_word_id[0]] + new_word
+        if old_word_id[0] == len(sentence_words) - 1:
+            sentence_to_substitute = ' '.join([' '.join(sentence_words[:old_word_id[0]]), new_word])
 
         else:
-            sentence_to_substitute = sentence_to_substitute[:old_word_id[0]] + new_word + sentence_to_substitute[old_word_id[0] + 1:]
+            sentence_to_substitute = ' '.join([' '.join(sentence_words[:old_word_id[0]]), new_word, ' '.join(sentence_words[old_word_id[0] + 1:])])
 
     # two MWE components appear in the sentence
     if len(old_word_id) == 2:
-        if old_word_id[1] == len(sentence_to_substitute.split(' ')) - 1:
-            sentence_to_substitute = sentence_to_substitute[:old_word_id[0]] + new_word
+        if old_word_id[1] == len(sentence.split(' ')) - 1:
+            sentence_to_substitute = ' '.join([' '.join(sentence_words[:old_word_id[0]]), new_word])
 
         else:
-            sentence_to_substitute = sentence_to_substitute[:old_word_id[0]] + new_word + sentence_to_substitute[old_word_id[1] + 1:]
+            sentence_to_substitute = ' '.join([' '.join(sentence_words[:old_word_id[0]]), new_word, ' '.join(sentence_words[old_word_id[1] + 1:])])
+
+    # print(f'sentence = {sentence}',
+          # f'sentence_to_substitute = {sentence_to_substitute}',
+          # sep='\n')
 
     if len(new_word.split(' ')) > 1:
         first_word, second_word = new_word.split(' ')
