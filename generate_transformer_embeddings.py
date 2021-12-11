@@ -132,13 +132,13 @@ def substitute_and_embed(sentence, old_word_id, new_word, tokenizer, model, laye
     if len(new_word.split(' ')) > 1:
         first_word, second_word = new_word.split(' ')
 
-        first_word_emb = get_word_embedding(sentence_to_substitute, old_word_id, tokenizer, model, layers)
+        first_word_emb = get_word_embedding(sentence_to_substitute, old_word_id[0], tokenizer, model, layers)
         # first_word_emb, word_occured = get_word_embedding(sentence, first_word, tokenizer, model, layers, lemmatizer)
 
         # if not word_occured:
         #     return False
 
-        second_word_emb = get_word_embedding(sentence_to_substitute, old_word_id + 1, tokenizer, model, layers)
+        second_word_emb = get_word_embedding(sentence_to_substitute, old_word_id[1], tokenizer, model, layers)
         # second_word_emb, word_occured = get_word_embedding(sentence, second_word, tokenizer, model, layers, lemmatizer)
 
         # if not word_occured:
@@ -148,7 +148,7 @@ def substitute_and_embed(sentence, old_word_id, new_word, tokenizer, model, laye
                zip(first_word_emb, second_word_emb)]
 
     else:
-        emb = get_word_embedding(sentence_to_substitute, old_word_id, tokenizer, model, layers)
+        emb = get_word_embedding(sentence_to_substitute, old_word_id[0], tokenizer, model, layers)
 
     return emb
 
@@ -159,8 +159,17 @@ def read_tsv(filepath, tokenizer, model, layers):
     complete_mwe_in_sent_output_file = filepath_name + f'_embeddings_{len(layers)}_layers_complete_mwe_in_sent.tsv'
     create_empty_file(complete_mwe_in_sent_output_file)
 
+    write_line_to_file(complete_mwe_in_sent_output_file, '\t'.join(
+        ['type', 'first_word', 'first_word_id', 'second_word', 'second_word_id', 'mwe', 'sentence',
+         'is_correct', 'complete_mwe_in_sent', 'mwe_embedding', 'first_word_only_embedding',
+         'second_word_only_embedding', 'first_word_mwe_emb_diff', 'second_word_mwe_emb_diff']))
+
     incomplete_mwe_in_sent_output_file = filepath_name + f'_embeddings_{len(layers)}_layers_incomplete_mwe_in_sent.tsv'
     create_empty_file(incomplete_mwe_in_sent_output_file)
+
+    write_line_to_file(incomplete_mwe_in_sent_output_file, '\t'.join(
+        ['type', 'first_word', 'first_word_id', 'second_word', 'second_word_id', 'mwe', 'sentence',
+         'is_correct', 'complete_mwe_in_sent', 'first_word_embedding', 'mwe_embedding', 'first_word_mwe_emb_diff']))
 
     with open(filepath, 'r', errors='replace') as in_file:
         content = in_file.readlines()
@@ -215,9 +224,10 @@ def read_tsv(filepath, tokenizer, model, layers):
                 second_word_only_embedding = [str(elem) for elem in second_word_only_embedding]
 
                 write_line_to_file(complete_mwe_in_sent_output_file, '\t'.join(
-                    [','.join(mwe_embedding), ','.join(first_word_only_embedding),
+                    [type, first_word, first_word_id, second_word, second_word_id, mwe, sentence,
+                     is_correct, complete_mwe_in_sent, ','.join(mwe_embedding), ','.join(first_word_only_embedding),
                      ','.join(second_word_only_embedding), ','.join(first_word_mwe_emb_diff),
-                     ','.join(second_word_mwe_emb_diff), is_correct, mwe]))
+                     ','.join(second_word_mwe_emb_diff)]))
 
             # only part of MWE appears in the sentence
             else:
@@ -232,8 +242,9 @@ def read_tsv(filepath, tokenizer, model, layers):
                 mwe_embedding = [str(elem) for elem in mwe_embedding]
 
                 write_line_to_file(incomplete_mwe_in_sent_output_file, '\t'.join(
-                    [','.join(first_word_embedding), ','.join(mwe_embedding),
-                     ','.join(first_word_mwe_emb_diff), is_correct, mwe]))
+                    [type, first_word, first_word_id, second_word, second_word_id, mwe, sentence,
+                     is_correct, complete_mwe_in_sent, ','.join(first_word_embedding), ','.join(mwe_embedding),
+                     ','.join(first_word_mwe_emb_diff)]))
 
 
 def main(args):
