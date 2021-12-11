@@ -22,11 +22,15 @@ def read_mwe(file_path, incorrect_mwe_file=False):
             if line_index == 0:
                 continue
 
-            if incorrect_mwe_file:
-                if ',' in line:
-                    mwe = line.strip().split(',')[1].replace("\"", '')
-            else:
-                mwe = line.strip().split('\t')[3].replace("\"", '')
+            # get MWEs from KGR10 (Słowosieć) MWE lists
+            # if incorrect_mwe_file:
+            #     if ',' in line:
+            #         mwe = line.strip().split(',')[1].replace("\"", '')
+            # else:
+            #     mwe = line.strip().split('\t')[3].replace("\"", '')
+
+            # get MWEs from PARSEME MWE lists
+            mwe = line.strip().split('\t')[7]
 
             mwe_words = mwe.split(' ')
 
@@ -166,11 +170,18 @@ def save_mwe_embeddings(output_file_name, mwe_embeddings) -> None:
 def main(args):
     # ft_model_path = "kgr10.plain.skipgram.dim300.neg10.bin"
     ft_model_path = "kgr10.plain.cbow.dim300.neg10.bin"
-    correct_mwe_file_path = 'correct_mwe.tsv'
-    incorrect_mwe_file_path = 'incorrect_MWE_kompozycyjne_polaczenia_plWN.csv'
+    # change filepaths to correct and incorrect MWE lists depending on the dataset
+    # Słowosieć (KGR10) correct and incorrect MWEs
+    # correct_mwe_file_path = 'correct_mwe.tsv'
+    # incorrect_mwe_file_path = 'incorrect_MWE_kompozycyjne_polaczenia_plWN.csv'
     # change output file name depending on the domain/type balance strategy
     # output_file_name = 'mwe_dataset_type_balanced.npy'
-    output_file_name = 'mwe_dataset_cbow.npy'
+    # output_file_name = 'mwe_dataset_cbow.npy'
+
+    # PARSEME Polish correct and incorrect MWEs
+    correct_mwe_file_path = 'parseme_correct_mwes.tsv'
+    incorrect_mwe_file_path = 'parseme_incorrect_mwes.tsv'
+    output_file_name = 'parseme_dataset_fasttext_embeddings_cbow.npy'
 
     ft_model = load_fasttext(ft_model_path)
 
