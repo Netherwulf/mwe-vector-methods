@@ -82,11 +82,11 @@ def get_word_vector(sent, word_id, tokenizer, model, layers):
     encoded = {key: encoded[key] for key in encoded.keys() if key != 'offset_mapping'}
     # get all token idxs that belong to the word of interest
     # token_ids_word = np.where(np.array(encoded.word_ids()) == idx)
-    print(f'encoded KEYS = {encoded.keys()}',
-          f'offset_mapping = {offset_mapping}',
-          f'input_ids = {encoded["input_ids"]}',
-          f'decoded sentence = {tokenizer.decode(encoded["input_ids"][0])}',
-          sep='\n')
+    # print(f'encoded KEYS = {encoded.keys()}',
+          # f'offset_mapping = {offset_mapping}',
+          # f'input_ids = {encoded["input_ids"]}',
+          # f'decoded sentence = {tokenizer.decode(encoded["input_ids"][0])}',
+          # sep='\n')
     return get_hidden_states(encoded, offset_ids, model, layers)
 
 
@@ -105,9 +105,9 @@ def get_word_embedding(sentence, word_id, tokenizer, model, layers):
     # idx, word_occured = get_word_idx(sentence, word, lemmatizer)
 
     word_embedding = get_word_vector(sentence, word_id, tokenizer, model, layers)
-    print(f'word id = {word_id}',
-          f'word embedding = {word_embedding}',
-          sep='\n')
+    # print(f'word id = {word_id}',
+          # f'word embedding = {word_embedding}',
+          # sep='\n')
     return word_embedding  # , word_occured
 
 
@@ -160,7 +160,7 @@ def read_tsv(filepath, tokenizer, model, layers):
     create_empty_file(complete_mwe_in_sent_output_file)
 
     write_line_to_file(complete_mwe_in_sent_output_file, '\t'.join(
-        ['type', 'first_word', 'first_word_id', 'second_word', 'second_word_id', 'mwe', 'sentence',
+        ['mwe_type', 'first_word', 'first_word_id', 'second_word', 'second_word_id', 'mwe', 'sentence',
          'is_correct', 'complete_mwe_in_sent', 'mwe_embedding', 'first_word_only_embedding',
          'second_word_only_embedding', 'first_word_mwe_emb_diff', 'second_word_mwe_emb_diff']))
 
@@ -168,7 +168,7 @@ def read_tsv(filepath, tokenizer, model, layers):
     create_empty_file(incomplete_mwe_in_sent_output_file)
 
     write_line_to_file(incomplete_mwe_in_sent_output_file, '\t'.join(
-        ['type', 'first_word', 'first_word_id', 'second_word', 'second_word_id', 'mwe', 'sentence',
+        ['mwe_type', 'first_word', 'first_word_id', 'second_word', 'second_word_id', 'mwe', 'sentence',
          'is_correct', 'complete_mwe_in_sent', 'first_word_embedding', 'mwe_embedding', 'first_word_mwe_emb_diff']))
 
     with open(filepath, 'r', errors='replace') as in_file:
@@ -189,15 +189,26 @@ def read_tsv(filepath, tokenizer, model, layers):
             # sentence = line_attributes[12]
 
             # PARSEME sentence list column mapping
-            type = line_attributes[0]
+            mwe_type = line_attributes[0]
             first_word = line_attributes[1]
-            first_word_id = line_attributes[3]
+            first_word_id = int(line_attributes[3])
             second_word = line_attributes[4]
-            second_word_id = line_attributes[6]
+            second_word_id = int(line_attributes[6])
             mwe = line_attributes[7]
             sentence = line_attributes[9]
-            is_correct = line_attributes[10]
+            is_correct = str(line_attributes[10])
             complete_mwe_in_sent = '1'
+
+            # print(f'mwe_type = {mwe_type}',
+                  # f'first_word = {first_word}',
+                  # f'first_word_id = {first_word_id}',
+                  # f'second_word = {second_word}',
+                  # f'second_word_id = {second_word_id}',
+                  # f'mwe = {mwe}',
+                  # f'sentence = {sentence}',
+                  # f'is_correct = {is_correct}',
+                  # f'complete_mwe_in_sent = {complete_mwe_in_sent}',
+                  # sep='\n')
 
             # complete MWE appears in the sentence
             if complete_mwe_in_sent == '1':
@@ -224,7 +235,7 @@ def read_tsv(filepath, tokenizer, model, layers):
                 second_word_only_embedding = [str(elem) for elem in second_word_only_embedding]
 
                 write_line_to_file(complete_mwe_in_sent_output_file, '\t'.join(
-                    [type, first_word, first_word_id, second_word, second_word_id, mwe, sentence,
+                    [mwe_type, first_word, str(first_word_id), second_word, str(second_word_id), mwe, sentence,
                      is_correct, complete_mwe_in_sent, ','.join(mwe_embedding), ','.join(first_word_only_embedding),
                      ','.join(second_word_only_embedding), ','.join(first_word_mwe_emb_diff),
                      ','.join(second_word_mwe_emb_diff)]))
@@ -242,7 +253,7 @@ def read_tsv(filepath, tokenizer, model, layers):
                 mwe_embedding = [str(elem) for elem in mwe_embedding]
 
                 write_line_to_file(incomplete_mwe_in_sent_output_file, '\t'.join(
-                    [type, first_word, first_word_id, second_word, second_word_id, mwe, sentence,
+                    [mwe_type, first_word, int(first_word_id), second_word, int(second_word_id), mwe, sentence,
                      is_correct, complete_mwe_in_sent, ','.join(first_word_embedding), ','.join(mwe_embedding),
                      ','.join(first_word_mwe_emb_diff)]))
 

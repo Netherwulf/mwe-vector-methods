@@ -13,7 +13,7 @@ def merge_sentence_lists(correct_mwe_filepath, incorrect_mwe_filepath, output_fi
 
     df_correct = df_correct.append(df_incorrect)
 
-    df_correct.to_csv(output_filepath, sep='\t')
+    df_correct.to_csv(output_filepath, sep='\t', index=False)
 
 
 def main(args):
