@@ -14,16 +14,35 @@ def load_fasttext(model_path):
 def read_mwe(file_path, ft_model, incorrect_mwe_file):
     df = pd.read_csv(file_path, sep='\t')
     df = df.drop_duplicates(subset=['full_mwe'])
+    df = df[(df['first_word'].notna()) & (df['second_word'].notna()) & (df['full_mwe'].notna())]
+
+    first_word_ft_emb_list = [ft_model.get_word_vector(word)]) for word in df['first_word'].tolist()]
+    second_word_ft_emb = [ft_model.get_word_vector(word)]) for word in df['second_word'].tolist()]
+
+    df['first_second_ft_emb_diff' = [(elem_w_1 - elem_w_2) for
+        elem_w_1, elem_w2 in
+        zip(first_word_ft_emb_list, second_word_ft_emb)]
+
+    df['first_second_ft_emb_abs_diff' = [abs(elem_w_1 - elem_w_2) for
+        elem_w_1, elem_w2 in
+        zip(first_word_ft_emb_list, second_word_ft_emb)]
+
+    df['first_second_ft_emb_prod' = [(elem_w_1 * elem_w_2) for
+        elem_w_1, elem_w2 in
+        zip(first_word_ft_emb_list, second_word_ft_emb)]
 
     df['first_word_ft_emb'] = [','.join([str(elem) for elem in ft_model.get_word_vector(word)]) for word in
                                df['first_word'].tolist()]
     df['second_word_ft_emb'] = [','.join([str(elem) for elem in ft_model.get_word_vector(word)]) for word in
                                 df['second_word'].tolist()]
-    df['first_second_ft_emb_diff'] = [
-        ','.join([str(elem) for elem in (ft_model.get_word_vector(first_word) - ft_model.get_word_vector(second_word))])
-        for
-        first_word, second_word in
-        zip(df['first_word'].tolist(), df['second_word'].tolist())]
+    df['first_second_ft_emb_diff'] = [','.join([str(elem) for elem in ft_model.get_word_vector(word)]) for word in
+                               df['first_word'].tolist()]
+    df['first_second_ft_emb_abs_diff'] = [','.join([str(elem) for elem in ft_model.get_word_vector(word)]) for word in
+                                df['second_word'].tolist()]
+    df['first_second_ft_emb_prod'] = [','.join([str(elem) for elem in word]) for word in
+                               df['first_word'].tolist()]
+
+
 
     df['is_correct'] = '0' if incorrect_mwe_file else '1'
 
@@ -200,7 +219,7 @@ def main(args):
     # PARSEME Polish correct and incorrect MWEs
     correct_mwe_file_path = 'parseme_correct_mwes.tsv'
     incorrect_mwe_file_path = 'parseme_incorrect_mwes.tsv'
-    output_file_name = 'parseme_dataset_fasttext_embeddings_cbow.npy'
+    output_file_name = 'parseme_dataset_fasttext_embeddings_cbow.tsv'
 
     ft_model = load_fasttext(ft_model_path)
 
@@ -211,7 +230,7 @@ def main(args):
 
     mwe_df = correct_mwe_df.append(incorrect_mwe_df)
 
-    mwe_df.to_csv(output_file_name, index=False)
+    mwe_df.to_csv(output_file_name, index=False, sep='\t')
 
     # for file_index, mwe_file_path in enumerate([correct_mwe_file_path, incorrect_mwe_file_path]):
     #     are_mwes_incorrect = file_index == 1
