@@ -452,7 +452,8 @@ def main(args):
                                              mwe_metadata, results_filepath)
 
                 get_evaluation_report(y_test, y_pred, indices_test, mwe_metadata, results_filepath)
-    else:
+
+    if 'majority_voting' not in args and 'weighted_voting' not in args and 'treshold_voting' not in args:
         get_evaluation_report(y_test, y_pred, indices_test, mwe_metadata, results_filepath)
 
 
