@@ -16,33 +16,28 @@ def read_mwe(file_path, ft_model, incorrect_mwe_file):
     df = df.drop_duplicates(subset=['full_mwe'])
     df = df[(df['first_word'].notna()) & (df['second_word'].notna()) & (df['full_mwe'].notna())]
 
-    first_word_ft_emb_list = [ft_model.get_word_vector(word)]) for word in df['first_word'].tolist()]
-    second_word_ft_emb = [ft_model.get_word_vector(word)]) for word in df['second_word'].tolist()]
+    first_word_ft_emb_list = [ft_model.get_word_vector(word) for word in df['first_word'].tolist()]
+    second_word_ft_emb = [ft_model.get_word_vector(word) for word in df['second_word'].tolist()]
 
-    df['first_second_ft_emb_diff' = [(elem_w_1 - elem_w_2) for
-        elem_w_1, elem_w2 in
-        zip(first_word_ft_emb_list, second_word_ft_emb)]
+    df['first_second_ft_emb_diff'] = [(elem_w_1 - elem_w_2) for elem_w_1, elem_w_2 in
+                                     zip(first_word_ft_emb_list, second_word_ft_emb)]
 
-    df['first_second_ft_emb_abs_diff' = [abs(elem_w_1 - elem_w_2) for
-        elem_w_1, elem_w2 in
-        zip(first_word_ft_emb_list, second_word_ft_emb)]
+    df['first_second_ft_emb_abs_diff'] = [abs(elem_w_1 - elem_w_2) for elem_w_1, elem_w_2 in
+                                         zip(first_word_ft_emb_list, second_word_ft_emb)]
 
-    df['first_second_ft_emb_prod' = [(elem_w_1 * elem_w_2) for
-        elem_w_1, elem_w2 in
-        zip(first_word_ft_emb_list, second_word_ft_emb)]
+    df['first_second_ft_emb_prod'] = [(elem_w_1 * elem_w_2) for elem_w_1, elem_w_2 in
+                                     zip(first_word_ft_emb_list, second_word_ft_emb)]
 
-    df['first_word_ft_emb'] = [','.join([str(elem) for elem in ft_model.get_word_vector(word)]) for word in
-                               df['first_word'].tolist()]
-    df['second_word_ft_emb'] = [','.join([str(elem) for elem in ft_model.get_word_vector(word)]) for word in
-                                df['second_word'].tolist()]
-    df['first_second_ft_emb_diff'] = [','.join([str(elem) for elem in ft_model.get_word_vector(word)]) for word in
-                               df['first_word'].tolist()]
-    df['first_second_ft_emb_abs_diff'] = [','.join([str(elem) for elem in ft_model.get_word_vector(word)]) for word in
-                                df['second_word'].tolist()]
-    df['first_second_ft_emb_prod'] = [','.join([str(elem) for elem in word]) for word in
-                               df['first_word'].tolist()]
-
-
+    df['first_word_ft_emb'] = [','.join([str(elem) for elem in word_emb]) for word_emb in
+                               first_word_ft_emb_list]
+    df['second_word_ft_emb'] = [','.join([str(elem) for elem in word_emb]) for word_emb in
+                                         second_word_ft_emb]
+    df['first_second_ft_emb_diff'] = [','.join([str(elem) for elem in word_emb]) for word_emb in
+                                      df['first_second_ft_emb_diff'].tolist()]
+    df['first_second_ft_emb_abs_diff'] = [','.join([str(elem) for elem in word_emb]) for word_emb in
+                                          df['first_second_ft_emb_abs_diff'].tolist()]
+    df['first_second_ft_emb_prod'] = [','.join([str(elem) for elem in word_emb]) for word_emb in
+                                      df['first_second_ft_emb_prod'].tolist()]
 
     df['is_correct'] = '0' if incorrect_mwe_file else '1'
 
