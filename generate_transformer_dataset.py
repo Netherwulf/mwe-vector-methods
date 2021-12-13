@@ -232,14 +232,14 @@ def main(args):
         save_list(os.path.join(result_dir_name, f"y_train_{smote_type}.csv"), transformed_y_train_smote)
 
     # Imblearn Pipeline dataset variant
-    print('Generating Imblearn Pipeline dataset variant...')
-    over = SMOTE(sampling_strategy=0.1)
-    under = RandomUnderSampler(sampling_strategy=0.5)
-    steps = [('o', over), ('u', under)]
-    pipeline = Pipeline(steps=steps)
-    X_train_pipeline, y_train_pipeline = pipeline.fit_resample(X_train, y_train)
-    save_list_of_lists(os.path.join(result_dir_name, "X_train_pipeline.csv"), X_train_pipeline)
-    save_list(os.path.join(result_dir_name, "y_train_pipeline.csv"), y_train_pipeline)
+    # print('Generating Imblearn Pipeline dataset variant...')
+    # over = SMOTE(sampling_strategy=0.1)
+    # under = RandomUnderSampler(sampling_strategy=0.5)
+    # steps = [('o', over), ('u', under)]
+    # pipeline = Pipeline(steps=steps)
+    # X_train_pipeline, y_train_pipeline = pipeline.fit_resample(X_train, y_train)
+    # save_list_of_lists(os.path.join(result_dir_name, "X_train_pipeline.csv"), X_train_pipeline)
+    # save_list(os.path.join(result_dir_name, "y_train_pipeline.csv"), y_train_pipeline)
 
     print('Saving test data...')
     save_list_of_lists(os.path.join(result_dir_name, "X_test.csv"), X_test)
