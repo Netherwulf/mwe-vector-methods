@@ -282,123 +282,123 @@ def main(args):
     if 'kgr10' in args and 'transformer_embeddings' in args:
         data_dir = 'transformer_embeddings_dataset'
 
-    if 'transformer_embeddings' in args:
-        X_train_filepath = os.path.join(data_dir, 'X_train.csv')
-        y_train_filepath = os.path.join(data_dir, 'y_train.csv')
+    # if 'transformer_embeddings' in args:
+    X_train_filepath = os.path.join(data_dir, 'X_train.csv')
+    y_train_filepath = os.path.join(data_dir, 'y_train.csv')
 
-        X_test_filepath = os.path.join(data_dir, 'X_test.csv')
-        y_test_filepath = os.path.join(data_dir, 'y_test.csv')
+    X_test_filepath = os.path.join(data_dir, 'X_test.csv')
+    y_test_filepath = os.path.join(data_dir, 'y_test.csv')
 
-        if 'smote' in args:
-            X_train_filepath = os.path.join(data_dir, 'X_train_smote.csv')
-            y_train_filepath = os.path.join(data_dir, 'y_train_smote.csv')
+    if 'smote' in args:
+        X_train_filepath = os.path.join(data_dir, 'X_train_smote.csv')
+        y_train_filepath = os.path.join(data_dir, 'y_train_smote.csv')
 
-        if 'borderline_smote' in args:
-            X_train_filepath = os.path.join(data_dir, 'X_train_borderline.csv')
-            y_train_filepath = os.path.join(data_dir, 'y_train_borderline.csv')
+    if 'borderline_smote' in args:
+        X_train_filepath = os.path.join(data_dir, 'X_train_borderline.csv')
+        y_train_filepath = os.path.join(data_dir, 'y_train_borderline.csv')
 
-        if 'svm_smote' in args:
-            X_train_filepath = os.path.join(data_dir, 'X_train_svm.csv')
-            y_train_filepath = os.path.join(data_dir, 'y_train_svm.csv')
+    if 'svm_smote' in args:
+        X_train_filepath = os.path.join(data_dir, 'X_train_svm.csv')
+        y_train_filepath = os.path.join(data_dir, 'y_train_svm.csv')
 
-        if 'adasyn' in args:
-            X_train_filepath = os.path.join(data_dir, 'X_train_adasyn.csv')
-            y_train_filepath = os.path.join(data_dir, 'y_train_adasyn.csv')
+    if 'adasyn' in args:
+        X_train_filepath = os.path.join(data_dir, 'X_train_adasyn.csv')
+        y_train_filepath = os.path.join(data_dir, 'y_train_adasyn.csv')
 
-        indices_train_filepath = os.path.join(data_dir, 'indices_train.csv')
-        indices_test_filepath = os.path.join(data_dir, 'indices_test.csv')
+    indices_train_filepath = os.path.join(data_dir, 'indices_train.csv')
+    indices_test_filepath = os.path.join(data_dir, 'indices_test.csv')
 
-        mwe_dict_filepath = os.path.join(data_dir, 'mwe_dict.pkl')
-        mwe_metadata_filepath = os.path.join(data_dir, 'mwe_metadata.csv')
+    mwe_dict_filepath = os.path.join(data_dir, 'mwe_dict.pkl')
+    mwe_metadata_filepath = os.path.join(data_dir, 'mwe_metadata.csv')
 
-        print('Loading train data...')
-        X_train = list_of_lists_to_float(load_list_of_lists(X_train_filepath, ','))
-        y_train = list_to_type(load_list(y_train_filepath), float)
+    print('Loading train data...')
+    X_train = list_of_lists_to_float(load_list_of_lists(X_train_filepath, ','))
+    y_train = list_to_type(load_list(y_train_filepath), float)
 
-        print('Loading test data...')
-        X_test = list_of_lists_to_float(load_list_of_lists(X_test_filepath, ','))
-        y_test = list_to_type(load_list(y_test_filepath), float)
+    print('Loading test data...')
+    X_test = list_of_lists_to_float(load_list_of_lists(X_test_filepath, ','))
+    y_test = list_to_type(load_list(y_test_filepath), float)
 
-        print('Loading indices files...')
-        indices_train = list_to_type(load_list(indices_train_filepath), int)
-        indices_test = list_to_type(load_list(indices_test_filepath), int)
+    print('Loading indices files...')
+    indices_train = list_to_type(load_list(indices_train_filepath), int)
+    indices_test = list_to_type(load_list(indices_test_filepath), int)
 
-        print('Loading mwe dict...')
-        mwe_dict = load_dict(mwe_dict_filepath)
+    print('Loading mwe dict...')
+    mwe_dict = load_dict(mwe_dict_filepath)
 
-        print('Loading mwe metadata...')
-        mwe_metadata = load_list_of_lists(mwe_metadata_filepath, ',')
+    print('Loading mwe metadata...')
+    mwe_metadata = load_list_of_lists(mwe_metadata_filepath, ',')
 
-        if 'diff_vector_only' in args:
-            X_train = np.array([embedding[768 * 2:] for embedding in X_train])
-            X_test = np.array([embedding[768 * 2:] for embedding in X_test])
+    if 'diff_vector_only' in args:
+        X_train = np.array([embedding[768 * 2:] for embedding in X_train])
+        X_test = np.array([embedding[768 * 2:] for embedding in X_test])
 
-    elif 'fasttext_transformer_embeddings' in args:
-        data_dir = 'transformer_embeddings_dataset'
-
-        print('Loading train data...')
-        X_train = preprocess_combined_embeddings(
-            load_list_of_lists(os.path.join(data_dir, "transformer_fasttext_diff_vectors_X_train.tsv"), '\t'))
-        y_train = list_to_type(load_list(os.path.join(data_dir, "fasttext_transformer_y_train.csv")), float)
-
-        print('Loading test data...')
-        X_test = preprocess_combined_embeddings(
-            load_list_of_lists(os.path.join(data_dir, "transformer_fasttext_diff_vectors_X_test.tsv"), '\t'))
-        y_test = list_to_type(load_list(os.path.join(data_dir, "fasttext_transformer_y_test.csv")), float)
-
-        print('Loading indices files...')
-        indices_train = list_to_type(load_list(os.path.join(data_dir, "fasttext_transformer_train_indices_list.csv")), int)
-        indices_test = list_to_type(load_list(os.path.join(data_dir, "fasttext_transformer_test_indices_list.csv")), int)
-
-        print('Loading mwe dict...')
-        mwe_dict = load_dict(os.path.join(data_dir, 'mwe_dict.pkl'))
-
-        print('Loading mwe list...')
-        mwe_list = load_list(os.path.join(data_dir, 'mwe_list.csv'))
-
-        print('Loading mwe metadata...')
-        mwe_metadata = load_list_of_lists(os.path.join(data_dir, 'mwe_metadata.csv'), ',')
-
-    elif 'fasttext_embeddings' in args:
-        data_dir = 'transformer_embeddings_dataset'
-
-        print('Loading train data...')
-        X_train = preprocess_combined_embeddings(
-            load_list_of_lists(os.path.join(data_dir, "transformer_fasttext_diff_vectors_X_train.tsv"), '\t'))
-        print(f'len of first sample in train set after preprocessing: {len(X_train[0])}')
-        X_train = np.array([elem[1:301] for elem in X_train])
-        print(f'len of first sample in train set after preprocessing: {len(X_train[0])}')
-        y_train = list_to_type(load_list(os.path.join(data_dir, "fasttext_transformer_y_train.csv")), float)
-
-        print('Loading test data...')
-        X_test = preprocess_combined_embeddings(
-            load_list_of_lists(os.path.join(data_dir, "transformer_fasttext_diff_vectors_X_test.tsv"), '\t'))
-        X_test = np.array([elem[1:301] for elem in X_test])
-        y_test = list_to_type(load_list(os.path.join(data_dir, "fasttext_transformer_y_test.csv")), float)
-
-        print('Loading indices files...')
-        indices_train = list_to_type(load_list(os.path.join(data_dir, "fasttext_transformer_train_indices_list.csv")), int)
-        indices_test = list_to_type(load_list(os.path.join(data_dir, "fasttext_transformer_test_indices_list.csv")), int)
-
-        print('Loading mwe dict...')
-        mwe_dict = load_dict(os.path.join(data_dir, 'mwe_dict.pkl'))
-
-        print('Loading mwe list...')
-        mwe_list = load_list(os.path.join(data_dir, 'mwe_list.csv'))
-
-        print('Loading mwe metadata...')
-        mwe_metadata = load_list_of_lists(os.path.join(data_dir, 'mwe_metadata.csv'), ',')
-
-    else:
-        dataset_filepath = 'mwe_dataset.npy'
-        # dataset_filepath = 'mwe_dataset_cbow.npy'
-        # dataset_filepath = 'mwe_dataset_domain_balanced.npy'  # domain-balanced dataset
-
-        X_train, X_test, y_train, y_test = load_data(dataset_filepath)
-
-        if 'diff_vector_only' in args:
-            X_train = np.array([embedding[300 * 2:] for embedding in X_train])
-            X_test = np.array([embedding[300 * 2:] for embedding in X_test])
+    # elif 'fasttext_transformer_embeddings' in args:
+    #     data_dir = 'transformer_embeddings_dataset'
+    #
+    #     print('Loading train data...')
+    #     X_train = preprocess_combined_embeddings(
+    #         load_list_of_lists(os.path.join(data_dir, "transformer_fasttext_diff_vectors_X_train.tsv"), '\t'))
+    #     y_train = list_to_type(load_list(os.path.join(data_dir, "fasttext_transformer_y_train.csv")), float)
+    #
+    #     print('Loading test data...')
+    #     X_test = preprocess_combined_embeddings(
+    #         load_list_of_lists(os.path.join(data_dir, "transformer_fasttext_diff_vectors_X_test.tsv"), '\t'))
+    #     y_test = list_to_type(load_list(os.path.join(data_dir, "fasttext_transformer_y_test.csv")), float)
+    #
+    #     print('Loading indices files...')
+    #     indices_train = list_to_type(load_list(os.path.join(data_dir, "fasttext_transformer_train_indices_list.csv")), int)
+    #     indices_test = list_to_type(load_list(os.path.join(data_dir, "fasttext_transformer_test_indices_list.csv")), int)
+    #
+    #     print('Loading mwe dict...')
+    #     mwe_dict = load_dict(os.path.join(data_dir, 'mwe_dict.pkl'))
+    #
+    #     print('Loading mwe list...')
+    #     mwe_list = load_list(os.path.join(data_dir, 'mwe_list.csv'))
+    #
+    #     print('Loading mwe metadata...')
+    #     mwe_metadata = load_list_of_lists(os.path.join(data_dir, 'mwe_metadata.csv'), ',')
+    #
+    # elif 'fasttext_embeddings' in args:
+    #     data_dir = 'transformer_embeddings_dataset'
+    #
+    #     print('Loading train data...')
+    #     X_train = preprocess_combined_embeddings(
+    #         load_list_of_lists(os.path.join(data_dir, "transformer_fasttext_diff_vectors_X_train.tsv"), '\t'))
+    #     print(f'len of first sample in train set after preprocessing: {len(X_train[0])}')
+    #     X_train = np.array([elem[1:301] for elem in X_train])
+    #     print(f'len of first sample in train set after preprocessing: {len(X_train[0])}')
+    #     y_train = list_to_type(load_list(os.path.join(data_dir, "fasttext_transformer_y_train.csv")), float)
+    #
+    #     print('Loading test data...')
+    #     X_test = preprocess_combined_embeddings(
+    #         load_list_of_lists(os.path.join(data_dir, "transformer_fasttext_diff_vectors_X_test.tsv"), '\t'))
+    #     X_test = np.array([elem[1:301] for elem in X_test])
+    #     y_test = list_to_type(load_list(os.path.join(data_dir, "fasttext_transformer_y_test.csv")), float)
+    #
+    #     print('Loading indices files...')
+    #     indices_train = list_to_type(load_list(os.path.join(data_dir, "fasttext_transformer_train_indices_list.csv")), int)
+    #     indices_test = list_to_type(load_list(os.path.join(data_dir, "fasttext_transformer_test_indices_list.csv")), int)
+    #
+    #     print('Loading mwe dict...')
+    #     mwe_dict = load_dict(os.path.join(data_dir, 'mwe_dict.pkl'))
+    #
+    #     print('Loading mwe list...')
+    #     mwe_list = load_list(os.path.join(data_dir, 'mwe_list.csv'))
+    #
+    #     print('Loading mwe metadata...')
+    #     mwe_metadata = load_list_of_lists(os.path.join(data_dir, 'mwe_metadata.csv'), ',')
+    #
+    # else:
+    #     dataset_filepath = 'mwe_dataset.npy'
+    #     # dataset_filepath = 'mwe_dataset_cbow.npy'
+    #     # dataset_filepath = 'mwe_dataset_domain_balanced.npy'  # domain-balanced dataset
+    #
+    #     X_train, X_test, y_train, y_test = load_data(dataset_filepath)
+    #
+    #     if 'diff_vector_only' in args:
+    #         X_train = np.array([embedding[300 * 2:] for embedding in X_train])
+    #         X_test = np.array([embedding[300 * 2:] for embedding in X_test])
 
     results_filepath = 'results_' + '_'.join(args) + '.tsv'
 
