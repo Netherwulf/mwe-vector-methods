@@ -53,7 +53,7 @@ def load_data(dataset_file):
 def get_mwe(mwe_file):
     df = pd.read_csv(mwe_file, sep='\t')
 
-    mwe_list = np.array([mwe for mwe in df['mwe'].tolist()])
+    mwe_list = np.array([mwe for mwe in df['full_mwe'].tolist()])
 
     mwe_metadata = np.array([[mwe_type, first_word, first_word_id, second_word, second_word_id, mwe, sentence,
                               is_correct] for
