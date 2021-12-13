@@ -30,9 +30,9 @@ def init_lemmatizer():
 def get_word_offset_ids(sentence, word_id, offset_mapping):
     sent_offsets = [(ele.start(), ele.end()) for ele in re.finditer(r'\S+', sentence)]
     # print(f'sentence = {sentence}',
-          # f'sent_offsets = {sent_offsets}',
-          # f'word_id = {word_id}',
-          # sep='\n')
+    # f'sent_offsets = {sent_offsets}',
+    # f'word_id = {word_id}',
+    # sep='\n')
     word_offset = sent_offsets[word_id]
     # print(f'word_offset = {word_offset}',
     #       f'offset_mapping = {offset_mapping}',
@@ -41,12 +41,12 @@ def get_word_offset_ids(sentence, word_id, offset_mapping):
                                 elem[0] == word_offset[0] or elem[1] == word_offset[1]]
 
     # print(f'sentence = {sentence}',
-          # f'word_id = {word_id}',
-          # f'sent_offsets = {sent_offsets}',
-          # f'word_offset = {word_offset}',
-          # f'offset_mapping = {offset_mapping}',
-          # f'word_offset_mappings_ind = {word_offset_mappings_ind}',
-          # sep='\n')
+    # f'word_id = {word_id}',
+    # f'sent_offsets = {sent_offsets}',
+    # f'word_offset = {word_offset}',
+    # f'offset_mapping = {offset_mapping}',
+    # f'word_offset_mappings_ind = {word_offset_mappings_ind}',
+    # sep='\n')
 
     return word_offset_mappings_ind
 
@@ -87,10 +87,10 @@ def get_word_vector(sent, word_id, tokenizer, model, layers):
     # get all token idxs that belong to the word of interest
     # token_ids_word = np.where(np.array(encoded.word_ids()) == idx)
     # print(f'encoded KEYS = {encoded.keys()}',
-          # f'offset_mapping = {offset_mapping}',
-          # f'word_id = {encoded["input_ids"]}',
-          # f'decoded sentence = {tokenizer.decode(encoded["input_ids"][0])}',
-          # sep='\n')
+    # f'offset_mapping = {offset_mapping}',
+    # f'word_id = {encoded["input_ids"]}',
+    # f'decoded sentence = {tokenizer.decode(encoded["input_ids"][0])}',
+    # sep='\n')
     return get_hidden_states(encoded, offset_ids, model, layers)
 
 
@@ -110,13 +110,13 @@ def get_word_embedding(sentence, word_id, tokenizer, model, layers):
 
     word_embedding = get_word_vector(sentence, word_id, tokenizer, model, layers)
     # print(f'word id = {word_id}',
-          # f'word embedding = {word_embedding}',
-          # sep='\n')
+    # f'word embedding = {word_embedding}',
+    # sep='\n')
     return word_embedding  # , word_occured
 
 
 def substitute_and_embed(sentence, old_word_id, new_word, tokenizer, model, layers):
-    #sentence_to_substitute = sentence[:]
+    # sentence_to_substitute = sentence[:]
     sentence_words = sentence.split(' ')
     # only one MWE component appears in the sentence
     if len(old_word_id) == 1:
@@ -124,7 +124,8 @@ def substitute_and_embed(sentence, old_word_id, new_word, tokenizer, model, laye
             sentence_to_substitute = ' '.join([' '.join(sentence_words[:old_word_id[0]]), new_word])
 
         else:
-            sentence_to_substitute = ' '.join([' '.join(sentence_words[:old_word_id[0]]), new_word, ' '.join(sentence_words[old_word_id[0] + 1:])])
+            sentence_to_substitute = ' '.join(
+                [' '.join(sentence_words[:old_word_id[0]]), new_word, ' '.join(sentence_words[old_word_id[0] + 1:])])
 
     # two MWE components appear in the sentence
     if len(old_word_id) == 2:
@@ -132,11 +133,12 @@ def substitute_and_embed(sentence, old_word_id, new_word, tokenizer, model, laye
             sentence_to_substitute = ' '.join([' '.join(sentence_words[:old_word_id[0]]), new_word])
 
         else:
-            sentence_to_substitute = ' '.join([' '.join(sentence_words[:old_word_id[0]]), new_word, ' '.join(sentence_words[old_word_id[1] + 1:])])
+            sentence_to_substitute = ' '.join(
+                [' '.join(sentence_words[:old_word_id[0]]), new_word, ' '.join(sentence_words[old_word_id[1] + 1:])])
 
     # print(f'sentence = {sentence}',
-          # f'sentence_to_substitute = {sentence_to_substitute}',
-          # sep='\n')
+    # f'sentence_to_substitute = {sentence_to_substitute}',
+    # sep='\n')
 
     if len(new_word.split(' ')) > 1:
         first_word, second_word = new_word.split(' ')
@@ -171,14 +173,17 @@ def read_tsv(filepath, tokenizer, model, layers):
     write_line_to_file(complete_mwe_in_sent_output_file, '\t'.join(
         ['mwe_type', 'first_word', 'first_word_id', 'second_word', 'second_word_id', 'mwe', 'sentence',
          'is_correct', 'complete_mwe_in_sent', 'mwe_embedding', 'first_word_only_embedding',
-         'second_word_only_embedding', 'first_word_mwe_emb_diff', 'second_word_mwe_emb_diff']))
+         'second_word_only_embedding', 'first_word_mwe_emb_diff', 'second_word_mwe_emb_diff',
+         'first_word_mwe_emb_abs_diff', 'second_word_mwe_emb_abs_diff', 'first_word_mwe_emb_prod',
+         'second_word_mwe_emb_prod']))
 
     incomplete_mwe_in_sent_output_file = filepath_name + f'_embeddings_{len(layers)}_layers_incomplete_mwe_in_sent.tsv'
     create_empty_file(incomplete_mwe_in_sent_output_file)
 
     write_line_to_file(incomplete_mwe_in_sent_output_file, '\t'.join(
         ['mwe_type', 'first_word', 'first_word_id', 'second_word', 'second_word_id', 'mwe', 'sentence',
-         'is_correct', 'complete_mwe_in_sent', 'first_word_embedding', 'mwe_embedding', 'first_word_mwe_emb_diff']))
+         'is_correct', 'complete_mwe_in_sent', 'first_word_embedding', 'mwe_embedding', 'first_word_mwe_emb_diff',
+         'first_word_mwe_emb_abs_diff', 'first_word_mwe_emb_prod']))
 
     with open(filepath, 'r', errors='replace') as in_file:
         content = in_file.readlines()
@@ -209,15 +214,15 @@ def read_tsv(filepath, tokenizer, model, layers):
             complete_mwe_in_sent = '1'
 
             # print(f'mwe_type = {mwe_type}',
-                  # f'first_word = {first_word}',
-                  # f'first_word_id = {first_word_id}',
-                  # f'second_word = {second_word}',
-                  # f'second_word_id = {second_word_id}',
-                  # f'mwe = {mwe}',
-                  # f'sentence = {sentence}',
-                  # f'is_correct = {is_correct}',
-                  # f'complete_mwe_in_sent = {complete_mwe_in_sent}',
-                  # sep='\n')
+            # f'first_word = {first_word}',
+            # f'first_word_id = {first_word_id}',
+            # f'second_word = {second_word}',
+            # f'second_word_id = {second_word_id}',
+            # f'mwe = {mwe}',
+            # f'sentence = {sentence}',
+            # f'is_correct = {is_correct}',
+            # f'complete_mwe_in_sent = {complete_mwe_in_sent}',
+            # sep='\n')
 
             # complete MWE appears in the sentence
             if complete_mwe_in_sent == '1':
@@ -239,6 +244,18 @@ def read_tsv(filepath, tokenizer, model, layers):
                 second_word_mwe_emb_diff = [str(mwe_elem - second_word_elem) for mwe_elem, second_word_elem in
                                             zip(mwe_embedding, second_word_only_embedding)]
 
+                first_word_mwe_emb_abs_diff = [str(abs(mwe_elem - first_word_elem)) for mwe_elem, first_word_elem in
+                                               zip(mwe_embedding, first_word_only_embedding)]
+
+                second_word_mwe_emb_abs_diff = [str(abs(mwe_elem - second_word_elem)) for mwe_elem, second_word_elem in
+                                                zip(mwe_embedding, second_word_only_embedding)]
+
+                first_word_mwe_emb_prod = [str(mwe_elem * first_word_elem) for mwe_elem, first_word_elem in
+                                           zip(mwe_embedding, first_word_only_embedding)]
+
+                second_word_mwe_emb_prod = [str(mwe_elem * second_word_elem) for mwe_elem, second_word_elem in
+                                            zip(mwe_embedding, second_word_only_embedding)]
+
                 mwe_embedding = [str(elem) for elem in mwe_embedding]
                 first_word_only_embedding = [str(elem) for elem in first_word_only_embedding]
                 second_word_only_embedding = [str(elem) for elem in second_word_only_embedding]
@@ -247,7 +264,9 @@ def read_tsv(filepath, tokenizer, model, layers):
                     [mwe_type, first_word, str(first_word_id), second_word, str(second_word_id), mwe, sentence,
                      is_correct, complete_mwe_in_sent, ','.join(mwe_embedding), ','.join(first_word_only_embedding),
                      ','.join(second_word_only_embedding), ','.join(first_word_mwe_emb_diff),
-                     ','.join(second_word_mwe_emb_diff)]))
+                     ','.join(second_word_mwe_emb_diff), ','.join(first_word_mwe_emb_abs_diff),
+                     ','.join(second_word_mwe_emb_abs_diff), ','.join(first_word_mwe_emb_prod),
+                     ','.join(second_word_mwe_emb_prod)]))
 
             # only part of MWE appears in the sentence
             else:
@@ -258,13 +277,20 @@ def read_tsv(filepath, tokenizer, model, layers):
                 first_word_mwe_emb_diff = [str(mwe_elem - first_word_elem) for mwe_elem, first_word_elem in
                                            zip(mwe_embedding, first_word_embedding)]
 
+                first_word_mwe_emb_abs_diff = [str(abs(mwe_elem - first_word_elem)) for mwe_elem, first_word_elem in
+                                               zip(mwe_embedding, first_word_embedding)]
+
+                first_word_mwe_emb_prod = [str(mwe_elem * first_word_elem) for mwe_elem, first_word_elem in
+                                           zip(mwe_embedding, first_word_embedding)]
+
                 first_word_embedding = [str(elem) for elem in first_word_embedding]
                 mwe_embedding = [str(elem) for elem in mwe_embedding]
 
                 write_line_to_file(incomplete_mwe_in_sent_output_file, '\t'.join(
                     [mwe_type, first_word, int(first_word_id), second_word, int(second_word_id), mwe, sentence,
                      is_correct, complete_mwe_in_sent, ','.join(first_word_embedding), ','.join(mwe_embedding),
-                     ','.join(first_word_mwe_emb_diff)]))
+                     ','.join(first_word_mwe_emb_diff), ','.join(first_word_mwe_emb_abs_diff),
+                     ','.join(first_word_mwe_emb_prod)]))
 
 
 def main(args):
