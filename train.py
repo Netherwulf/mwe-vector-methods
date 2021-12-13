@@ -273,34 +273,61 @@ def load_dict(filepath):
 
 
 def main(args):
-    if 'transformer_embeddings' in args:
-        # dataset_filepath = 'sentences_containing_mwe_from_kgr10_group_0_embeddings_1_layers_incomplete_mwe_in_sent.tsv'
-        # mwe_filepath = 'sentences_containing_mwe_from_kgr10_group_0_mwe_list_incomplete_mwe_in_sent.tsv'
-        #
-        # X_train, X_test, y_train, y_test, indices_train, indices_test, mwe_list, mwe_dict, mwe_metadata = load_transformer_embeddings_data(
-        #     dataset_filepath, mwe_filepath)
+    if 'parseme' in args and 'transformer_embeddings' in args:
+        data_dir = 'parseme_transformer_embeddings_pl'
+
+    if 'parseme' in args and 'fasttext_embeddings' in args:
+        data_dir = 'parseme_fasttext_embeddings_pl'
+
+    if 'kgr10' in args and 'transformer_embeddings' in args:
         data_dir = 'transformer_embeddings_dataset'
 
+    if 'transformer_embeddings' in args:
+        X_train_filepath = os.path.join(data_dir, 'X_train.csv')
+        y_train_filepath = os.path.join(data_dir, 'y_train.csv')
+
+        X_test_filepath = os.path.join(data_dir, 'X_test.csv')
+        y_test_filepath = os.path.join(data_dir, 'y_test.csv')
+
+        if 'smote' in args:
+            X_train_filepath = os.path.join(data_dir, 'X_train_smote.csv')
+            y_train_filepath = os.path.join(data_dir, 'y_train_smote.csv')
+
+        if 'borderline_smote' in args:
+            X_train_filepath = os.path.join(data_dir, 'X_train_borderline.csv')
+            y_train_filepath = os.path.join(data_dir, 'y_train_borderline.csv')
+
+        if 'svm_smote' in args:
+            X_train_filepath = os.path.join(data_dir, 'X_train_svm.csv')
+            y_train_filepath = os.path.join(data_dir, 'y_train_svm.csv')
+
+        if 'adasyn' in args:
+            X_train_filepath = os.path.join(data_dir, 'X_train_adasyn.csv')
+            y_train_filepath = os.path.join(data_dir, 'y_train_adasyn.csv')
+
+        indices_train_filepath = os.path.join(data_dir, 'indices_train.csv')
+        indices_test_filepath = os.path.join(data_dir, 'indices_test.csv')
+
+        mwe_dict_filepath = os.path.join(data_dir, 'mwe_dict.pkl')
+        mwe_metadata_filepath = os.path.join(data_dir, 'mwe_metadata.csv')
+
         print('Loading train data...')
-        X_train = list_of_lists_to_float(load_list_of_lists(os.path.join(data_dir, "X_train.csv"), ','))
-        y_train = list_to_type(load_list(os.path.join(data_dir, "y_train.csv")), float)
+        X_train = list_of_lists_to_float(load_list_of_lists(X_train_filepath, ','))
+        y_train = list_to_type(load_list(y_train_filepath), float)
 
         print('Loading test data...')
-        X_test = list_of_lists_to_float(load_list_of_lists(os.path.join(data_dir, "X_test.csv"), ','))
-        y_test = list_to_type(load_list(os.path.join(data_dir, "y_test.csv")), float)
+        X_test = list_of_lists_to_float(load_list_of_lists(X_test_filepath, ','))
+        y_test = list_to_type(load_list(y_test_filepath), float)
 
         print('Loading indices files...')
-        indices_train = list_to_type(load_list(os.path.join(data_dir, "indices_train.csv")), int)
-        indices_test = list_to_type(load_list(os.path.join(data_dir, "indices_test.csv")), int)
+        indices_train = list_to_type(load_list(indices_train_filepath), int)
+        indices_test = list_to_type(load_list(indices_test_filepath), int)
 
         print('Loading mwe dict...')
-        mwe_dict = load_dict(os.path.join(data_dir, 'mwe_dict.pkl'))
-
-        print('Loading mwe list...')
-        mwe_list = load_list(os.path.join(data_dir, 'mwe_list.csv'))
+        mwe_dict = load_dict(mwe_dict_filepath)
 
         print('Loading mwe metadata...')
-        mwe_metadata = load_list_of_lists(os.path.join(data_dir, 'mwe_metadata.csv'), ',')
+        mwe_metadata = load_list_of_lists(mwe_metadata_filepath, ',')
 
         if 'diff_vector_only' in args:
             X_train = np.array([embedding[768 * 2:] for embedding in X_train])
@@ -376,29 +403,6 @@ def main(args):
     results_filepath = 'results_' + '_'.join(args) + '.tsv'
 
     create_empty_file(results_filepath)
-
-    if 'smote' in args:
-        oversample = SMOTE()
-        X_train, y_train = oversample.fit_resample(X_train, y_train)
-
-    if 'pipeline' in args:
-        over = SMOTE(sampling_strategy=0.1)
-        under = RandomUnderSampler(sampling_strategy=0.5)
-        steps = [('o', over), ('u', under)]
-        pipeline = Pipeline(steps=steps)
-        X_train, y_train = pipeline.fit_resample(X_train, y_train)
-
-    if 'borderline_smote' in args:
-        oversample = BorderlineSMOTE()
-        X_train, y_train = oversample.fit_resample(X_train, y_train)
-
-    if 'svm_smote' in args:
-        oversample = SVMSMOTE()
-        X_train, y_train = oversample.fit_resample(X_train, y_train)
-
-    if 'adasyn' in args:
-        oversample = ADASYN()
-        X_train, y_train = oversample.fit_resample(X_train, y_train)
 
     if 'cnn' in args:
         print(f'X_train shape: {X_train.shape}')

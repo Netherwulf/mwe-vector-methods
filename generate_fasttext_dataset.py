@@ -56,13 +56,12 @@ def get_mwe(mwe_file):
     mwe_list = np.array([mwe for mwe in df['mwe'].tolist()])
 
     mwe_metadata = np.array([[mwe_type, first_word, first_word_id, second_word, second_word_id, mwe, sentence,
-                              is_correct, complete_mwe_in_sent] for
+                              is_correct] for
                              mwe_type, first_word, first_word_id, second_word, second_word_id, mwe, sentence,
-                             is_correct, complete_mwe_in_sent in
-                             zip(df['mwe_type'].tolist(), df['first_word'].tolist(), df['first_word_id'].tolist(),
-                                 df['second_word'].tolist(), df['second_word_id'].tolist(), df['mwe'].tolist(),
-                                 df['sentence'].tolist(), df['is_correct'].tolist(),
-                                 df['complete_mwe_in_sent'].tolist())])
+                             is_correct in
+                             zip(df['type'].tolist(), df['first_word'].tolist(), df['first_word_id'].tolist(),
+                                 df['second_word'].tolist(), df['second_word_id'].tolist(), df['full_mwe'].tolist(),
+                                 df['sentence'].tolist(), df['is_correct'].tolist())])
 
     mwe_dict = {}
 
@@ -114,28 +113,19 @@ def load_transformer_embeddings_data(dataset_file):
     df = pd.read_csv(dataset_file, sep='\t')
 
     print('Generating embeddings list...')
-    mwe_embedding = np.array(
-        [np.array([float(elem) for elem in line.split(',')]) for line in df['mwe_embedding'].tolist()])
-    first_word_only_embedding = np.array(
-        [np.array([float(elem) for elem in line.split(',')]) for line in df['first_word_only_embedding'].tolist()])
-    second_word_only_embedding = np.array(
-        [np.array([float(elem) for elem in line.split(',')]) for line in df['second_word_only_embedding'].tolist()])
-    first_word_mwe_emb_diff = np.array(
-        [np.array([float(elem) for elem in line.split(',')]) for line in df['first_word_mwe_emb_diff'].tolist()])
-    second_word_mwe_emb_diff = np.array(
-        [np.array([float(elem) for elem in line.split(',')]) for line in df['second_word_mwe_emb_diff'].tolist()])
-    first_word_mwe_emb_abs_diff = np.array(
-        [np.array([float(elem) for elem in line.split(',')]) for line in df['first_word_mwe_emb_abs_diff'].tolist()])
-    second_word_mwe_emb_abs_diff = np.array(
-        [np.array([float(elem) for elem in line.split(',')]) for line in df['second_word_mwe_emb_abs_diff'].tolist()])
-    first_word_mwe_emb_prod = np.array(
-        [np.array([float(elem) for elem in line.split(',')]) for line in df['first_word_mwe_emb_prod'].tolist()])
-    second_word_mwe_emb_prod = np.array(
-        [np.array([float(elem) for elem in line.split(',')]) for line in df['second_word_mwe_emb_prod'].tolist()])
+    first_word_ft_emb = np.array(
+        [np.array([float(elem) for elem in line.split(',')]) for line in df['first_word_ft_emb'].tolist()])
+    second_word_ft_emb = np.array(
+        [np.array([float(elem) for elem in line.split(',')]) for line in df['second_word_ft_emb'].tolist()])
+    first_second_ft_emb_diff = np.array(
+        [np.array([float(elem) for elem in line.split(',')]) for line in df['first_second_ft_emb_diff'].tolist()])
+    first_second_ft_emb_abs_diff = np.array(
+        [np.array([float(elem) for elem in line.split(',')]) for line in df['first_second_ft_emb_abs_diff'].tolist()])
+    first_second_ft_emb_prod = np.array(
+        [np.array([float(elem) for elem in line.split(',')]) for line in df['first_second_ft_emb_prod'].tolist()])
 
-    embeddings_list = np.hstack((mwe_embedding, first_word_only_embedding, second_word_only_embedding,
-                                 first_word_mwe_emb_diff, second_word_mwe_emb_diff, first_word_mwe_emb_abs_diff,
-                                 second_word_mwe_emb_abs_diff, first_word_mwe_emb_prod, second_word_mwe_emb_prod))
+    embeddings_list = np.hstack((first_word_ft_emb, second_word_ft_emb, first_second_ft_emb_diff,
+                                 first_second_ft_emb_abs_diff, first_second_ft_emb_prod))
 
     embeddings_list = [(embedding, label) for
                        embedding, label in zip(embeddings_list, df['is_correct'].tolist())]
@@ -162,7 +152,7 @@ def create_empty_file(filepath):
     with open(filepath, 'w') as f:
         column_names_line = '\t'.join(
             ['mwe_type', 'first_word', 'first_word_id', 'second_word', 'second_word_id', 'mwe', 'sentence',
-             'is_correct', 'complete_mwe_in_sent'])
+             'is_correct'])
         f.write(f"{column_names_line}\n")
         pass
 
@@ -206,10 +196,8 @@ def get_smote_oversampler(smote_key):
 
 
 def main(args):
-    # dataset_filepath = 'sentences_containing_mwe_from_kgr10_group_0_embeddings_1_layers_incomplete_mwe_in_sent.tsv'
-    # mwe_filepath = 'sentences_containing_mwe_from_kgr10_group_0_mwe_list_incomplete_mwe_in_sent.tsv'
     # dataset_filepath = 'parseme_merged_mwes_embeddings_1_layers_complete_mwe_in_sent.tsv'
-    dataset_filepath = 'parseme_merged_mwes_embeddings_1_layers_complete_mwe_in_sent.tsv'
+    dataset_filepath = 'parseme_dataset_fasttext_embeddings_cbow.tsv'
 
     X_train, X_test, y_train, y_test, indices_train, indices_test, mwe_list, mwe_dict, mwe_metadata = load_transformer_embeddings_data(
         dataset_filepath)
