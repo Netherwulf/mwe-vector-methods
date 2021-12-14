@@ -34,11 +34,16 @@ def create_cnn_model(input_shape=(900, 1)):
 
 
 def find_best_checkpoint(dir_name):
-    curr_loss = 0.0
+    curr_loss = 1.0
 
     for filepath in glob.glob(f"{dir_name}/*.hdf5"):
         loss_value = float(filepath.split('_')[-1].split('.')[0] + '.' + filepath.split('.')[-2])
-        if loss_value > curr_loss:
+        print(f'old_loss: {curr_loss}',
+              f'loss_value: {loss_value}',
+              f'new_filepath: {filepath}',
+              sep='\n')
+
+        if loss_value < curr_loss:
             best_checkpoint = filepath
             curr_loss = loss_value
     print(f'Best checkpoint: {best_checkpoint}')
@@ -86,7 +91,7 @@ def train_cnn_model(model, X, y, epoch_num):
         filepath=checkpoint_filepath,
         save_weights_only=True,
         monitor='val_loss',  # val_auc
-        mode='max',
+        mode='auto',
         save_best_only=True)
 
     # Model weights are saved at the end of every epoch, if it's the best seen
