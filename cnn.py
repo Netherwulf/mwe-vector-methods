@@ -99,7 +99,7 @@ def train_cnn_model(model, X, y, epoch_num):
     history = model.fit(
         X,
         y,
-        batch_size=128,
+        batch_size=32,  # 128
         validation_split=0.2,
         epochs=epochs,
         class_weight=get_class_weights(y),

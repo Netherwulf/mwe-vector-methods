@@ -315,6 +315,10 @@ def main(args):
     X_train = list_of_lists_to_float(load_list_of_lists(X_train_filepath, ','))
     y_train = list_to_type(load_list(y_train_filepath), float)
 
+    if 'undersampling' in args:
+        undersample = RandomUnderSampler(sampling_strategy='majority')
+        X_train, y_train = undersample.fit_resample(X_train, y_train)
+
     print('Loading test data...')
     X_test = list_of_lists_to_float(load_list_of_lists(X_test_filepath, ','))
     y_test = list_to_type(load_list(y_test_filepath), float)
@@ -457,7 +461,7 @@ def main(args):
 
                 get_evaluation_report(y_test, y_pred, indices_test, mwe_metadata, results_filepath)
 
-    if 'majority_voting' not in args and 'weighted_voting' not in args and 'treshold_voting' not in args:
+    else:
         get_evaluation_report(y_test, y_pred, indices_test, mwe_metadata, results_filepath)
 
 
