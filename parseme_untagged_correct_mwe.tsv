@@ -1,0 +1,646 @@
+	type	first_word	first_word_lemma	first_word_id	second_word	second_word_lemma	second_word_id	full_mwe	full_mwe_lemma	sentence
+0	PART+VERB	nie	nie	1	mam	mieć	2	nie mam	nie mieć	Teraz nie mam nikogo innego na jego miejsce .
+1	PART+VERB	nie	nie	6	ma	mieć	7	nie ma	nie mieć	- W Polsce od lat prawie nie ma roku bez epidemii - dodaje .
+2	VERB+AUX	było	być	2	by	by	3	było by	być by	Nie byłoby było by w tym nic złego ( w końcu wszystko jest dla ludzi , a ksiądz to też mężczyzna ) gdyby nie to , że ksiądz to jednak ksiądz i komu jak komu , ale jemu właśnie nie bardzo wypada , tak przy ludziach .
+3	PART+VERB	nie	nie	5	widzę	widzieć	6	nie widzę	nie widzieć	Inaczej mówiąc , kiedy pana nie widzę , jest mi lepiej .
+4	PART+VERB	nie	nie	3	chcą	chcieć	4	nie chcą	nie chcieć	- Nasi koledzy nie chcą przyjąć do wiadomości , że jest inaczej , niż miało być . . .
+5	ADP+NOUN	W	w	0	oczach	oko	1	W oczach	w oko	W oczach tych z naprzeciwka nie było także nienawiści , jeśli już , to fanatyzm ideowy , przeświadczenie , że trzeba dać wyraz swoim poglądom , protestować wobec niesprawiedliwości i bogactwu , a potem poszedł do swojego gabinetu i pracował do późnych godzin popołudniowych , patrząc od czasu do czasu na biwakujących studentów i połyskujące z dala , poza ogrodzeniem i bramą campusu , bagnety .
+6	ADP+NOUN	na	na	30	rękę	ręka	31	na rękę	na ręka	- Na dodatek - wtrąciła się pani Roszko - kiedy rano zeszliśmy zeszli śmy na śniadanie , kelnerka , taka młoda siksa , stawiając dzbanek z wodą , chlapnęła mi na rękę .
+7	ADP+PRON	ze	z	3	sobą	siebie	4	ze sobą	z siebie	Czuć się komfortowo ze sobą , być szczęśliwym , to nie znaczy udawać , że wszystko jest tak jak przed urodzeniem dziecka .
+8	ADP+NOUN	do	do	3	udziału	udział	4	do udziału	do udział	- Zapraszamy wszystkich do udziału w naszej zabawie - mówi Małgorzata Kowalska .
+9	VERB+AUX	zrobił	zrobić	3	em	być	4	zrobił em	zrobić być	I tak zrobiłem zrobił em .
+10	ADP+PRON	za	za	4	sobą	siebie	5	za sobą	za siebie	Rozwój gospodarki indyjskiej pociągnął za sobą gospodarkę pakistańską , bo kraje te - zrośnięte blizną - zawsze na siebie oddziałują .
+11	ADJ+PRON	ciągnąca	ciągnąć	3	się	się	4	ciągnąca się	ciągnąć się	Zapoczątkowana zostaje , ciągnąca się przez następne stulecia , fatalna tradycja mieszania się Rosji w wewnętrzne sprawy polskie , terroru , skłócania bądź przekupstwa , a przede wszystkim osłabiania państwa polskiego , likwidacji , a przynajmniej ograniczania tych sił społecznych , które mogłyby mogły by przeforsować ratujące to państwo reformy .
+12	PART+VERB	nie	nie	12	mam	mieć	13	nie mam	nie mieć	A jak jeszcze słyszę , że mam bulić komuś kasę , której nie mam , żeby mógł jeszcze bardziej monopolizować rynek , to mnie krew zalewa .
+13	ADP+ADJ	za	za	8	stosowne	stosowny	9	za stosowne	za stosowny	Włażąc na cudze łóżko , nie uważał nawet za stosowne zdjąć zakurzonych butów .
+14	ADP+NOUN	W	w	0	czasie	czas	1	W czasie	w czas	W czasie obławy policjantom z Pieniężna udało się zatrzymać dwóch kłusowników .
+15	ADP+NOUN	w	w	3	gardle	gardło	4	w gardle	w gardło	Pojawia się drapanie w gardle , wysypka , nagły spadek ciśnienia , duszność , trudności w oddychaniu , bóle brzucha .
+16	ADP+NOUN	Na	na	0	koniec	koniec	1	Na koniec	na koniec	Na koniec owego wspaniałego dnia zaprosili go , by odwiedził ich w domu .
+17	PART+VERB	Nie	nie	32	chcę	chcieć	33	Nie chcę	nie chcieć	"Pisarz Wojciech Kuczok wyznał w wywiadzie dla "" Przeglądu "" , iż z zasady nie bierze udziału "" w żadnych szopkach politycznych ani w wyborach "" , następnie wyjaśnił dlaczego : "" Nie chcę postępować wbrew sobie ."
+18	PART+VERB	nie	nie	2	ma	mieć	3	nie ma	nie mieć	Projekt uchwały nie ma nic wspólnego z opracowaniem przyszłościowego , spójnego systemu cen , kierowanego przez mechanizmy ekonomiczne .
+19	VERB+PRON	Daj	dać	1	się	się	2	Daj się	dać się	– Daj się uwieść .
+20	PART+VERB	nie	nie	19	ma	mieć	20	nie ma	nie mieć	Należy przeanalizować to , kiedy firma zobowiązuje się odsprzedać prawo do pobytu oraz co proponuje w zamian , jeżeli nie ma miejsca w wybranym przez turystę ośrodku .
+21	VERB+NOUN	ma	mieć	20	miejsca	miejsce	21	ma miejsca	mieć miejsce	Należy przeanalizować to , kiedy firma zobowiązuje się odsprzedać prawo do pobytu oraz co proponuje w zamian , jeżeli nie ma miejsca w wybranym przez turystę ośrodku .
+22	PART+VERB	nie	nie	31	widzą	widzieć	32	nie widzą	nie widzieć	Stoeckmann docenił dotychczasowe postępowanie Waszyngtonu , mówiąc : - To , co w tym momencie jest wymagane , to umiarkowanie , i sądzę , że USA przeprowadzają bardzo dokładną analizę i nie widzą uniwersalnego rozwiązania , którego my też nie widzimy .
+23	PART+VERB	nie	nie	39	widzimy	widzieć	40	nie widzimy	nie widzieć	Stoeckmann docenił dotychczasowe postępowanie Waszyngtonu , mówiąc : - To , co w tym momencie jest wymagane , to umiarkowanie , i sądzę , że USA przeprowadzają bardzo dokładną analizę i nie widzą uniwersalnego rozwiązania , którego my też nie widzimy .
+24	PART+VERB	Nie	nie	1	wiem	wiedzieć	2	Nie wiem	nie wiedzieć	- Nie wiem , co się stało .
+25	PART+VERB	nie	nie	26	mamy	mieć	27	nie mamy	nie mieć	Dawniej , jak mi w szkole bardzo dokuczali tym , że rodzice nie mieszkają razem , to miałem miał em czasem do nich żal , że nie mamy jednego wspólnego domu , tak jak u innych .
+26	ADP+NOUN	na	na	16	wolności	wolność	17	na wolności	na wolność	Darek P . widząc , że jego zeznania nie przyniosły żadnego skutku , a Komor chodzi na wolności , sprzedaje majątek i dalej prowadzi swoje lewe interesy , zwrócił się z prośbą o pomoc do dziennikarzy .
+27	PART+VERB	nie	nie	28	widzę	widzieć	29	nie widzę	nie widzieć	Normalnie nie prosiłbym prosił by m o sprostowanie tej notatki ale jak się Pan na pewno orientuje , nie cieszę się zbyt dobrą opinią wśród społeczeństwa emigracyjnego i nie widzę powodu dlaczego ta nieprawdziwa notatka miałaby miała by przedstawić mnie w fałszywym świetle .
+28	PART+VERB	nie	nie	1	chciała	chcieć	2	nie chciała	nie chcieć	Ale nie chciała chodzić , udawała , że nic nie rozumie .
+29	VERB+NOUN	spędzając	spędzać	7	sen	sen	8	spędzając sen	spędzać sen	- Czyżby widmo Kwaśniewskiego krążyło nad Polską spędzając sen z oczu prawicy ? - dziwi się pan K .
+30	ADP+NOUN	z	z	9	oczu	oko	10	z oczu	z oko	- Czyżby widmo Kwaśniewskiego krążyło nad Polską spędzając sen z oczu prawicy ? - dziwi się pan K .
+31	ADP+NOUN	na	na	21	oczy	oko	22	na oczy	na oko	Znając tego rodzaju formuły , kabaliści mogli działać ( to znaczy pomagać białą magią lub szkodzić czarną ) , na przykład na oczy , intonując odpowiednim tonem literę Szin , w pierwszy dzień tygodnia , w godzinie panowania Jowisza , pod auspicjami Saturna , któremu w symbolice odpowiada prawe oko .
+32	PART+VERB	nie	nie	15	chce	chcieć	16	nie chce	nie chcieć	W Warszawie mówi się , że zrestrukturyzowany Zakład Lotniczy , zatrudniający jedynie 1000 osób , nie chce już produkować Iryd , opierając swoją egzystencję na montażu lekkich samolotów transportowych M28 oraz rolniczych i przeciwpożarowych Dromaderów .
+33	ADP+NOUN	w	w	7	oczy	oko	8	w oczy	w oko	Na ułamek sekundy znieruchomieli , patrząc sobie w oczy , i w sekundę potem przywarli do siebie .
+34	PART+VERB	Nie	nie	0	wiem	wiedzieć	1	Nie wiem	nie wiedzieć	Nie wiem .
+35	PART+VERB	nie	nie	1	widzę	widzieć	2	nie widzę	nie widzieć	Ale nie widzę , więc wpadam na pomysł , by zresetować swój telefon .
+36	VERB+PRON	trzymają	trzymać	4	się	się	5	trzymają się	trzymać się	Na tym samym poziomie trzymają się ceny marchwi i buraków - około złotówki za kilogram .
+37	VERB+PRON	Spotkał	spotkać	0	się	się	1	Spotkał się	spotkać się	Spotkał się ze stanowczą odmową .
+38	ADP+NOUN	Na	na	0	koniec	koniec	1	Na koniec	na koniec	Na koniec czerwca br . wynosił bowiem 12,1 proc .
+39	ADP+NOUN	w	w	10	grach	gra	11	w grach	w gra	Trzeba pamiętać , że telefonistki wydzwaniając kolejne impulsy i uczestnicząc w grach audiotele uzyskały dochód w wysokości 45 tysięcy złotych .
+40	VERB+PRON	robi	robić	44	się	się	45	robi się	robić się	"U nas z kolei prace Chełmińskiego przerabia się na Chełmońskiego ( wystarczy zmienić jedną literkę ) , Kazimierza Wygrzywalskiego na Feliksa Wygrzywalskiego , Władysława Szernera jr . na ojca ( wymazując tylko "" jr "" ) , podobnie jak z prac córki Włodzimierza Tetmajera robi się obrazy taty ."
+41	ADP+NOUN	w	w	4	słowach	słowo	5	w słowach	w słowo	Jeśli ja nie przebierając w słowach opowiem , co myślę o panu Niesiołowskim , to mogę wylądować w więzieniu .
+42	VERB+PRON	zdecydował	zdecydować	7	się	się	8	zdecydował się	zdecydować się	Między lutym a majem 1945 r . zdecydował się los żyjącego dotąd na uboczu wojny miasta .
+43	ADP+ADV	na	na	8	tyle	tyle	9	na tyle	na tyle	Musimy zdecydować , czy praca jest dla nas na tyle istotna , że traktujemy ją jako numer jeden w naszym życiu .
+44	PRON+VERB	SIĘ	się	24	CHCIEĆ	chcieć	25	SIĘ CHCIEĆ	się chcieć	- MÓGŁBYM MÓGŁ BY M , GDYBYM GDYBY M CHCIAŁ , ALE KIEDY MOŻESZ WIEDZIEĆ WSZYSTKO , CO TYLKO ZECHCESZ , TO PRZESTAJE CI SIĘ CHCIEĆ .
+45	PART+PART	i	i	7	to	to	8	i to	i to	Chyba właśnie dlatego wygraliśmy wygrali śmy , i to z takimi sławami , specami od żydowskich muzeów i pomników , jak Daniel Libeskind czy Peter Eisenman .
+46	PART+VERB	nie	nie	14	ma	mieć	15	nie ma	nie mieć	Mogę się tylko domyślać , że jeśli to byli czołowi youtuberzy – a tu nie ma innych – to nigdy nie zjadali własnych ciasteczek .
+47	NOUN+ADJ	rzutów	rzut	7	karnych	karny	8	rzutów karnych	rzut karny	- Czy nie było Panu ciężko oglądać rzutów karnych jako rezerwowy ?
+48	PART+VERB	nie	nie	5	robił	robić	6	nie robił	nie robić	Obecny minister finansów oczywiście nic nie robił w tej sprawie .
+49	PART+VERB	Nie	nie	1	wiecie	wiedzieć	2	Nie wiecie	nie wiedzieć	- Nie wiecie , dokąd poszła ?
+50	VERB+PRON	deklarował	deklarować	2	się	się	3	deklarował się	deklarować się	I choć deklarował się jako niewierzący , to jednak z sympatii do nas wybrał się kiedyś na Mszę świętą , mimo że – jak mówił – nie był w kościele od ponad dziesięciu lat .
+51	PART+VERB	Nie	nie	7	chcemy	chcieć	8	Nie chcemy	nie chcieć	Po kilku minutach uczniowie stwierdzają : - Nie chcemy , żeby mieszkali w Laskach .
+52	PART+VERB	nie	nie	2	wiem	wiedzieć	3	nie wiem	nie wiedzieć	- Naprawdę nie wiem , o co tu chodzi - mówił zirytowany .
+53	ADP+PRON	o	o	5	co	co	6	o co	o co	- Naprawdę nie wiem , o co tu chodzi - mówił zirytowany .
+54	ADP+NOUN	na	na	10	ręce	ręka	11	na ręce	na ręka	Andrzej Chronowski , dotychczasowy minister skarbu , złożył wczoraj dymisję na ręce premiera .
+55	VERB+PRON	lała	lać	17	się	się	18	lała się	lać się	Przypominamy : chodzi tu o wydatki ponoszone każdego dnia po to , żeby każdego dnia w Wietnamie lała się krew i ginęli ludzie .
+56	ADP+NOUN	w	w	9	czasie	czas	10	w czasie	w czas	- Teraz będę bez problemu puszczać sygnały do kolegi w czasie lekcji - cieszy się chłopak .
+57	PART+VERB	nie	nie	2	ma	mieć	3	nie ma	nie mieć	Barku chyba nie ma , to błąd .
+58	ADP+PRON	O	o	0	co	co	1	O co	o co	O co mi chodziło , to o rozreklamowanie owych filmów i wielkie oczekiwania wobec nich w kategoriach rozrywkowych napompowane do granic przyzwoitości przez media .
+59	ADP+NOUN	w	w	12	gardłach	gardło	13	w gardłach	w gardło	Gawrony kraczą jak opętane , ochryple , jakby coś rozdzierało im się w gardłach .
+60	PART+VERB	nie	nie	25	wiem	wiedzieć	26	nie wiem	nie wiedzieć	Tak dywagujemy sobie o tym że Polska to Polska tamto , ale wobec braku zagrożenia ze strony Zakonu na północ od Mazowsza i Kujaw , nie wiem czy byłby był by wygenerowany impuls zjednoczeniowy , a jeśli tak to pewnie nie wokół Piastów kujawskich . . .
+61	PART+VERB	nie	nie	2	wie	wiedzieć	3	nie wie	nie wiedzieć	Pani Zyta nie wie , że Włosi dawno mają domy społecznie budowane z niższym VAT-em i UE nie wnosi do tego żadnych pretensji ?
+62	PART+VERB	nie	nie	1	chcesz	chcieć	2	nie chcesz	nie chcieć	Jeśli nie chcesz biegać , pływać czy grać w piłkę - umyj okna , skoś trawę na działce , posprzątaj piwnicę .
+63	VERB+PRON	zebrały	zebrać	2	się	się	3	zebrały się	zebrać się	Gdy dziewczęta zebrały się w sali szkolnej , wyjaśniła krótko : - Zdałyśmy Zdały śmy egzamin na ćwiczeniach .
+64	PART+VERB	nie	nie	14	chcę	chcieć	15	nie chcę	nie chcieć	- Ze względu na lojalność wobec kolegi przyznaję się do zabójstwa Kariny , bo nie chcę go wrobić w mord , którego nie popełnił - wyznał sądowi Tomasz S .
+65	ADJ+NOUN	dalszym	daleki	20	ciągu	ciąg	21	dalszym ciągu	daleki ciąg	Jej stan prezydent ocenił generalnie jako bardzo dobry , podkreślając m.in . spadek bezrobocia i oznajmił , że Rosja w dalszym ciągu będzie spłacać przedterminowo swe zagraniczne zadłużenie .
+66	PART+VERB	nie	nie	22	miał	mieć	23	nie miał	nie mieć	Oczywiście , można się mimo to upierać , że powołując postać Biegańskiego Styron zbłaźnił się jako pisarz , bo przecie Cybichowski córki nie miał .
+67	PART+VERB	nie	nie	12	chce	chcieć	13	nie chce	nie chcieć	A oto końcowy fragment wypowiedzi przedstawiciela kierownictwa innego młyna : - Państwo nie chce lub nie potrafi regulować rynku zbóż .
+68	CCONJ+PRON	i	i	3	to	to	4	i to	i to	– Analizujemy dowody i to , jaki członkowie zarządu mieli wpływ na niegospodarne decyzje – mówi Zieliński .
+69	ADP+NOUN	w	w	10	oczy	oko	11	w oczy	w oko	- W Paryżu - powiedział tamten , patrząc mu prosto w oczy - najlepsze kasztany są na placu Pigalle .
+70	ADP+NOUN	W	w	0	czasach	czas	1	W czasach	w czas	W czasach Platona , sztuką było też rzemiosło , które spełniało kryterium umiejętnego wytwarzania .
+71	ADP+NOUN	na	na	16	cele	cel	17	na cele	na cel	"Lider Samoobrony zapowiedział , że poda do sądu tygodnik "" Wprost "" , żądając miliona złotych na cele charytatywne ."
+72	ADP+NOUN	z	z	3	ziemi	ziemia	4	z ziemi	z ziemia	Strażnicy podnieśli Ilię z ziemi , odkneblowali usta .
+73	PART+VERB	nie	nie	3	ma	mieć	4	nie ma	nie mieć	Oświadczył , że nie ma warunków dla uroczystego otwarcia Cmentarza Orląt Lwowskich w najbliższy wtorek .
+74	ADP+NOUN	w	w	3	roli	rola	4	w roli	w rola	Debiutująca za oceanem w roli szefa rządu Angela Merkel wykazała dużą pewność siebie .
+75	VERB+PRON	spotkać	spotkać	28	się	się	29	spotkać się	spotkać się	Jak w miarę sprawnie i szybko odwiedzić Szwajcarię Indochin - Bangkok , zajrzeć na targ wodny gdzie za grosze można zakupić mniej , lub bardziej egzotyczne owoce , spotkać się z Czerwonymi Khmerami i spojrzeć w oczy Buddzie z siódmego nieba ?
+76	ADP+NOUN	w	w	35	oczy	oko	36	w oczy	w oko	Jak w miarę sprawnie i szybko odwiedzić Szwajcarię Indochin - Bangkok , zajrzeć na targ wodny gdzie za grosze można zakupić mniej , lub bardziej egzotyczne owoce , spotkać się z Czerwonymi Khmerami i spojrzeć w oczy Buddzie z siódmego nieba ?
+77	ADP+NOUN	na	na	14	stanowisku	stanowisko	15	na stanowisku	na stanowisko	Siemkowicz prostuje : - To było 25 listopada , w piątym dniu mojej pracy na stanowisku komendanta .
+78	ADJ+PRON	składające	składać	9	się	się	10	składające się	składać się	"Niemniej jednak należy pamiętać , że "" wszystkie elementy składające się na środowisko nie istnieją w izolacji i są ze sobą ściśle sprzężone "" ."
+79	ADP+PRON	ze	z	19	sobą	siebie	20	ze sobą	z siebie	"Niemniej jednak należy pamiętać , że "" wszystkie elementy składające się na środowisko nie istnieją w izolacji i są ze sobą ściśle sprzężone "" ."
+80	PART+VERB	Nie	nie	0	ma	mieć	1	Nie ma	nie mieć	Nie ma wyzwolenia .
+81	ADP+PRON	w	w	22	sobie	siebie	23	w sobie	w siebie	"Okres andrzejkowych wróżb jest takim właśnie okresem , gdzie każdy może sobie pozwolić na dojście do głosu tego "" pierwotnego człowieka "" w sobie , bez obaw , że zostanie to źle przyjęte . . ."
+82	PART+VERB	nie	nie	3	widział	widzieć	4	nie widział	nie widzieć	Niestety , nikt nie widział złodziei .
+83	ADP+PRON	o	o	22	czym	co	23	o czym	o co	Nie kusząc się o rozstrzyganie tej złożonej sprawy technicznej , trzeba stwierdzić , że zaważyła ona ujemnie na polskim udziale festiwalowym , o czym będzie mowa później .
+84	ADP+ADJ	na	na	15	dobre	dobry	16	na dobre	na dobry	Trudno będzie uwinąć się w tym roku z sadzeniem do końca maja , kiedy tak na dobre ruszy wegetacja w górach - martwi się Władysław Budzyn , nadleśniczy Nadleśnictwa Komańcza .
+85	PART+VERB	Nie	nie	0	chciał	chcieć	1	Nie chciał	nie chcieć	Nie chciał mieć krowy .
+86	ADP+NOUN	w	w	9	oczy	oko	10	w oczy	w oko	Toteż śmiecie , prószące mi stale na głowę i w oczy , jest o wiele mniej dokuczliwe od tego , które sypało się na mnie na barży .
+87	PART+VERB	nie	nie	1	masz	mieć	2	nie masz	nie mieć	Jak nie masz nic do powiedzenia , to nie pisz , świat nie zubożeje od tego .
+88	PART+VERB	nie	nie	4	ma	mieć	5	nie ma	nie mieć	- W naszej drużynie nie ma gwiazd , potrzebni są ludzie nieprawdopodobnie zaangażowani w grę .
+89	ADP+NOUN	w	w	13	grę	gra	14	w grę	w gra	- W naszej drużynie nie ma gwiazd , potrzebni są ludzie nieprawdopodobnie zaangażowani w grę .
+90	PART+VERB	nie	nie	4	wiem	wiedzieć	5	nie wiem	nie wiedzieć	Ja nic o tym nie wiem .
+91	PART+VERB	nie	nie	1	wiem	wiedzieć	2	nie wiem	nie wiedzieć	Choćby nie wiem jak bardzo niewyczerpane były pasje i żądze - ślubuję je ugasić .
+92	CCONJ+PRON	i	i	5	to	to	6	i to	i to	Zastanowiła ją realność hotelowej łazienki i to , że wydarzenia sprzed sześciu lat wróciły do niej z taką wyrazistością .
+93	PART+VERB	nie	nie	5	miał	mieć	6	nie miał	nie mieć	Bynajmniej nie dlatego , żeby nie miał albo miał złych rodziców , przeciwnie , cała rodzina była ze sobą silnie związana , a on pozostał teraz jako jedyny w domu .
+94	ADP+PRON	ze	z	17	sobą	siebie	18	ze sobą	z siebie	Bynajmniej nie dlatego , żeby nie miał albo miał złych rodziców , przeciwnie , cała rodzina była ze sobą silnie związana , a on pozostał teraz jako jedyny w domu .
+95	PART+VERB	nie	nie	3	wiem	wiedzieć	4	nie wiem	nie wiedzieć	Choćbyś Choćby ś nie wiem jak się opierała , musisz , ptaszeczku , musisz !
+96	ADP+NOUN	Na	na	0	koniec	koniec	1	Na koniec	na koniec	Na koniec zacieramy ślady .
+97	PART+VERB	Nie	nie	3	ma	mieć	4	Nie ma	nie mieć	"Yueshan : "" Nie ma nawet miejsca na wetknięcie szpilki "" ."
+98	ADP+NOUN	na	na	21	stanowiskach	stanowisko	22	na stanowiskach	na stanowisko	"Na swoją korzyść Lech Wałęsa interpretował przepis mówiący o tym , iż prezydent na wniosek premiera "" może dokonywać "" zmian na stanowiskach ministrów ; jeśli może , to znaczy , że nie musi ."
+99	ADP+NOUN	w	w	3	oczy	oko	4	w oczy	w oko	- Patrzy Hansowi w oczy i widać , że waży troskliwie podpływające do ust słowa .
+100	ADP+NOUN	w	w	4	czasie	czas	5	w czasie	w czas	NIK podkreśla , że w czasie prywatyzacji AWRSP następowało pogorszenie sytuacji ekonomicznej Polski .
+101	PART+VERB	nie	nie	2	ma	mieć	3	nie ma	nie mieć	W sztuce nie ma nic bardziej żywotnego od martwej natury przedmiotów .
+102	PART+VERB	nie	nie	5	miała	mieć	6	nie miała	nie mieć	Znów się zawahała , ale nie miała przecież nic do ukrycia .
+103	PART+VERB	nie	nie	4	dały	dać	5	nie dały	nie dać	Wicemistrzynie Polski z Mielca nie dały pograć w Krakowie Wiśle i opuściły ostatnie miejsce w tabeli właśnie na rzecz podopiecznych Lesława Kędryny .
+104	PART+VERB	nie	nie	10	ma	mieć	11	nie ma	nie mieć	- Próbowałem Próbował em wytłumaczyć tym panom , że już nie ma miejsc na dzisiejszy występ . . . - piszczał pikolak , podnosząc swoją czapkę .
+105	VERB+NOUN	ma	mieć	11	miejsc	miejsce	12	ma miejsc	mieć miejsce	- Próbowałem Próbował em wytłumaczyć tym panom , że już nie ma miejsc na dzisiejszy występ . . . - piszczał pikolak , podnosząc swoją czapkę .
+106	VERB+PRON	spotkać	spotkać	2	się	się	3	spotkać się	spotkać się	Trzeba też spotkać się z fachowcami , uzyskać pozwolenia , odbyć konsultacje .
+107	PART+VERB	Nie	nie	0	chcemy	chcieć	1	Nie chcemy	nie chcieć	Nie chcemy , by ktokolwiek kwestionował twoją wartość jako pracownika z zupełnie innych powodów niż zawodowe .
+108	PART+VERB	nie	nie	2	robić	robić	3	nie robić	nie robić	Możesz również nie robić nic , tylko patrzeć .
+109	PART+VERB	nie	nie	6	wiedząc	wiedzieć	7	nie wiedząc	nie wiedzieć	Dziwnie było iść białymi korytarzami , nie wiedząc , dokąd prowadzą .
+110	PART+VERB	nie	nie	9	mam	mieć	10	nie mam	nie mieć	Odparłem Odparł em im : proszę panów , ja nie mam tu żadnych osobistych rzeczy .
+111	PART+VERB	nie	nie	4	wiem	wiedzieć	5	nie wiem	nie wiedzieć	Potem mówię , że nie wiem , dlaczego tak się dzieje .
+112	PART+PART	i	i	10	to	to	11	i to	i to	Rodzinne przeszczepy nerki do tej pory przeprowadzano w Polsce sporadycznie i to jedynie w dwóch ośrodkach : w Warszawie i w Poznaniu .
+113	ADP+PRON	ze	z	21	sobą	siebie	22	ze sobą	z siebie	Dzieci bardzo chętnie „ dojadają ” tym chlebkiem , a panie dyżurujące na stołówce twierdzą , sporo z nich zabiera nawet ze sobą kilka pajd chleba .
+114	ADP+NOUN	z	z	4	głowy	głowa	5	z głowy	z głowa	- Jemu ciekła krew z głowy - mówią świadkowie .
+115	PART+VERB	Nie	nie	0	robimy	robić	1	Nie robimy	nie robić	Nie robimy z tego tajemnicy .
+116	PART+VERB	nie	nie	10	dał	dać	11	nie dał	nie dać	Następnie hospitalizował się podając jako powód bóle nerek , ale nie dał się zbadać .
+117	VERB+PRON	dał	dać	11	się	się	12	dał się	dać się	Następnie hospitalizował się podając jako powód bóle nerek , ale nie dał się zbadać .
+118	ADP+DET	na	na	16	tyle	tyle	17	na tyle	na tyle	Powiedziałbym Powiedział by m , że ich rola jest formalna i głos pracowników nie przebija się na tyle , na ile zasługuje .
+119	NOUN+NOUN	akt	akt	6	oskarżenia	oskarżenie	7	akt oskarżenia	akt oskarżenie	W tej sprawie krakowska prokuratura przygotowuje akt oskarżenia .
+120	ADP+NOUN	w	w	5	czasie	czas	6	w czasie	w czas	Moje pokolenie , to uformowane w czasie dwudziestoletniej niepodległości , już się wykrusza , lecz także i wiele pojęć się wykrusza : państwo , ojczyzna , poświęcenie dla narodu , nawet wiara , którą politycznymi spekulacjami stoczono , jak czerwie toczą drewno dębu .
+121	PART+VERB	nie	nie	14	ma	mieć	15	nie ma	nie mieć	- Jeżeli nie zapłacimy Masterowi za pokazanie się na ekranie , to nas tam nie ma .
+122	ADJ+PRON	dającej	dawać	13	się	się	14	dającej się	dawać się	Futurologowie snują , co prawda , rozważania o możliwości wskrzeszenia człowieka w nie dającej się określić przyszłości , pod warunkiem , że dzięki specjalnej technologii zamrozi się ciało , ale nie może to przesłonić faktu , że w naszym wieku śmierć jakby potaniała i zbanalizowała się .
+123	ADP+PRON	za	za	4	sobą	siebie	5	za sobą	za siebie	W pewnej chwili słyszy za sobą szybki jazgot peema .
+124	PART+VERB	nie	nie	1	chce	chcieć	2	nie chce	nie chcieć	PiS nie chce się zajmować bezrobociem , wyrównywaniem szans w dostępie do edukacji , służby zdrowia czy rozwarstwieniem społecznym , a zamiast tego funduje nam komisję bankową .
+125	ADP+NOUN	w	w	23	żyle	żyła	24	w żyle	w żyła	Następnie rozłożyła wysoki statyw , zawiesiła na nim pudełko , przeprowadziła od niego przezroczysty przewód do igły , którą wcześniej automatyczny iniektor umieścił w żyle na przedramieniu Irka .
+126	VERB+PRON	daje	dawać	7	się	się	8	daje się	dawać się	Zwierzę polubiło piwko i bez kufla nie daje się wydoić .
+127	PART+VERB	nie	nie	12	chcą	chcieć	13	nie chcą	nie chcieć	Rosja początkowo boczyła się na to , że Amerykanie zrywają traktat i nie chcą podpisywać jakichkolwiek wspólnych uzgodnień o redukcji broni nuklearnej .
+128	ADP+ADV	na	na	7	tyle	tyle	8	na tyle	na tyle	W pewnym oddaleniu od dworu , ale na tyle blisko , by można było tam w każdej chwili zajrzeć , znajdowały się zabudowania gospodarcze , czyli stajnie , owczarnie , obory , chlewy i kurniki , dalej pomieszczenia do przechowywania plonów i inne przeznaczone na maszyny rolnicze , warsztaty , mieszkania pracowników i wozownie .
+129	PART+VERB	nie	nie	19	chce	chcieć	20	nie chce	nie chcieć	Ile będzie tych komputerów , ile będą kosztować i kto je dostanie - na razie polski potentat telefoniczny zdradzić nie chce .
+130	ADP+PRON	w	w	12	sobie	siebie	13	w sobie	w siebie	I nawet teraz , po tylu gorzkich doświadczeniach , nie potrafi wzbudzić w sobie nienawiści do tego oprawcy .
+131	ADP+NOUN	w	w	22	czasie	czas	23	w czasie	w czas	Pojechałem Pojechał em w tej sprawie do Bieruta i tłumaczyłem tłumaczył em , że Moczarski - niezależnie od pracy , którą wykonywał w czasie okupacji - jest przyzwoitym człowiekiem .
+132	PART+PART	i	i	7	to	to	8	i to	i to	Wtedy okazało się , że niesolidnym klientem i to całkiem innego banku , była znajoma Bączyków , której pan Rajmund żyrował pożyczkę .
+133	PART+VERB	nie	nie	7	robię	robić	8	nie robię	nie robić	A teraz ja tu jestem sam i nie robię żadnej z tych rzeczy , o których tyle mówiliśmy mówili śmy ; między innymi dlatego , że nie mam gitary - zaśmiał się śmiechem , który nie budził we mnie żadnego echa .
+134	PART+VERB	nie	nie	26	mam	mieć	27	nie mam	nie mieć	A teraz ja tu jestem sam i nie robię żadnej z tych rzeczy , o których tyle mówiliśmy mówili śmy ; między innymi dlatego , że nie mam gitary - zaśmiał się śmiechem , który nie budził we mnie żadnego echa .
+135	ADP+NOUN	w	w	1	czasie	czas	2	w czasie	w czas	Charczew w czasie całej rozmowy mówił po rosyjsku , ale , jak twierdzi Wasiłowski , sprawiał wrażenie , że rozumie język polski .
+136	PART+VERB	nie	nie	9	ma	mieć	10	nie ma	nie mieć	To postawa seksualnej anarchii , która uznaje , że nie ma w dziedzinie życia seksualnego niczego , co mogłoby mogło by zostać uznane za amoralne .
+137	PART+VERB	nie	nie	1	wiedziało	wiedzieć	2	nie wiedziało	nie wiedzieć	Żadne nie wiedziało .
+138	PART+VERB	nie	nie	27	ma	mieć	28	nie ma	nie mieć	Bardzo chciałbym chciał by m , żeby interesowano się mną jako artystą , a nie facetem , który żyje sam i przeszkadza co poniektórym tym , że nie ma żony , dwóch kochanek i sześciorga dzieci na boku , o których można by pisać .
+139	PART+VERB	nie	nie	14	mają	mieć	15	nie mają	nie mieć	5 ) W takim zestawie świetnie wyglądają osoby niskie i średnie , o ile nie mają krótkiej talii .
+140	PART+VERB	nie	nie	4	ma	mieć	5	nie ma	nie mieć	- Pana prezesa jeszcze nie ma .
+141	ADP+ADJ	na	na	5	dobre	dobry	6	na dobre	na dobry	- Kiedy impreza rozkręciła się na dobre , ktoś dosypał mi narkotyków do drinka - mówi dziewczyna .
+142	SCONJ+NOUN	Co	co	0	do	do	1	Co do	co do	Co do odpowiedzialności politycznej za działalność , to przypomnę jeszcze raz , chociaż pewnie będę musiał jeszcze za moment do tego wrócić , że mówimy o śledztwie , z którego dokumenty i notatki datują się od 25 stycznia 1991 r . do 26 marca 1997 r .
+143	NOUN+NOUN	do	do	1	odpowiedzialności	odpowiedzialność	2	do odpowiedzialności	do odpowiedzialność	Co do odpowiedzialności politycznej za działalność , to przypomnę jeszcze raz , chociaż pewnie będę musiał jeszcze za moment do tego wrócić , że mówimy o śledztwie , z którego dokumenty i notatki datują się od 25 stycznia 1991 r . do 26 marca 1997 r .
+144	ADP+PRON	w	w	23	sobie	siebie	24	w sobie	w siebie	Gdyby więc Joanna umiała zanalizować różne odmiany kary , musiałaby musiała by dostrzec , że bardziej boi się groźby kary niż kary samej w sobie .
+145	PART+VERB	nie	nie	8	chcę	chcieć	9	nie chcę	nie chcieć	- Agatka jest teraz u swoich chrzestnych i nie chcę , by wracała do domu .
+146	ADP+NOUN	W	w	0	czasie	czas	1	W czasie	w czas	W czasie hartowania zachodzą zarówno szybkie przemiany biochemiczne w komórkach oraz przebudowują się tkanki , co wymaga dłuższego czasu .
+147	ADP+PRON	z	z	12	siebie	siebie	13	z siebie	z siebie	Czułem Czuł em się wspaniale , wiedziałem wiedział em , że wiele z siebie mogę dać innym , i to zarówno tutaj , jak i tam , kiedy już znajdę się w normalnym świecie .
+148	PART+VERB	nie	nie	2	mają	mieć	3	nie mają	nie mieć	Ale oni nie mają Balcerowiczów .
+149	PART+VERB	nie	nie	1	ma	mieć	2	nie ma	nie mieć	Choć nie ma oficjalnych odwiedzin , mama może spotkać się z rodziną w korytarzu .
+150	VERB+PRON	spotkać	spotkać	8	się	się	9	spotkać się	spotkać się	Choć nie ma oficjalnych odwiedzin , mama może spotkać się z rodziną w korytarzu .
+151	ADP+NOUN	w	w	21	czasie	czas	22	w czasie	w czas	Trzęsienie ziemi w Chinach , Grecji i Włoszech , śnieżyca w Kanadzie , powódź w Australii , zimno w Bangladeszu - w czasie ostatniego weekendu spowodowały kilkadziesiąt ofiar śmiertelnych .
+152	ADP+NOUN	w	w	67	czasie	czas	68	w czasie	w czas	Bez uszczerbku dla praw twórców lub artystów wykonawców , producentowi fonogramu lub wideogramu przysługuje wyłączne prawo do rozporządzania i korzystania z fonogramu lub wideogramu w zakresie : 1 ) zwielokrotniania określoną techniką , 2 ) wprowadzenia do obrotu , 3 ) najmu oraz użyczania egzemplarzy , 4 ) publicznego udostępniania fonogramu lub wideogramu w taki sposób , aby każdy mógł mieć do niego dostęp w miejscu i w czasie przez siebie wybranym .
+153	ADP+PRON	ze	z	3	sobą	siebie	4	ze sobą	z siebie	Są to wydarzenia ze sobą powiązane : rodzice decydują za dziecko , że ma być ochrzczone i rodzice decydują za dziecko , że ma chodzić na religię czy do kościoła .
+154	VERB+AUX	było	być	32	by	by	33	było by	być by	"Trener kielczan Ryszard Wieczorek na początku desygnował do gry żelazną "" jedenastkę "" na obecną chwilę prawie optymalną , choć kto wie , czy zamiast Przemka Cichonia na lewej obronie nie byłoby było by w wyjściowym składzie Roberta Bednarka ."
+155	ADP+NOUN	W	w	0	czasie	czas	1	W czasie	w czas	W czasie trwania Plusa można podnieść za zgodą towarzystwa wysokość sumy ubezpieczenia .
+156	PART+VERB	nie	nie	15	chcą	chcieć	16	nie chcą	nie chcieć	A do nas - kraju mlekiem i miodem płynącego - jakoś Ci głupi zniewoleni Amerykanie nie chcą imigrować za chlebem . ;-)))
+157	ADP+NOUN	w	w	3	życiu	życie	4	w życiu	w życie	Dziesięć kolejnych lat w życiu Paula Bernardo dowiodło , że tylko w dwóch przypadkach zachowywał się jak przeciętny zakochany mężczyzna .
+158	ADP+NOUN	w	w	19	grze	gra	20	w grze	w gra	Reprezentację układa się zatem nie tyle wedle jakości gry na boisku europejskim , co wedle kryteriów , które obowiązują w grze na boisku krajowym .
+159	VERB+PRON	skarży	skarżyć	8	się	się	9	skarży się	skarżyć się	- Pana nigdy dobudzić się nie można ; skarży się pan , że przeszkadzamy panu rozmowami , a potem pretensje .
+160	ADP+NOUN	W	w	0	czasie	czas	1	W czasie	w czas	W czasie letniego skwaru samochody bywają tak bardzo nagrzane , że z reguły nie wystarcza otwarcie okien , więc kierowcy , o ile nie mają w aucie klimatyzacji , na gwałt poszukują innej możliwości schłodzenia kabiny i najczęściej jest to nawiew , równie nagrzanego powietrza , z dysz w desce rozdzielczej , ale ostrzegam byle nie prosto w twarz , bo nie jednemu zaprószyło w czasie jazdy oczy .
+161	PART+VERB	nie	nie	23	mają	mieć	24	nie mają	nie mieć	W czasie letniego skwaru samochody bywają tak bardzo nagrzane , że z reguły nie wystarcza otwarcie okien , więc kierowcy , o ile nie mają w aucie klimatyzacji , na gwałt poszukują innej możliwości schłodzenia kabiny i najczęściej jest to nawiew , równie nagrzanego powietrza , z dysz w desce rozdzielczej , ale ostrzegam byle nie prosto w twarz , bo nie jednemu zaprószyło w czasie jazdy oczy .
+162	ADP+NOUN	w	w	64	czasie	czas	65	w czasie	w czas	W czasie letniego skwaru samochody bywają tak bardzo nagrzane , że z reguły nie wystarcza otwarcie okien , więc kierowcy , o ile nie mają w aucie klimatyzacji , na gwałt poszukują innej możliwości schłodzenia kabiny i najczęściej jest to nawiew , równie nagrzanego powietrza , z dysz w desce rozdzielczej , ale ostrzegam byle nie prosto w twarz , bo nie jednemu zaprószyło w czasie jazdy oczy .
+163	ADP+PRON	z	z	9	siebie	siebie	10	z siebie	z siebie	Wreszcie , pamiętając o Jurku , wydusiłem wydusił em z siebie : - Może byś by ś został ?
+164	PART+VERB	nie	nie	1	widział	widzieć	2	nie widział	nie widzieć	Czy nie widział domów na mapach ?
+165	ADP+NOUN	w	w	22	czasie	czas	23	w czasie	w czas	A potem dowiedziałem dowiedział em się , że nie mogę nie pójść na obiad wydawany w restauracji przez znajomego Chenga , bo w czasie ostatniego spotkania znajomy dał mi twarz .
+166	ADP+PRON	ze	z	16	sobą	siebie	17	ze sobą	z siebie	Jeśli ktoś spróbuje pogodzić skłócone małżeństwo , mówiąc : ja zdecyduję za was , jak macie ze sobą żyć - zostanie wyśmiany .
+167	NOUN+NOUN	Sekcja	sekcja	0	zwłok	zwłoki	1	Sekcja zwłok	sekcja zwłoki	Sekcja zwłok wykazała , że przyczynami zgonu były zakrzepica żyły udowej , zator tętnicy płucnej i niewydolność krążeniowo - oddechowa .
+168	ADP+NOUN	w	w	43	życiu	życie	44	w życiu	w życie	Otóż dobra te , jak to wynika z cytowanych dokumentów , od roku 1815 do roku 1835 były własnością jego siostry , Teresy Scypionowej , choć niewątpliwie zostały kupione i zagospodarowane z myślą o nim i jego żonie , czyli dwu najbliższych osobach w życiu tej kobiety .
+169	PART+VERB	nie	nie	24	ma	mieć	25	nie ma	nie mieć	No bo jak to : haruje jak koń , pod koniec orkiestrowego finału chrypi z przemęczenia , obraca milionami - i nic z tego nie ma ?
+170	ADP+NOUN	w	w	36	czasie	czas	37	w czasie	w czas	ZA kilka dni rozpoczęte zostaną na terenie XIV-wiecznego zamku w Pasłęku pierwsze badania związane z hipotezą olsztyńskiego radiestety Edwarda Trusielewicza , przewidującego , że pod jednym ze skrzydeł warowni ukryta jest stawna Bursztynowa Komnata , wywieziona w czasie wojny przez Niemców z Carskiego Sioła .
+171	ADP+NOUN	do	do	9	góry	góra	10	do góry	do góra	Na placach poczęły gromadzić się grupy przechodniów z zadartymi do góry głowami .
+172	ADP+NOUN	w	w	6	oczach	oko	7	w oczach	w oko	W biurze rajdu kolejka kierowców topniała w oczach .
+173	PART+VERB	nie	nie	12	wiem	wiedzieć	13	nie wiem	nie wiedzieć	"Ja staram się tylko zobrazować to , że same ubooty , choćby nie wiem jak doskonałe , potrzebują wsparcia , a to zapewniały im i te "" maluchy nawodne "" i te kolosy ."
+174	ADP+ADV	na	na	11	tyle	tyle	12	na tyle	na tyle	Mimo że zaćmienie osiągnie bardzo dużą fazę , blask Słońca pozostanie na tyle silny , że oglądanie zjawiska okiem nieuzbrojonym będzie niebezpieczne !
+175	PART+PART	i	i	35	to	to	36	i to	i to	Szczęściem w perspektywie historycznej nazwałbym nazwał by m okres , kiedy pojawia się przed szerszymi społecznościami , narodami , grupami zawodowymi , zbiorowiskami sąsiadów , rodzinami nadzieja na ziszczenie celów , do jakich się dąży i to nie w sposób egoistyczny .
+176	PART+PRON	i	i	5	to	to	6	i to	i to	Dobrze wróży na przyszłość również i to , że do partnerstwa przymierzają się kolejne banki i towarzystwa zarówno majątkowe , jak i życiowe .
+177	VERB+AUX	była	być	7	by	by	8	była by	być by	Jeszcze dziesięć lat temu rzecz taka byłaby była by nie do pomyślenia .
+178	ADP+PRON	w	w	20	siebie	siebie	21	w siebie	w siebie	Bywa , że dwaj przeciwnicy nagle nieruchomieją , stojąc na wyprostowanych łapach , z nadętymi podgardlami , wpatrują się wzajemnie w siebie i gwałtownie kiwają głowami .
+179	NOUN+NOUN	tryb	tryb	4	życia	życie	5	tryb życia	tryb życie	Chaotyczny , pozbawiony planu tryb życia , liczne nieprzemyślane wydatki , składanie obietnic bez pokrycia - to też są pozostałości z poprzedniej epoki .
+180	VERB+AUX	było	być	2	by	by	3	było by	być by	Nie byłoby było by w tym być może żadnej sprzeczności , gdyby się przyjęło , że istnieje świadomość nieegotyczna , tj . całkowicie pozbawiona Ja ( taką według Maxa Schelera jest świadomość Boga ) .
+181	PART+VERB	nie	nie	7	ma	mieć	8	nie ma	nie mieć	Nawet ci przychylni przyznają jednak , że nie ma cudów - spółce sprzyja zbyt wiele rozmaitych okoliczności , by uznać to wyłącznie za ich przypadkowy zbieg .
+182	PART+VERB	nie	nie	2	robię	robić	3	nie robię	nie robić	Ja nic nie robię ?
+183	ADP+PRON	za	za	21	sobą	siebie	22	za sobą	za siebie	A może nie obecne , lecz przeszłe , w chorym związku , do którego jedna strona , od samego początku wprowadziła za sobą gruboskórność , fałsz , intrygi , kłamstwo , obłudę i . . . wyrachowanie ?
+184	NOUN+VERB	górach	góra	8	jest	być	9	górach jest	góra być	Kinga Baranowska : - Wbrew pozorom wypadków w górach jest bardzo mało .
+185	ADP+NOUN	w	w	6	czasie	czas	7	w czasie	w czas	Smolorz powtarzał to sobie kilka razy w czasie jazdy przez miasto .
+186	PART+VERB	nie	nie	12	chcąc	chcieć	13	nie chcąc	nie chcieć	Miał już na końcu jeżyka pytanie , ile waży Diglator , ale nie chcąc się blamować ignorancją , wziął latarkę od Gossego i ruszył wzdłuż stopy olbrzyma .
+187	ADP+PRON	po	po	5	sobie	siebie	6	po sobie	po siebie	Interlinia - odstęp pomiędzy następującymi po sobie wierszami .
+188	DET+NOUN	swoje	swój	10	siły	siła	11	swoje siły	swój siła	Cyklicznie w każdy czwartek każdy chętny , będzie mógł sprawdzić swoje siły i możliwości w biegu , skoku czy rzucie , bez względu na wiek czy płeć .
+189	VERB+PRON	stawia	stawiać	18	się	się	19	stawia się	stawiać się	"W związku z przypływem krwi objętość piersi zwiększa się , sutek jędrnieje i unosi się nieco - "" stawia się "" , a brodawka piersiowa twardnieje i zwiększa swoją wrażliwość ."
+190	PART+VERB	nie	nie	9	ma	mieć	10	nie ma	nie mieć	"Zakajew powiedział niemieckiemu tygodnikowi "" Fokus "" , że nie ma nic wspólnego z akcją w Moskwie ."
+191	DET+NOUN	swą	swój	3	sprawę	sprawa	4	swą sprawę	swój sprawa	Na zimno rozpatrzył swą sprawę , uznał , że jest mocnym , i przyszedł zaaresztować Stefana za to , że sprowadził żołnierzy .
+192	ADP+NOUN	w	w	1	czasach	czas	2	w czasach	w czas	"Nawet w czasach stalinizmu powstawały w Polsce komedie , takie jak "" Skarb "" czy "" Przygoda na Mariensztacie "" Leonarda Buczkowskiego , z melodyjnymi piosenkami , które chętnie nucono ."
+193	ADP+NOUN	Na	na	0	koniec	koniec	1	Na koniec	na koniec	Na koniec kandyzować mango cukrem .
+194	PART+VERB	Nie	nie	1	ma	mieć	2	Nie ma	nie mieć	- Nie ma .
+195	PART+VERB	nie	nie	4	ma	mieć	5	nie ma	nie mieć	- W naszej gminie nie ma bowiem przejścia granicznego dla aut - mówi burmistrz Matela .
+196	PART+VERB	nie	nie	4	wiem	wiedzieć	5	nie wiem	nie wiedzieć	Ona : - Sama nie wiem dlaczego , ale mam do Mateusza pełne zaufanie .
+197	PART+VERB	Nie	nie	0	daj	dać	1	Nie daj	nie dać	Nie daj pogoni się zbliżyć .
+198	PART+VERB	nie	nie	3	ma	mieć	4	nie ma	nie mieć	Bez tej ostatniej nie ma narodu .
+199	PART+VERB	nie	nie	9	widzą	widzieć	10	nie widzą	nie widzieć	Teraz chłopcy noszą karabiny i popalają papierosy , kiedy nie widzą ich starsi .
+200	ADP+PRON	o	o	22	czym	co	23	o czym	o co	"W książce "" Seks po sześćdziesiątce "" , którą napisał wraz z żoną , twierdzi , że badania potwierdzają jedynie to , o czym wiadomo było już od dawna : wiek ma tę cechę , że im człowiek starszy , tym więcej potrafi , wykazuje większe zrozumienie dla partnera , jest też bardziej czuły ."
+201	PART+VERB	Nie	nie	0	chciał	chcieć	1	Nie chciał	nie chcieć	Nie chciał .
+202	ADJ+AUX	zrobione	zrobić	19	są	być	20	zrobione są	zrobić być	To było to piętro z trojgiem drzwi , choć dopiero teraz zobaczyłem zobaczył em , że te w narożniku zrobione są z byle jak pozbijanych kawałków dykty i wyglądają raczej na wejście do jakiegoś składziku .
+203	PART+VERB	nie	nie	2	ma	mieć	3	nie ma	nie mieć	We wsi nie ma masażysty , więc trzeba korzystać z pomocy najbliższych .
+204	ADP+NOUN	W	w	0	czasie	czas	1	W czasie	w czas	W czasie prób robiłaś robiła ś wrażenie nieustraszonej , ale tuż przed premierą usłyszałam usłyszała m od Marysi : mama płacze ze zdenerwowania .
+205	ADP+NOUN	W	w	0	życiu	życie	1	W życiu	w życie	W życiu prywatnym afiszował swój homoseksualizm , miał cały harem młodych ludzi , pozornie adiutantów .
+206	PART+VERB	nie	nie	17	ma	mieć	18	nie ma	nie mieć	Jak wiadomo istnieją już fabryki automatyczne , gdzie człowieka się nie uświadczy , jak do tej pory nie ma jednak laboratoriów , w których wataha komputerów układałaby układała by programy .
+207	ADP+PRON	o	o	4	czym	co	5	o czym	o co	Kto z kim i o czym rozmawia , jakie są języki i tajne sygnały .
+208	VERB+PRON	daję	dawać	12	sobie	siebie	13	daję sobie	dawać siebie	Te fasolki wszystkich smaków to wynalazek Joanne Rowling z Harry'ego Pottera i daję sobie punkty za to , że nie musiałem musiał em tego nigdzie sprawdzać , natomiast kiedy zgadaliśmy zgadali śmy się z innymi rodzicami po zebraniu – to oni nie wiedzieli .
+209	PART+VERB	nie	nie	41	wiedzieli	wiedzieć	42	nie wiedzieli	nie wiedzieć	Te fasolki wszystkich smaków to wynalazek Joanne Rowling z Harry'ego Pottera i daję sobie punkty za to , że nie musiałem musiał em tego nigdzie sprawdzać , natomiast kiedy zgadaliśmy zgadali śmy się z innymi rodzicami po zebraniu – to oni nie wiedzieli .
+210	ADP+PRON	z	z	7	siebie	siebie	8	z siebie	z siebie	– A ty wyglądasz na bardzo zadowolonego z siebie .
+211	ADP+NOUN	w	w	9	czasie	czas	10	w czasie	w czas	Wypytywała rodaków o Warszawę , interesowała się przeżyciami Tomka w czasie wyprawy i nawet namawiała go usilnie , aby pozostał w Australii .
+212	ADP+NOUN	na	na	2	ręce	ręka	3	na ręce	na ręka	Wzięła mnie na ręce i zaniosła na łóżko .
+213	ADP+PRON	o	o	4	czym	co	5	o czym	o co	"Tak twierdzą meksykańscy naukowcy o czym donosi tygodnik "" New Scientist "" ."
+214	ADP+ADV	na	na	20	tyle	tyle	21	na tyle	na tyle	Pokiwał tylko głową nie bardzo chyba wierząc w to wszystko , a może tylko oswoił się już z tą myślą na tyle , że nie robiła już na nim większego wrażenia .
+215	CCONJ+PRON	i	i	7	tym	to	8	i tym	i to	Okrągły , kolorowy , charakteryzuje się asymetrią i tym że nie ma w nim dwóch takich samych elementów .
+216	PART+VERB	nie	nie	10	ma	mieć	11	nie ma	nie mieć	Okrągły , kolorowy , charakteryzuje się asymetrią i tym że nie ma w nim dwóch takich samych elementów .
+217	PART+VERB	nie	nie	4	mają	mieć	5	nie mają	nie mieć	Mieszkańcy tych miejscowości nadal nie mają prądu i nikt nie umie powiedzieć , kiedy będzie .
+218	ADP+NOUN	w	w	25	oczach	oko	26	w oczach	w oko	- W taką grę , to my się bawić nie będziemy ! - powiedziało kilkunastu , czy może nawet kilkudziesięciu facetów i bryknęło z obłędem w oczach przez płot do domów .
+219	PART+VERB	nie	nie	1	mają	mieć	2	nie mają	nie mieć	Anglosasi nie mają wielkich przywódców nie dlatego , że ich nie posiadają - lecz dlatego , że ich nie chcą .
+220	PART+VERB	nie	nie	18	chcą	chcieć	19	nie chcą	nie chcieć	Anglosasi nie mają wielkich przywódców nie dlatego , że ich nie posiadają - lecz dlatego , że ich nie chcą .
+221	ADP+NOUN	w	w	4	czasie	czas	5	w czasie	w czas	Nie będziesz wówczas podjadać w czasie różnych prac domowych i na ulicy .
+222	ADP+DET	na	na	6	tyle	tyle	7	na tyle	na tyle	- Będąc urzędnikiem mogę się czuć na tyle silny , na ile pozwala mi prawo .
+223	ADP+NOUN	w	w	6	czasie	czas	7	w czasie	w czas	- Jego przodków uratował mój dziadek w czasie II wojny światowej .
+224	PART+VERB	Nie	nie	0	wiem	wiedzieć	1	Nie wiem	nie wiedzieć	Nie wiem , czy rozwiązanie parlamentu to dobry pomysł na ich rozwiązanie .
+225	ADJ+NOUN	gorącym	gorący	5	uczynku	uczynek	6	gorącym uczynku	gorący uczynek	Zostali zatrzymani przez policję na gorącym uczynku .
+226	PART+VERB	nie	nie	3	chciał	chcieć	4	nie chciał	nie chcieć	Edek odmówił , nie chciał zostawić Mali .
+227	PART+VERB	nie	nie	2	wiedziała	wiedzieć	3	nie wiedziała	nie wiedzieć	Ale prezenterka nie wiedziała , kiedy miałaby miała by zajść w ciążę , bo to mogło pokrzyżować jej plany zawodowe .
+228	PART+VERB	nie	nie	36	mają	mieć	37	nie mają	nie mieć	Niektórzy kandydaci do wyborów podchodzić będą spokojnie , bo albo są jedynymi ubiegającymi się o mandat radnego w swoim okręgu ( co w praktyce oznacza , że już mogą się z niego cieszyć ) , albo nie mają żadnych konkurentów w staraniach o fotel wójta lub burmistrza gminy .
+229	ADP+NOUN	w	w	7	życie	życie	8	w życie	w życie	Zbigniew Izdebski : Reforma administracyjna jest wdrażana w życie , choć wielu oponentów twierdzi , że jest zbyt wcześnie na jakiekolwiek reformy .
+230	PART+VERB	nie	nie	12	ma	mieć	13	nie ma	nie mieć	Nie bój się , nie sposób jest przechwalić dziecko , a chwalenie nie ma nic wspólnego z rozpieszczaniem .
+231	PART+VERB	nie	nie	7	dać	dać	8	nie dać	nie dać	"Trzeba "" siedzieć "" blisko niego , nie dać mu się rozwinąć , zadawać mnóstwo ciosów w półdystansie ."
+232	ADP+NOUN	w	w	7	czasie	czas	8	w czasie	w czas	Do wypadku doszło w poniedziałek po południu w czasie największego upału .
+233	PART+VERB	Nie	nie	0	ma	mieć	1	Nie ma	nie mieć	Nie ma co prawda koniaku , ale ma właśnie te cygara , jeśli pan oberleutnant zechce przyjąć . . .
+234	ADP+NOUN	do	do	1	góry	góra	2	do góry	do góra	Podnoszą do góry ręce , śpiewają .
+235	ADP+NOUN	w	w	11	życiu	życie	12	w życiu	w życie	– Ja ci tutaj mówię coś , co może ci się w życiu twem przydać , a ty żarty sobie stroisz .
+236	ADP+NOUN	w	w	19	oczach	oko	20	w oczach	w oko	Początkowo kropla zabarwiła swą najbliższą okolicę , ale oto coś przystąpiło do kontrofensywy , gdyż strefa barwna poczyna się w oczach kurczyć i po chwili nie ma już śladu po barwnej kropli .
+237	PART+VERB	nie	nie	25	ma	mieć	26	nie ma	nie mieć	Początkowo kropla zabarwiła swą najbliższą okolicę , ale oto coś przystąpiło do kontrofensywy , gdyż strefa barwna poczyna się w oczach kurczyć i po chwili nie ma już śladu po barwnej kropli .
+238	PART+VERB	nie	nie	19	widzi	widzieć	20	nie widzi	nie widzieć	No jeśli jest tak , jak Pan mówi , no to może Pan nas skrytykować w swym tekście - nie widzi problemu kierownik placówki rzucającej oskarżeniami .
+239	DET+NOUN	swoje	swój	14	siły	siła	15	swoje siły	swój siła	Wiedźma odwróciła się ku niemu z mozołem , wkładając w ten drobny ruch wszystkie swoje siły .
+240	VERB+PRON	dopuszcza	dopuszczać	2	się	się	3	dopuszcza się	dopuszczać się	Tym razem dopuszcza się inną działalność , niż gastronomiczna .
+241	ADP+NOUN	w	w	13	stanie	stan	14	w stanie	w stan	Miesiąc temu posadę stracił komendant powiatowy z Braniewa , który w komendzie był w stanie nietrzeźwości .
+242	PART+VERB	Nie	nie	0	chce	chcieć	1	Nie chce	nie chcieć	Nie chce widzieć nikogo ! - skrzyczała nas jego sekretarka .
+243	PART+VERB	nie	nie	22	chciał	chcieć	23	nie chciał	nie chcieć	Ajtemików , czyli przedmiotów lub umiejętności , które mogę kupić , jest mnóstwo i Córka zastanawia się , czybym czy by m nie chciał kupić jej ajtemika , który sprawi , że będzie latać .
+244	ADP+PRON	w	w	30	czym	co	31	w czym	w co	Łatwiej jest ziać ogniem i rzucać zaklęcia , niż dbać o celne headshoty , ale prawda jest taka , że nastolatki wolą CS GO niż wybieranie mikstur i czarów , w czym , zdaje się , celują Azjaci .
+245	ADJ+NOUN	ostatnie	ostatni	19	słowa	słowo	20	ostatnie słowa	ostatni słowo	- Młody człowieku , za to , co się stało tej nocy , zapłacisz własną krwią - takie były ostatnie słowa , jakie Casanuova powiedział do hrabiego Ciano .
+246	ADP+ADV	na	na	3	tyle	tyle	4	na tyle	na tyle	Wachowski natomiast miał na tyle duży wpływ na Wałęsę , że mógł u niego ułaskawienie wyjednać .
+247	ADP+PRON	w	w	14	sobie	siebie	15	w sobie	w siebie	Kiedy wieczorem po raz kolejny przegryzał całą historię , oprócz żalu i rozczarowania odkrył w sobie także uczucie ulgi .
+248	ADP+NOUN	na	na	4	cele	cel	5	na cele	na cel	Wykorzystanie zabytkowych nieruchomości wyłącznie na cele komercyjne sprawia , że atrakcyjne dzielnice miast pustoszeją z mieszkańców
+249	PART+VERB	nie	nie	26	chcemy	chcieć	27	nie chcemy	nie chcieć	A tak w ogóle to jak jeszcze jutro będzie siedział w tej brei to psy spuszczę i kijem skórę wygarbuję , bo my tu żadnego podmiotu nie chcemy .
+250	VERB+PRON	uniosły	unieść	4	się	się	5	uniosły się	unieść się	W gasnącym świetle rakiety uniosły się zaciśnięte pięści .
+251	PART+VERB	nie	nie	7	chcieli	chcieć	8	nie chcieli	nie chcieć	Ani on , ani zastępca Grzegorz Paluch nie chcieli jednak wypowiadać się o całej sprawie na łamach prasy .
+252	PART+PART	i	i	6	to	to	7	i to	i to	System finansowy kas chorych nadal , i to w przyspieszonym tempie , anarchizuje się , a w ostatnich miesiącach faktycznie się załamał , czego widocznym przykładem jest gwałtowny wzrost zadłużenia zakładów opieki zdrowotnej oraz - co zdecydowanie bardziej groźne - utrata płynności finansowej płatnika , jakim są kasy chorych , co prowadzi w prostej linii do bankructwa .
+253	PART+VERB	nie	nie	1	miał	mieć	2	nie miał	nie mieć	Denat nie miał przy sobie dokumentów .
+254	ADP+NOUN	w	w	4	czasie	czas	5	w czasie	w czas	Sam Stern natomiast - w czasie , kiedy go odkrywaliśmy odkrywali śmy - miał już tę buntowniczą młodość za sobą i zajmował się głównie pisaniem dla zarobku licznych scenariuszy filmowych .
+255	ADP+PRON	w	w	13	siebie	siebie	14	w siebie	w siebie	Uspokoiła się myślą , że ten wydatek to także inwestycja , tyle że w siebie .
+256	PART+VERB	nie	nie	8	ma	mieć	9	nie ma	nie mieć	Mimo obietnic złożonych pacjentom , stwardnienia rozsianego nadal nie ma na liście chorób przewlekłych .
+257	ADP+PRON	w	w	2	siebie	siebie	3	w siebie	w siebie	To wiara w siebie - jako podstawowy warunek zwycięstwa .
+258	ADP+NOUN	do	do	4	góry	góra	5	do góry	do góra	Te kapsle , podrzucane do góry , dudniły o butelkę .
+259	PART+VERB	nie	nie	15	wierzył	wierzyć	16	nie wierzył	nie wierzyć	Komendantowi OSP z Wąsosza wszyscy mówili , że ma wśród swoich ludzi podpalaczy , ale nie wierzył .
+260	ADP+PRON	o	o	4	co	co	5	o co	o co	Sprawdziłeś Sprawdził eś , o co cię prosiłem prosił em ?
+261	PART+VERB	nie	nie	6	mają	mieć	7	nie mają	nie mieć	Wytwarza je krajowy przemysł farmaceutyczny i nie mają tańszych zamienników .
+262	PART+VERB	nie	nie	2	widzi	widzieć	3	nie widzi	nie widzieć	Pan nic nie widzi , nic nie wie .
+263	PART+VERB	nie	nie	6	wie	wiedzieć	7	nie wie	nie wiedzieć	Pan nic nie widzi , nic nie wie .
+264	VERB+PRON	dają	dawać	15	się	się	16	dają się	dawać się	Lipidy stanowią klasę związków , które są trudno rozpuszczalne lub nierozpuszczalne w wodzie , a dają się wyekstrahować z tkanek przy pomocy niepolarnych rozpuszczalników organicznych , takich jak : eter , benzen , chloroform czy heksan .
+265	ADP+NOUN	na	na	2	nogach	noga	3	na nogach	na noga	Od czwartej na nogach , dwie godziny kręcenia papilotów , a tu jeszcze moment , a lunie .
+266	ADP+NOUN	na	na	24	końcu	koniec	25	na końcu	na koniec	Tydzień temu dyskutowaliśmy dyskutowali śmy o aborcji i o tym , żeby nie zabijać , a żołnierz , rekrut składający przysięgę wojskową , mówiący na końcu : ˝ Tak mi dopomóż Bóg ˝ , powinien mieć świadomość , że musi zabijać .
+267	ADP+NOUN	w	w	6	oczach	oko	7	w oczach	w oko	Chyba sam miałem miał em mokro w oczach ; zawsze miałem miał em oczy ustawione w mokrym miejscu .
+268	PART+VERB	nie	nie	21	masz	mieć	22	nie masz	nie mieć	Wydaje się , że to bardzo dużo czasu , ale minuta płynie za minutą , godzina za godziną , a ty nie masz nic .
+269	ADP+NOUN	w	w	1	pole	pole	2	w pole	w pole	Wbiegł w pole karne , strzelił gola .
+270	PART+VERB	Nie	nie	1	dajmy	dać	2	Nie dajmy	nie dać	- Nie dajmy się sprowokować ! - wołali drudzy .
+271	VERB+PRON	dajmy	dać	2	się	się	3	dajmy się	dać się	- Nie dajmy się sprowokować ! - wołali drudzy .
+272	PART+VERB	nie	nie	14	chcemy	chcieć	15	nie chcemy	nie chcieć	"Ryszard Smożewski : "" Zajmujemy się tematyką sportową regularnie , jako jedyni , ale nie chcemy być sportowym teatrem ."
+273	PART+VERB	nie	nie	10	ma	mieć	11	nie ma	nie mieć	Boom Box nie skarży się na warunki , chociaż zespół nie ma samochodu i na koncerty dojeżdża pociągami , a potem z dworca autobusem .
+274	VERB+PRON	podzieliła	podzielić	2	się	się	3	podzieliła się	podzielić się	Komisja tak podzieliła się w głosowaniu w tej sprawie , że rozstrzygnięcie było niemożliwe - dwóch członków komisji było za ukaraniem gwiżdżących posłów , dwóch przeciw i jeden wstrzymał się od głosu .
+275	PART+VERB	Nie	nie	1	mam	mieć	2	Nie mam	nie mieć	- Nie mam drugiej przy sobie - odburknął mąż i zaciągnął się papierosem .
+276	PART+VERB	Nie	nie	0	mam	mieć	1	Nie mam	nie mieć	Nie mam na chleb - napisała na kartce babcia .
+277	AUX+VERB	by	by	9	było	być	10	by było	by być	Zaczęliśmy Zaczęli śmy kiedyś tak sobie dialogować , Jak by było fajnie , robota zbudować .
+278	VERB+AUX	było	być	2	by	by	3	było by	być by	Nie byłoby było by w tym nic nadzwyczajnego , gdyby nie fakt , że w Polsce zrobiła Glavani niesłychaną karierę , kończąc jako arystokratka i pani na legendarnej Sofiówce .
+279	PART+VERB	Nie	nie	0	wiem	wiedzieć	1	Nie wiem	nie wiedzieć	Nie wiem , ile piw musiałbym musiał by m wypić , aby zainteresować się inną dziewczyną .
+280	NOUN+NOUN	akt	akt	17	oskarżenia	oskarżenie	18	akt oskarżenia	akt oskarżenie	- Zdarzało się , że uderzyłem uderzył em butnego Niemca z Wehrwolfu , ale tego nie obejmuje akt oskarżenia .
+281	PART+VERB	nie	nie	12	mieli	mieć	13	nie mieli	nie mieć	Podporucznik Ziemba dygotał jak ratlerek , wargi mu z lekka posiniały , nie mieli ze sobą żadnej odzieży , dzień był upalny .
+282	ADP+PRON	ze	z	14	sobą	siebie	15	ze sobą	z siebie	Podporucznik Ziemba dygotał jak ratlerek , wargi mu z lekka posiniały , nie mieli ze sobą żadnej odzieży , dzień był upalny .
+283	PART+VERB	nie	nie	1	ma	mieć	2	nie ma	nie mieć	Obecnie nie ma ewentualnych nabywców .
+284	PART+VERB	nie	nie	5	chcą	chcieć	6	nie chcą	nie chcieć	Stwierdziły , że po prostu nie chcą dialogować w tej sprawie , co jest rzeczywiście zrozumiałe .
+285	VERB+VERB	miało	mieć	9	znaczyć	znaczyć	10	miało znaczyć	mieć znaczyć	Co , jak nam wyjaśniono na lekcji wychowawczej , miało znaczyć wschodzący nowy , lepszy świat .
+286	PART+VERB	nie	nie	20	widzi	widzieć	21	nie widzi	nie widzieć	Agenci w mundurach i po cywilnemu porywają z tłumu pierwsze ofiary i przemocą odprowadzają do najbliższych bram , tłum tego nie widzi , zahipnotyzowany , wpatrzony w człowieka na mównicy .
+287	PART+VERB	Nie	nie	0	wiecie	wiedzieć	1	Nie wiecie	nie wiedzieć	Nie wiecie , z kim zadzieracie !
+288	ADP+NOUN	po	po	3	głowie	głowa	4	po głowie	po głowa	Ognista łapa przejechała po głowie Liścia , ledwie zdołał jej umknąć .
+289	PART+VERB	Nie	nie	0	ma	mieć	1	Nie ma	nie mieć	Nie ma jednolitych standardów leczenia , przepisy na temat ochrony zdrowia są niejasne - czytamy w dokumencie przygotowanym na dzisiejszą konferencję .
+290	ADP+NOUN	w	w	1	czasie	czas	2	w czasie	w czas	Jeszcze w czasie studiów zainteresował się finansami i bankowością .
+291	VERB+AUX	Zrobił	zrobić	1	em	być	2	Zrobił em	zrobić być	Zrobiłem Zrobił em krok do przodu i pociągnąłem pociągnął em Dorę za sobą .
+292	ADP+PRON	za	za	11	sobą	siebie	12	za sobą	za siebie	Zrobiłem Zrobił em krok do przodu i pociągnąłem pociągnął em Dorę za sobą .
+293	PART+VERB	nie	nie	14	mają	mieć	15	nie mają	nie mieć	Siedzący nieopodal pracownicy pogotowia dowcipkują z biegaczy - emerytów , wyraźnie zadowoleni , że nie mają nic do roboty - nikt nie zgłosił się do nich po pomoc .
+294	PART+VERB	nie	nie	6	chcemy	chcieć	7	nie chcemy	nie chcieć	Poligon jest nam potrzebny , ale nie chcemy straszyć swoimi planami ludzi i wysiedlać ich stąd kosztem naszych celów .
+295	PART+VERB	nie	nie	10	robią	robić	11	nie robią	nie robić	- Nie pierwszy raz puszczają tutaj szybowce , ale nigdy nie robią tego tak nisko nad wioską - opowiada Maria Dudek , która akurat w ogródku pieliła truskawki .
+296	ADP+NOUN	na	na	2	kontach	konto	3	na kontach	na konto	Obsługa operacji na kontach z drobnymi oszczędnościami , jakie się gromadzą w kasach oszczędności , jest dla wielkiego banku nieopłacalna ( w Polsce prowadzenie konta kosztuje dziś klienta więcej niż na Zachodzie ) .
+297	PART+VERB	Nie	nie	1	mam	mieć	2	Nie mam	nie mieć	– Nie mam już tego kawałeczka skórki , jeśli o to chodzi , ale wszystko tylko na tym się skończyło .
+298	PART+VERB	nie	nie	11	chcę	chcieć	12	nie chcę	nie chcieć	Przez chwile zaciskała wargi , a potem wybuchnęła : - Ja nie chcę do Grochulskiej !
+299	ADP+PRON	w	w	15	sobie	siebie	16	w sobie	w siebie	Wolał zastanawiać się nad tym , kto mógł w tym wypadku pomóc , niż podsycać w sobie pragnienie rozbicia komuś głowy .
+300	ADP+NOUN	w	w	44	słowach	słowo	45	w słowach	w słowo	"O ile kiedyś Kukiz po równo dowalał byłym działaczom PZPR , ZChN i KPN , a przy okazji piętnował zupełnie apolityczne chamstwo ( vide : piosenka "" Rodzina słowem silna "" ) , to dziś artysta idzie na wojnę z komuną , a ujawniona w słowach piosenek postawa ma charakter jasno określony w sensie politycznym ."
+301	PART+VERB	Nie	nie	0	chcę	chcieć	1	Nie chcę	nie chcieć	Nie chcę go podejrzewać , że osobiście inispirował takie metody zohydzania mojej osoby , gdyż zdyskredytował by się jako człowiek .
+302	VERB+VERB	ma	mieć	5	znaczyć	znaczyć	6	ma znaczyć	mieć znaczyć	– A cóż to niby ma znaczyć ?
+303	ADP+ADV	na	na	2	tyle	tyle	3	na tyle	na tyle	Sumka była na tyle pokaźna , że starczyłoby starczyło by nie tylko na czarną godzinę , ale na kilka czarnych lat .
+304	ADP+NOUN	w	w	10	życiu	życie	11	w życiu	w życie	Ambitny Amerykanin wierzył naprawdę , że ma szanse na osiągnięcie w życiu sukcesu na miarę Rockefellera , jeśli tylko będzie się o to wytrwale starał .
+305	ADP+PRON	po	po	9	sobie	siebie	10	po sobie	po siebie	Lenin , szczęśliwszy niż Marks i Engels , pozostawił po sobie kontynuatora swej pracy i swej myśli .
+306	ADJ+PRON	ciągnącą	ciągnąć	24	się	się	25	ciągnącą się	ciągnąć się	A właściwie nie tyle jej słowa , do których nie przywiązywałem przywiązywał em wówczas specjalnej wagi , tylko melodię , powolną i dostojną , ciągnącą się wąską strużką pamięci niczym smuga kadzidlanego dymu - i ta nostalgiczna melodia podziałała na mnie kojąco .
+307	ADP+NOUN	w	w	7	oko	oko	8	w oko	w oko	Często bywało , że kiedy stawał oko w oko z jakimś człowiekiem , który naciągnął jego nerwy , musiał zatrudnić swój mózg dźwięcznymi frazami starożytnych Rzymian , które miały cudowną właściwość wytłumiania i absorbowania agresji .
+308	PART+VERB	nie	nie	13	chciała	chcieć	14	nie chciała	nie chcieć	Adamiec zatrzymał się i próbował zabrać od góralki swoją walizkę , ale stara nie chciała mu oddać .
+309	ADP+PRON	O	o	1	czym	co	2	O czym	o co	- O czym myślisz ? - zainteresowała się .
+310	VERB+PRON	oparł	oprzeć	7	się	się	8	oparł się	oprzeć się	Żeby jednak pozbyć się resztek wątpliwości - oparł się o kamień ramieniem i spróbował ruszyć go z miejsca .
+311	ADP+ADJ	na	na	2	dobre	dobry	3	na dobre	na dobry	Zaczyna mnie na dobre wkurzać .
+312	PART+VERB	Nie	nie	0	wie	wiedzieć	1	Nie wie	nie wiedzieć	Nie wie tylko , że rzucone na polskiej ziemi kiełkuje w świadomości piłkarzy w takim tempie jak genetycznie zmodyfikowana fasola .
+313	NOUN+NOUN	aktu	akt	1	oskarżenia	oskarżenie	2	aktu oskarżenia	akt oskarżenie	Według aktu oskarżenia , odpowiadający przed szczecińskim sądem obywatele Niemiec tworzyli fikcyjne spółki , w których nominalnie mieli 49 proc . udziałów , a Polacy - 51 proc .
+314	PART+VERB	nie	nie	24	ma	mieć	25	nie ma	nie mieć	Pierwsze z tych zjawisk dotyczy przepływu prądu elektrycznego przez różne materiały bez żadnych strat energii , drugie - właściwości cieczy , w których praktycznie nie ma lepkości .
+315	PART+VERB	Nie	nie	9	ma	mieć	10	Nie ma	nie mieć	"Wyciera twarz , otwiera apteczkę , szuka , "" Nie ma plastra "" , myśli ."
+316	PRON+VERB	się	się	2	pali	palić	3	się pali	się palić	- Niech się pali dalej - odezwała się po chwili .
+317	VERB+PRON	ukazała	ukazać	2	się	się	3	ukazała się	ukazać się	W drzwiach ukazała się lisia twarz pana Hawełko .
+318	PART+VERB	nie	nie	4	miało	mieć	5	nie miało	nie mieć	To chyba w ogóle nie miało nic wspólnego z odwagą .
+319	PART+VERB	nie	nie	26	ma	mieć	27	nie ma	nie mieć	Szacki sięgnął po otwarte akta sprawy i przeczytał : „ I pomyślałam pomyślała m sobie , że być może ktoś mu wyrządził przysługę , bo naprawdę nie ma chyba światów , gdzie panu Henrykowi mogłoby mogło by być gorzej niż tutaj ” .
+320	ADP+PRON	O	o	5	co	co	6	O co	o co	W końcu spytała : – O co ci chodziło z tym tam , na końcu , że ty nie oszukujesz , z narkotykami niby ?
+321	ADP+NOUN	na	na	13	końcu	koniec	14	na końcu	na koniec	W końcu spytała : – O co ci chodziło z tym tam , na końcu , że ty nie oszukujesz , z narkotykami niby ?
+322	ADP+PRON	o	o	16	co	co	17	o co	o co	"Aby wypłaty mogły zostać rozpoczęte , Bundestag jak najszybciej powinien ogłosić "" pokój prawny "" , o co apeluje również premier Jerzy Buzek ."
+323	ADP+PRON	o	o	4	czym	co	5	o czym	o co	Był bardzo nowoczesny , o czym świadczy stanowisko dowodzenia , które było izolowane dźwiękochłonną wykładziną , aby nie dochodził do niego huk wystrzałów .
+324	ADP+ADV	na	na	4	tyle	tyle	5	na tyle	na tyle	Wydarzenia miały być albo na tyle tajemnicze , drażliwe albo w końcu na tyle wstydliwe , że jego uczestnicy przez lata nikomu o nich nie opowiadali , traktując je jak ów szkielet w szafie .
+325	ADP+ADV	na	na	12	tyle	tyle	13	na tyle	na tyle	Wydarzenia miały być albo na tyle tajemnicze , drażliwe albo w końcu na tyle wstydliwe , że jego uczestnicy przez lata nikomu o nich nie opowiadali , traktując je jak ów szkielet w szafie .
+326	PART+VERB	Nie	nie	1	wiem	wiedzieć	2	Nie wiem	nie wiedzieć	- Nie wiem - wyjęczał kłusownik .
+327	ADP+PRON	za	za	7	siebie	siebie	8	za siebie	za siebie	Wiedziony odruchem warunkowym , wysunąłem wysunął em za siebie na oślep prawy prosty , na który drapieżnik prawie sam się nadział i to tak pechowo , że rozgniótł sobie moją pięścią zapalony papieros na wargach .
+328	PART+PART	i	i	21	to	to	22	i to	i to	Wiedziony odruchem warunkowym , wysunąłem wysunął em za siebie na oślep prawy prosty , na który drapieżnik prawie sam się nadział i to tak pechowo , że rozgniótł sobie moją pięścią zapalony papieros na wargach .
+329	PART+VERB	nie	nie	7	mam	mieć	8	nie mam	nie mieć	- Więc ja - rzekł zahlmeister - nie mam nic przeciwko temu , o ile pan leutnant się zgodzi .
+330	ADP+NOUN	w	w	12	stanie	stan	13	w stanie	w stan	Czasami jestem szczerze zdumiona , że mimo zmiany ustawy o prowadzeniu samochodu w stanie nietrzeźwym , tak wiele osób nadal decyduje się na to , aby po „ jednym głębszym ” wsiąść za kierownicę .
+331	ADP+PRON	w	w	1	sobie	siebie	2	w sobie	w siebie	Miała w sobie dużo czaru i uwodzicielskiej kokieterii .
+332	VERB+AUX	zrobiła	zrobić	14	ś	być	15	zrobiła ś	zrobić być	- Nie , mamo , ale powiedz , proszę , co z nią zrobiłaś zrobiła ś - Joanna używała liczby pojedynczej z nadzieją , że obecność drugiej liszki nie została odkryta .
+333	ADP+PRON	o	o	18	czym	co	19	o czym	o co	Bez wątpienia w tej chwili gra w lepszym klubie , który w dodatku jest znacznie lepiej zorganizowany , o czym świadczy fakt wyczarterowania samolotu na mecz wyjazdowy do Gdyni .
+334	VERB+PRON	kręci	kręcić	18	się	się	19	kręci się	kręcić się	"Ogólnie panuje niezbyt duża tolerancja na ciszę - Irena skubie palce , Maciek głośno przełyka ślinę , Regina kręci się , wzdycha , poprawia buty , patrzy na zegarek , Iza chowa twarz w "" daszku "" z rąk ."
+335	PART+PART	i	i	15	to	to	16	i to	i to	W umowie zastrzeżono jednak , że w dogodnym momencie będzie mógł dokupić akcje od Elektrimu i to po starej cenie .
+336	ADP+NOUN	w	w	2	stanie	stan	3	w stanie	w stan	Masa próbki w stanie powietrznosuchym powinna wynosić 2,5 - 3 kg na 1 dm3 objętości cylindra użytego do badania .
+337	ADP+NOUN	na	na	10	rękę	ręka	11	na rękę	na ręka	- Japońska firma Seiko wprowadziła na rynek pierwszy kwarcowy zegarek na rękę .
+338	PART+PART	i	i	5	to	to	6	i to	i to	Jeżeli ktoś wykłada pieniądze , i to niemałe , chce współdecydować , jak zostaną wykorzystane .
+339	PART+VERB	nie	nie	15	ma	mieć	16	nie ma	nie mieć	Tak jak nikt nie debatuje w kwestii konieczności odżywiania , czy odpoczynku , tak samo nie ma sensu włączać coś tak zwykłego jak seks ( mający miejsce pomiędzy ludźmi odpowiadającymi za swoje czyny ) w politykę , ani ideologię .
+340	VERB+NOUN	ma	mieć	16	sensu	sens	17	ma sensu	mieć sens	Tak jak nikt nie debatuje w kwestii konieczności odżywiania , czy odpoczynku , tak samo nie ma sensu włączać coś tak zwykłego jak seks ( mający miejsce pomiędzy ludźmi odpowiadającymi za swoje czyny ) w politykę , ani ideologię .
+341	ADP+PRON	ze	z	7	sobą	siebie	8	ze sobą	z siebie	- Rozsądek nakazywałby nakazywał by zabrać go ze sobą .
+342	PART+VERB	nie	nie	3	mam	mieć	4	nie mam	nie mieć	Od dwu tygodni nie mam od ciebie listu !
+343	ADP+NOUN	w	w	21	oczach	oko	22	w oczach	w oko	Sama dla siebie wypiękniała duchowo w tym wywyższeniu , jakie dały jej nowe uczucia , i była , aż do łez w oczach włącznie , zadowolona z siebie i ze świata .
+344	ADP+PRON	z	z	26	siebie	siebie	27	z siebie	z siebie	Sama dla siebie wypiękniała duchowo w tym wywyższeniu , jakie dały jej nowe uczucia , i była , aż do łez w oczach włącznie , zadowolona z siebie i ze świata .
+345	CCONJ+PRON	i	i	19	tym	to	20	i tym	i to	Młodzi ludzie , którzy za rok , dwa będą pełnoletni , raczej nie będą chwalić się rodzicom swoimi wyczynami i tym , że notorycznie łamali regulamin .
+346	ADP+PRON	w	w	3	sobie	siebie	4	w sobie	w siebie	6 . Zagubienie w sobie i rzeczywistości .
+347	PART+VERB	nie	nie	13	mieściło	mieścić	14	nie mieściło	nie mieścić	Kiwnąłem Kiwnął em głową szybciej , niż pomyślałem pomyślał em - ale wprost nie mieściło mi się w głowie , żeby Irek zdolny był do czegoś takiego .
+348	VERB+PRON	kręci	kręcić	6	się	się	7	kręci się	kręcić się	Karuzela z nazwiskami pretendentów do ratuszy kręci się coraz szybciej , ale konkrety będą znane dopiero w kwietniu .
+349	ADP+NOUN	po	po	30	stronie	strona	31	po stronie	po strona	Ostrożnie podszedł i zobaczył , że sięga on po książki o religii , literaturze i historii , kartkuje , a potem wyjmuje długopis i pracowicie coś zamazuje , niekiedy strona po stronie .
+350	PART+VERB	nie	nie	2	chce	chcieć	3	nie chce	nie chcieć	Norweski podróżnik nie chce zdradzić , czy to już jego ostatnia wyprawa .
+351	PART+VERB	Nie	nie	1	ma	mieć	2	Nie ma	nie mieć	- Nie ma wątpliwości , że dla takiego banku jak Handlowy , skupionego na pewnej grupie klientów , nie jest bez znaczenia , czy będzie w stanie przekształcić się w bank uniwersalny , świadczący usługi zarówno dla przedsiębiorstw , jak i dla ludności .
+352	VERB+NOUN	ma	mieć	2	wątpliwości	wątpliwość	3	ma wątpliwości	mieć wątpliwość	- Nie ma wątpliwości , że dla takiego banku jak Handlowy , skupionego na pewnej grupie klientów , nie jest bez znaczenia , czy będzie w stanie przekształcić się w bank uniwersalny , świadczący usługi zarówno dla przedsiębiorstw , jak i dla ludności .
+353	VERB+PRON	zebrał	zebrać	4	się	się	5	zebrał się	zebrać się	W zamku Książąt Pomorskich zebrał się tłum uczniów i gości , którzy obejrzeli montaż poetycko - muzyczny w wykonaniu uczniów .
+354	ADP+PRON	ze	z	16	sobą	siebie	17	ze sobą	z siebie	Na pożywce pokazanej mi grafiki oraz słów Mirka wykiełkował w mojej wyobraźni obraz nieszablonowej strategii niosącej ze sobą kilka nowych , dobrych pomysłów oraz czerpiącej garściami z kosza wartości wypracowanych latami przez krakowskie studio .
+355	ADP+NOUN	w	w	15	czasach	czas	16	w czasach	w czas	Maurycy postawił nagrobek osiem lat wcześniej , kierując się bardziej przezornością niż chrześcijańską pokorą , w czasach , gdy dawni włodarze miasta , wyzbywszy się kolejno księgozbiorów , mebli , stołowych zastaw , obrazów i oleodruków , poczęli wystawiać na sprzedaż resztki z resztek dawnej świetności , na jakie niespodziewanie pojawił się popyt : miejsca w rodzinnych grobowcach .
+356	ADP+NOUN	w	w	16	stół	stół	17	w stół	w stół	- Najgorsze jest to , że oni są wszyscy bezkarni . - Różowiutki sędzia uderzył pięścią w stół .
+357	PART+VERB	Nie	nie	0	chciała	chcieć	1	Nie chciała	nie chcieć	Nie chciała się przyznać , ile ma lat , ale była drobna i kruchej budowy ; wyglądała najwyżej na szesnaście .
+358	PART+VERB	Nie	nie	1	ma	mieć	2	Nie ma	nie mieć	- Nie ma .
+359	ADP+PRON	o	o	29	co	co	30	o co	o co	"Jeśli zatem jeszcze kiedyś natkniesz się na promocję gminy czy miasta w stylu : "" Inwestujcie u nas ! Tu pieniądze leżą na ulicy ! "" to już wiesz o co chodzi ."
+360	ADP+NOUN	przed	przed	19	sądem	sąd	20	przed sądem	przed sąd	- Zagroził , że mnie przeklnie , rzuci na mnie urok i zaszkodzi mi na zdrowiu - żaliła się przed sądem na bioenergoterapeutę poszkodowana Zofia Ż .
+361	PART+VERB	Nie	nie	1	wiem	wiedzieć	2	Nie wiem	nie wiedzieć	- Nie wiem , jak mnie omamił - sama sobie dziwi się studentka .
+362	ADP+NOUN	w	w	31	życie	życie	32	w życie	w życie	A więc wspólny element , stała niezmienna - powtórzmy to jeszcze raz : w centrum tego zainteresowania jest człowiek , tak jako twórca kultury , jak i jako osoba , uwikłana w życie , konieczność podejmowania wyborów , szukająca kryteriów odróżnienia dobra od zła .
+363	ADP+PRON	o	o	13	co	co	14	o co	o co	- Problem - głos Szarleja był nader ponury - nie w tym , o co nas oskarżą .
+364	PART+VERB	nie	nie	20	miała	mieć	21	nie miała	nie mieć	Nadgorliwi ochroniarze zobaczyli więcej niż powinni , kiedy szukając skradzionych rzeczy podnieśli bluzkę Winony Ryder - oskarżona o kradzież aktorka nie miała na sobie biustonosza .
+365	ADP+NOUN	w	w	1	powietrze	powietrze	2	w powietrze	w powietrze	Wystrzelił w powietrze jak katapultowany i cała aula zadarła głowy , bo przebił sufit i poszybował jak radziecka rakieta na podbój kosmosu .
+366	ADP+PRON	z	z	15	siebie	siebie	16	z siebie	z siebie	"- Dostanę rozstroju nerwowego , jak nie przestanę tego miętosić w głowie "" - kpił z siebie : Podszedł do okna ."
+367	VERB+PRON	Rzucał	rzucać	0	się	się	1	Rzucał się	rzucać się	Rzucał się na funkcjonariuszy z kopytami , stawał na tylnych nogach , szczerzył zęby , toczył ślinę i buchał parą z pyska .
+368	ADP+PRON	ze	z	2	sobą	siebie	3	ze sobą	z siebie	Młodzież przywiezie ze sobą wodę ze swojego miejsca zamieszkania , która trafi do pierwszej chrzcielnicy Polski .
+369	PART+VERB	nie	nie	17	ma	mieć	18	nie ma	nie mieć	- W umowie koalicyjnej zapisaliśmy zapisali śmy , że w sprawach ideowych będziemy się zbliżać , ale nie ma obowiązku jednomyślności .
+370	VERB+NOUN	ma	mieć	18	obowiązku	obowiązek	19	ma obowiązku	mieć obowiązek	- W umowie koalicyjnej zapisaliśmy zapisali śmy , że w sprawach ideowych będziemy się zbliżać , ale nie ma obowiązku jednomyślności .
+371	PART+VERB	nie	nie	7	ma	mieć	8	nie ma	nie mieć	Olek zawiadamia posępnie : - Władka już nie ma .
+372	PART+VERB	nie	nie	6	ma	mieć	7	nie ma	nie mieć	Ale skoro oskarżony się przyznał , nie ma kłopotu .
+373	VERB+NOUN	ma	mieć	7	kłopotu	kłopot	8	ma kłopotu	mieć kłopot	Ale skoro oskarżony się przyznał , nie ma kłopotu .
+374	PART+VERB	nie	nie	2	wiesz	wiedzieć	3	nie wiesz	nie wiedzieć	- Ty nie wiesz ?
+375	VERB+NOUN	miał	mieć	18	zaufanie	zaufanie	19	miał zaufanie	mieć zaufanie	Jeśli zawarty związek nie znaczy nic dla partnera , jeżeli oszukał , grał , ukrywał , za nic miał zaufanie , kłamał w żywe oczy , wyprowadził w pole , zadrwił za plecami , nie dotrzymał układu , cichcem i podstępnie przestał być partnerem , to znaczy , że nie ma nic pewnego , znowu jest się samym , porzuconym , posiadanie stronnika było tylko złudzeniem , jest się na tym świecie obcym pomiędzy obcymi , odrzuconym , niechcianym .
+376	PART+VERB	nie	nie	49	ma	mieć	50	nie ma	nie mieć	Jeśli zawarty związek nie znaczy nic dla partnera , jeżeli oszukał , grał , ukrywał , za nic miał zaufanie , kłamał w żywe oczy , wyprowadził w pole , zadrwił za plecami , nie dotrzymał układu , cichcem i podstępnie przestał być partnerem , to znaczy , że nie ma nic pewnego , znowu jest się samym , porzuconym , posiadanie stronnika było tylko złudzeniem , jest się na tym świecie obcym pomiędzy obcymi , odrzuconym , niechcianym .
+377	VERB+PRON	Robi	robić	0	się	się	1	Robi się	robić się	Robi się te rzeczy !
+378	PART+VERB	nie	nie	10	chciał	chcieć	11	nie chciał	nie chcieć	Nie skłamał jedynie w kwestii postrzelenia kobiety , której zresztą nie chciał zabić , a miał jedynie wystraszyć .
+379	CCONJ+PRON	i	i	9	to	to	10	i to	i to	W nowych zapisach regionalne kasy chorych cechuje przejrzystość struktur i to , że pokrywają się tereny objęte przez kasy z terenami nowych województw .
+380	VERB+PRON	spotkali	spotkać	1	się	się	2	spotkali się	spotkać się	Cichociemni spotkali się w GROM-ie .
+381	PART+VERB	Nie	nie	0	ma	mieć	1	Nie ma	nie mieć	Nie ma natomiast pracy dla górników i mechaników urządzeń przemysłowych .
+382	PART+VERB	nie	nie	1	robi	robić	2	nie robi	nie robić	Nic nie robi cały dzień .
+383	PART+VERB	nie	nie	26	widzieli	widzieć	27	nie widzieli	nie widzieć	- A jak powiesz , to co ? - odpowiedział Józik tyle tego tam jest , chcesz to cię nauczę , jak można wziąć , żeby nie widzieli .
+384	PART+VERB	nie	nie	6	mieścili	mieścić	7	nie mieścili	nie mieścić	Powodzenie ubiegłorocznego przedsięwzięcia , kiedy widzowie nie mieścili się w sali kinowej , a niektórzy wręcz leżeli pod ekranem , zdecydowało że teraz projekcje odbędą się w trzech miejscach .
+385	VERB+PRON	mieścili	mieścić	7	się	się	8	mieścili się	mieścić się	Powodzenie ubiegłorocznego przedsięwzięcia , kiedy widzowie nie mieścili się w sali kinowej , a niektórzy wręcz leżeli pod ekranem , zdecydowało że teraz projekcje odbędą się w trzech miejscach .
+386	PART+VERB	nie	nie	17	robił	robić	18	nie robił	nie robić	Bohatera anegdotki chełpiącego się przed znajomymi : – Stać mnie na to , żeby mój zięć nic nie robił , tylko chodził po pokoju .
+387	PART+VERB	Nie	nie	1	wiem	wiedzieć	2	Nie wiem	nie wiedzieć	– Nie wiem .
+388	ADP+NOUN	z	z	12	końcem	koniec	13	z końcem	z koniec	Za kościołem widać dwór z XVIII wieku , którego neogotyckie skrzydło dobudowano z końcem XIX wieku .
+389	ADJ+NOUN	ostatniego	ostatni	3	słowa	słowo	4	ostatniego słowa	ostatni słowo	Proboszcz uczepił się ostatniego słowa .
+390	ADP+PRON	za	za	13	siebie	siebie	14	za siebie	za siebie	Dla tej ojczyzny nawet lepiej było , kiedy owi emigranci nie odwracali się za siebie , nie próbowali powrotu .
+391	ADP+NOUN	do	do	2	głowy	głowa	3	do głowy	do głowa	Przykładanie pistoletu do głowy i inscenizowanie zarzynania świni to jedne z metod psychomanipulacji , jakimi swoich ajentów terroryzowała Żabka Polska SA - wynika z ekspertyzy dla Helsińskiej Fundacji Praw Człowieka .
+392	PART+VERB	Nie	nie	0	widzieli	widzieć	1	Nie widzieli	nie widzieć	Nie widzieli się miesiąc i musiał ponownie oswoić Gosię .
+393	ADP+NOUN	W	w	1	czasach	czas	2	W czasach	w czas	"- W czasach , gdy Andrzej Lepper i Leszek Miller wyrastają na mężów stanu , pole do działania dla satyryków jest ogromne - mówi Piotr Lisiewicz , dziennikarz "" Gazety Polskiej "" , lider Akcji Alternatywnej Naszość , która na swoim koncie ma wiele artystycznych osiągnięć i niemal tyle samo procesów sądowych , które same przerodziły się w happeningi ."
+394	ADP+NOUN	w	w	10	oko	oko	11	w oko	w oko	Tłumaczył sobie , że Sherlock Holmes niejednokrotnie spotykał się oko w oko z nie takimi błahymi sprawami , a zawsze potrafił wybrnąć z każdej sytuacji .
+395	PART+VERB	nie	nie	3	ma	mieć	4	nie ma	nie mieć	Much w zimie nie ma - oświadczył .
+396	PART+PRON	i	i	7	to	to	8	i to	i to	Jednak już wkrótce okazało się , że i to nie wystarczy .
+397	NOUN+NOUN	wyrzuty	wyrzut	2	sumienia	sumienie	3	wyrzuty sumienia	wyrzut sumienie	Ponownie odczuł wyrzuty sumienia , nie było jednak czasu na rozmyślania .
+398	ADP+NOUN	na	na	15	koniec	koniec	16	na koniec	na koniec	Tablica 6 pokazuje udział kapitałów własnych w sumie bilansowej wybranych polskich banków , według danych na koniec 1995 roku ( w przypadku większości przedstawionych banków - przed audytem ) .
+399	ADP+ADV	na	na	2	tyle	tyle	3	na tyle	na tyle	Protest był na tyle spokojny , że nie doszło do żadnego zagrożenia zdrowia i życia pacjentów .
+400	ADP+NOUN	w	w	6	oczach	oko	7	w oczach	w oko	Podporucznik Słodziak przebiegał korytarze z obłędem w oczach , podporucznik Kawiarz chrypiał z wysiłkiem do słuchawki telefonu , podporucznik Kowalik pojechał z kolejnym transportem na stację .
+401	ADP+ADV	na	na	3	tyle	tyle	4	na tyle	na tyle	Jestem jeszcze chyba na tyle sprawny , a w domu nie potrafię siedzieć , bo bym by m zwariował .
+402	ADP+PRON	ze	z	2	sobą	siebie	3	ze sobą	z siebie	Zabrała mnie ze sobą , była to dobra okazja , żeby zafundować sobie darmową terapię , pojechać szybko jej passatem do Gdańska .
+403	ADP+NOUN	w	w	4	oczy	oko	5	w oczy	w oko	Nie tylko patrzyła mi w oczy z oddaniem , ale dbała o porządek na mym biurku , temperowała mi ołówki , pilnowała mej herbaty , a na imieniny postawiła mi na biurku kwiaty w wazonie .
+404	PART+VERB	nie	nie	33	dała	dać	34	nie dała	nie dać	Wyjrzałam Wyjrzała m na ulicę - słychać było z oddali poganianie tłumów ludzi , niemieckie wymysły ; byłam była m ciekawa , jak to wygląda - to wyganianie ludzi , ale Rena mi nie dała .
+405	ADP+PRON	w	w	10	czym	co	11	w czym	w co	Przede wszystkim nadmierna cześć dla świętych i Matki Boskiej , w czym , tak jak pozostali protestanci , dopatrywał się bałwochwalstwa .
+406	PART+VERB	nie	nie	3	chcę	chcieć	4	nie chcę	nie chcieć	- Tak bardzo nie chcę , żebyś żeby ś odszedł , i wiem , że musisz odejść - szepnęłam szepnęła m .
+407	ADJ+PRON	obracająca	obracać	1	się	się	2	obracająca się	obracać się	Dziewczyna obracająca się kusząco na parkiecie wydała mu się wyjątkowo wyjątkowa .
+408	PART+VERB	Nie	nie	1	mam	mieć	2	Nie mam	nie mieć	"- Nie mam zeszytu , tylko program komputerowy , w którym jest specjalna opcja "" kolejka "" - wyjaśnia ."
+409	PART+VERB	nie	nie	4	chciał	chcieć	5	nie chciał	nie chcieć	Lipczyk jako szef SLD nie chciał ujawnić ile impreza kosztowała , dementował , by finansowano ją za pieniądze z gminnej kasy .
+410	PART+VERB	nie	nie	21	ma	mieć	22	nie ma	nie mieć	Nie oddającym czci żadnemu z istniejących bogów , ale i nie marnującym swej energii na udowadnianie , że tak naprawdę boga nie ma , zaś wszystkie religie to pic na wodę i fotomontaż .
+411	VERB+PRON	mieszczą	mieścić	16	się	się	17	mieszczą się	mieścić się	- Chciałem Chciał em tylko zwrócić twą uwagę na fakt , że złe duchy i potwory mieszczą się w takim oto zwykłym , maleńkim robaczku .
+412	ADP+PRON	z	z	11	siebie	siebie	12	z siebie	z siebie	"W swoim Zeszycie wpisz tytuł "" Jestem słoniem - skala zadowolenia z siebie "" przerysuj skalę i po każdym etapie przypisz sobie odpowiednią ocenę ."
+413	ADP+NOUN	w	w	2	czasach	czas	3	w czasach	w czas	"Tak było w czasach odrodzenia , kiedy to Savonarola , ponury mnich , mający "" nominację do świętości "" , kazał mieszkańcom Florencji rzucać na stos rześby i malowidła , uznane przez niego za sprośne , a przedstawiające nieraz znaczną wartość artystyczną ."
+414	NOUN+NOUN	Akt	akt	0	oskarżenia	oskarżenie	1	Akt oskarżenia	akt oskarżenie	Akt oskarżenia trafił do sądu na początku 1995 roku .
+415	ADP+NOUN	W	w	0	roli	rola	1	W roli	w rola	W roli trenera gospodarzy , przed miejscową publicznością , debiutował Mirosław Hajdo .
+416	VERB+PRON	prezentują	prezentować	10	się	się	11	prezentują się	prezentować się	Postkomuniści , niegdyś żerujący na nostalgii za PRL-em , dziś prezentują się jako partia otwarta na Europę Zachodnią , kompetentna w sprawowaniu władzy i promująca rozsądne zmiany .
+417	PART+VERB	nie	nie	5	macie	mieć	6	nie macie	nie mieć	Przecież przegraliście przegrali ście , nie macie już nikogo !
+418	ADP+NOUN	na	na	34	sercu	serce	35	na sercu	na serce	Odkrycie , którego dokonała , nie powinno było jej do tego stopnia porazić , a jednak tak się stało : czuła , że coś się zawala , zapada , że do jej wszystkich ciężarów na sercu dokłada się jeszcze jeden , wcale nie mniejszy , ciężar jakiegoś zawodu i smutku , i świadomości , że z jej przyjaźni z Teresą także będą nici .
+419	CCONJ+PRON	i	i	3	to	to	4	i to	i to	Zaczynają doceniać przyrodę i to , czym obdarzyła nas natura - piękne lasy , jeziora , rośliny , zwierzęta a nawet widoki
+420	ADP+NOUN	w	w	21	oczy	oko	22	w oczy	w oko	Dlatego Hildegard , ilekroć przekraczała próg , zawsze przez krótką chwilę spoglądała na swe odbicie , przez moment patrzyła sobie prosto w oczy - dzień po dniu , miesiąc po miesiącu , rok po roku .
+421	PART+VERB	Nie	nie	1	wiem	wiedzieć	2	Nie wiem	nie wiedzieć	- Nie wiem - mruknął Adamek , sięgając po sztucer .
+422	ADP+NOUN	w	w	13	oczach	oko	14	w oczach	w oko	Jeśli test wychodził negatywny - smutniałam smutniała m i miałam miała m łzy w oczach bo nie było dzidziusia , a jednocześnie jakiś chochlik we mnie świergotał , że dobrze , że jeszcze mam trochę czasu na szaleństwa .
+423	ADP+NOUN	z	z	6	prośbą	prośba	7	z prośbą	z prośba	Posłałem Posłał em do Arasyba Wagurę z prośbą , by czarownik dudnił w bęben bezustannie i głuszył bicie Akawojów .
+424	VERB+PRON	zastanawia	zastanawiać	15	się	się	16	zastanawia się	zastanawiać się	- Ciekawe , dlaczego na chwilę przed wyborami pan minister stał się taki hojny - zastanawia się Artur Zawisza z PiS .
+425	ADP+NOUN	w	w	15	składzie	skład	16	w składzie	w skład	Mooney pod wpływem głębokiej depresji musiał wrócić do Stanów Zjednoczonych , lecz ponownie pojawił się w składzie Can w drugiej połowie lat osiemdziesiątych , kiedy grupa reaktywowała się celem nagrania płyty Rite Time .
+426	VERB+AUX	Zrobiła	zrobić	2	ś	być	3	Zrobiła ś	zrobić być	- Zrobiłaś Zrobiła ś ogólny zarys kolejnych etapów swojego życia , jednak jeśli pojawia się jakaś nęcąca okazja , chętnie odstępujesz od przyjętej linii postępowania - mówi Joni Johnston .
+427	PART+VERB	nie	nie	4	ma	mieć	5	nie ma	nie mieć	- Nie tylko jej nie ma . . . ale . . . i naszych rzeczy także samo nie . . . ma - powiedział wolno Piskorszczak , zajrzawszy do szafy .
+428	PART+VERB	nie	nie	17	ma	mieć	18	nie ma	nie mieć	Studenci medycyny alarmują z kolei , że w przyszłym roku będą musieli zdawać egzamin dyplomowy , a nie ma jeszcze jego kryteriów .
+429	PART+VERB	nie	nie	26	chcą	chcieć	27	nie chcą	nie chcieć	Dzisiaj takiego starego Forda można kupić już za pięć-sześć tysięcy złotych i jeżdżą nimi na ogół ci , którzy potrzebują auta z dużym bagażnikiem , a nie chcą zbytnio afiszować się tym , że stać ich na lepsze .
+430	ADP+ADJ	na	na	36	lepsze	dobry	37	na lepsze	na dobry	Dzisiaj takiego starego Forda można kupić już za pięć-sześć tysięcy złotych i jeżdżą nimi na ogół ci , którzy potrzebują auta z dużym bagażnikiem , a nie chcą zbytnio afiszować się tym , że stać ich na lepsze .
+431	PART+VERB	Nie	nie	1	wierzę	wierzyć	2	Nie wierzę	nie wierzyć	– Nie wierzę w takie historie , Oleg .
+432	ADP+ADV	na	na	1	tyle	tyle	2	na tyle	na tyle	Był na tyle inteligentny , że pojął , iż nie pomogą tu żadne targi .
+433	PART+VERB	nie	nie	5	ma	mieć	6	nie ma	nie mieć	Na powiększanie sieci dróg ekspresowych nie ma pieniędzy .
+434	PRON+VERB	się	się	8	zrobić	zrobić	9	się zrobić	się zrobić	Związek jako taki powinien zaserwować sprawę , powinna się zrobić rozróbka a potem powinno wszystko działać jak należy .
+435	ADP+NOUN	Z	z	1	propozycją	propozycja	2	Z propozycją	z propozycja	"- Z propozycją współprowadzenia "" Lewiatana "" Wiesiek zwrócił się do mnie w 92 roku . - mówi Kurski ."
+436	PART+VERB	nie	nie	3	wiem	wiedzieć	4	nie wiem	nie wiedzieć	Jestem tu od nie wiem jak dawna .
+437	ADP+NOUN	W	w	0	czasie	czas	1	W czasie	w czas	W czasie obserwacji z tylnej części dachu wysuwa się - wcześniej starannie ukryty - kilkumetrowej wysokości podnośnik hydrauliczny .
+438	VERB+AUX	zrobił	zrobić	7	em	być	8	zrobił em	zrobić być	Zamiast ogólnych podsumowań festiwalu , co zrobiłem zrobił em już poniekąd w bieżących relacjach ( POLITYKA 20 i 21 ) , chciałbym chciał by m zatrzymać się przy kilku postaciach ekranowych , które wypadły najbardziej sugestywnie spośród setek pokazanych w tym roku w Cannes .
+439	PART+VERB	nie	nie	12	chce	chcieć	13	nie chce	nie chcieć	Aspirant wyartykułował nieokreślony dźwięk , co miało dawać do zrozumienia , że nie chce mieszać się do sporu .
+440	PART+VERB	Nie	nie	1	ma	mieć	2	Nie ma	nie mieć	- Nie ma idealnego systemu .
+441	DET+NOUN	swoje	swój	14	sprawy	sprawa	15	swoje sprawy	swój sprawa	Ale niektórzy z nich , w tym Lamberski , wręcz ubezwłasnowolnili się , powierzając swoje sprawy prawnikowi .
+442	PART+VERB	nie	nie	12	wiedział	wiedzieć	13	nie wiedział	nie wiedzieć	Do usranej śmierci czekać by mogli , mówi Stefan Jadzi , gdyby nie wiedział , jak z ludźmi rozmawiać .
+443	VERB+PRON	chciał	chcieć	2	się	się	3	chciał się	chcieć się	A może chciał się jeszcze Fryderyk pochylić nad mogiłą najmłodszej swej siostry , Emilki ?
+444	ADP+NOUN	na	na	17	koniec	koniec	18	na koniec	na koniec	Skinąłem Skinął em ręką na Kasię , aby pozostała na miejscu , a sam pobiegłem pobiegł em na koniec półwyspu .
+445	ADP+ADV	na	na	10	tyle	tyle	11	na tyle	na tyle	Przyszło mi do głowy , że jeżeli uda mi się na tyle opanować strach , aby na chwilę zatkać uszy i patrzeć tylko na wędrujące owady , zacznę myśleć z jakim takim sensem .
+446	PART+VERB	Nie	nie	0	wiedziała	wiedzieć	1	Nie wiedziała	nie wiedzieć	Nie wiedziała .
+447	ADV+ADV	jak	jak	4	daleko	daleko	5	jak daleko	jak daleko	Gdzie jest granica , jak daleko ksiądz może się zaangażować w działalność publiczną , polityczną ?
+448	ADP+NOUN	w	w	11	ogień	ogień	12	w ogień	w ogień	Wtedy Bóg złapie to całe towarzystwo łącznie ze mną i wrzuci w ogień piekielny , a będzie tam płacz i zgrzytanie zębów .
+449	CCONJ+PRON	i	i	8	to	to	9	i to	i to	- O naszym członkostwie w Unii zadecyduje polityka i to , kiedy Piętnastka zdecyduje się otworzyć na Wschód .
+450	PART+VERB	nie	nie	12	wie	wiedzieć	13	nie wie	nie wiedzieć	W jaki sposób trafił na ul . Wilczą w Warszawie , już nie wie .
+451	ADP+PRON	w	w	20	sobie	siebie	21	w sobie	w siebie	Wszystko zależy od tego , jaki program zawiera nasza podświadomość , na ile serio traktujemy swoje marzenia , czy podsycamy w sobie pragnienia i awersje , czy też pozwalamy sobie na pozytywne nastawienie , życzliwość wobec wszystkich istot , otwartość na zmiany .
+452	ADP+NOUN	W	w	0	czasie	czas	1	W czasie	w czas	W czasie tym Iran , wyczerpany , wyniszczony wiekowymi wojnami z Bizancjum , jest świeżo podbity przez Arabów , którzy zaczynają krzewić nową wiarę - islam .
+453	PART+VERB	nie	nie	14	ma	mieć	15	nie ma	nie mieć	Izabela Dydowicz , szefowa jastrzębskiej prokuratury , przyznaje , że w tej chwili również nie ma dowodów i nie można aresztować młodych bandytów .
+454	ADP+NOUN	W	w	0	czasie	czas	1	W czasie	w czas	"W czasie kiedy hakerzy należący do znanej brazylijskiej grupy piratów "" Crimeboys "" usiłowali dokonać włamania , strona była aktualizowana i dzięki temu zabezpieczona ."
+455	ADP+PRON	ze	z	4	sobą	siebie	5	ze sobą	z siebie	Niosły teczki , rozprawiały ze sobą hałaśliwie , miały na głowach przekrzywione berety , pod ich nogami skrzypiał śnieg .
+456	PART+VERB	nie	nie	10	dał	dać	11	nie dał	nie dać	"Cztery minuty później w sytuacji "" sam na sam "" nie dał się pokonać Madejowi Majdan ."
+457	NOUN+NOUN	sekcja	sekcja	2	zwłok	zwłoki	3	sekcja zwłok	sekcja zwłoki	Jak wykazała sekcja zwłok , został on śmiertelnie pobity , m.in . drewnianym taboretem strzaskano mu głowę .
+458	ADP+NOUN	po	po	64	głowie	głowa	65	po głowie	po głowa	Adaś mógł być pewny , że z każdych tarapatów wydostanie się po drabinie miłości matczynej , złapie go mama , gdy się potknie , utuli i nafaszeruje ptasim mleczkiem po ojcowskich razach , a gdy będzie tonął , Leokadia rzuci mu koło ratunkowe albo sama zamieni się w ponton o dużej wyporności i ruszy na ratunek , jak wówczas gdy na brzegu Bałtyku oberwał po głowie od silniejszego kolegi , który do tego zabrał mu wiaderko i łopatkę .
+459	ADP+NOUN	w	w	3	czasie	czas	4	w czasie	w czas	Dodajmy , że w czasie wizyt papieża i przy innych okazjach nieraz przebywał w Polsce , jego korespondencje zaś z naszego kraju , również te pisane po proklamowaniu stanu wojennego , potwierdzając konserwatywne poglądy ich autora , udowodniły też , że jest dziennikarzem mającym szacunek dla faktów .
+460	CCONJ+PRON	i	i	6	tego	to	7	i tego	i to	Także moje pytania dotyczą przedstawionego problemu i tego , aby wszyscy Polacy , mając swoich reprezentantów , mając to lobby - nie wiem , czy to jest odpowiednie słowo - wywarli presję , by niemieccy eurodeputowani nie blokowali na każdym szczeblu dyskusji na ten temat , bo jest to bardzo poważny problem .
+461	PART+VERB	nie	nie	21	wiem	wiedzieć	22	nie wiem	nie wiedzieć	Także moje pytania dotyczą przedstawionego problemu i tego , aby wszyscy Polacy , mając swoich reprezentantów , mając to lobby - nie wiem , czy to jest odpowiednie słowo - wywarli presję , by niemieccy eurodeputowani nie blokowali na każdym szczeblu dyskusji na ten temat , bo jest to bardzo poważny problem .
+462	PART+VERB	nie	nie	3	ma	mieć	4	nie ma	nie mieć	- Na Helu nie ma komisariatu policji - wyjaśnia Wądołowski .
+463	ADP+NOUN	Na	na	0	koniec	koniec	1	Na koniec	na koniec	Na koniec 1996 roku deficyt budżetowy wystąpił w 21 miastach spośród 35 , chociaż planowało go aż 30 miast .
+464	VERB+PRON	spotkała	spotkać	3	się	się	4	spotkała się	spotkać się	Ta wizja macierzyństwa spotkała się z polemiką ze strony działaczki pacyfistycznej i feministycznej Madeleine Vernet ( 1878 - 1949 ) .
+465	VERB+PRON	wypowiada	wypowiadać	9	się	się	10	wypowiada się	wypowiadać się	13 . Żona prezydenta zawsze pierwsza wie , komu wypowiada się wojnę , jakie podatki będą obowiązywały w przyszłym roku i do jakiej telewizji przenosi się znany prezenter telewizyjny .
+466	VERB+PRON	zdecyduje	zdecydować	10	się	się	11	zdecyduje się	zdecydować się	To , czy ponownie zasiądzie w ławach na Wiejskiej , zdecyduje się , już bez jej udziału , w dzień wyborów samorządowych – prawdopodobnie 27 października .
+467	CCONJ+PRON	i	i	6	to	to	7	i to	i to	Mocno akcentuje swoją samowystarczalność , niezależność i to , że doskonale wie , czego chce .
+468	ADP+PRON	ze	z	10	sobą	siebie	11	ze sobą	z siebie	Gdy zgasło światło , kamera pokazała , że zabawiali się ze sobą pod kołdrą .
+469	PART+VERB	Nie	nie	1	ma	mieć	2	Nie ma	nie mieć	- Nie ma miejsca dla mnie ? - zapytał brunet i spojrzał uważnie na szatniarza .
+470	VERB+NOUN	ma	mieć	2	miejsca	miejsce	3	ma miejsca	mieć miejsce	- Nie ma miejsca dla mnie ? - zapytał brunet i spojrzał uważnie na szatniarza .
+471	PART+VERB	nie	nie	35	ma	mieć	36	nie ma	nie mieć	- UE asygnuje bardzo dużo pieniędzy na subsydia dla rolników , a to nie jest wydajne . Rolnicy , rozleniwieni dopłatami nic nie produkują - twierdzili uczniowie , podając jednocześnie przykład Nowej Zelandii , gdzie nie ma dopłat , a rolnictwo rozwija się świetnie .
+472	ADP+ADV	na	na	11	tyle	tyle	12	na tyle	na tyle	Z czasem w kraju powstał wolny rynek antykwaryczny i rozwinął się na tyle , że w 2000 roku Mielniczuk wykonał kolejny skok do przodu - z Paryża wrócił do Warszawy , choć miał obywatelstwo francuskie i dobrą sytuację finansową , bo we Francji z powodzeniem handlował nie tylko obrazami , lecz także nieruchomościami .
+473	PART+VERB	Nie	nie	0	ma	mieć	1	Nie ma	nie mieć	Nie ma wojska bez generała i nie ma generała bez wojska .
+474	PART+VERB	nie	nie	6	ma	mieć	7	nie ma	nie mieć	Nie ma wojska bez generała i nie ma generała bez wojska .
+475	PART+VERB	nie	nie	9	chcąc	chcieć	10	nie chcąc	nie chcieć	Widziałam Widziała m , jak bardzo się stara , nie chcąc nam wyrządzić przykrości .
+476	PART+VERB	nie	nie	2	widzi	widzieć	3	nie widzi	nie widzieć	Tego naprawdę nie widzi się codziennie , więc jeśli chcecie obejrzeć kolejną część , to łapki w górę i lajkujcie .
+477	PART+VERB	Nie	nie	0	ma	mieć	1	Nie ma	nie mieć	Nie ma w Polsce drugiej osoby , która byłaby była by w takiej roli jak ja .
+478	VERB+AUX	była	być	9	by	by	10	była by	być by	Nie ma w Polsce drugiej osoby , która byłaby była by w takiej roli jak ja .
+479	ADP+NOUN	na	na	10	scenie	scena	11	na scenie	na scena	Jaro pofatygował się zadośćuczynić życzeniu klienta , a tymczasem dziewczyny na scenie dały spokój rurce .
+480	PART+VERB	Nie	nie	0	mamy	mieć	1	Nie mamy	nie mieć	Nie mamy wystarczających środków transportu ani łączności , aby odpowiednio zareagować w takiej sytuacji .
+481	PART+VERB	Nie	nie	0	ma	mieć	1	Nie ma	nie mieć	Nie ma nic gorszego niż deszcz i mgła .
+482	ADP+ADV	na	na	1	tyle	tyle	2	na tyle	na tyle	To na tyle mało , że będzie Pan mógł startować jeszcze w innych konkursach .
+483	ADP+NOUN	na	na	7	cel	cel	8	na cel	na cel	Zanim pomyślałem pomyślał em o naprowadzeniu armaty na cel , granaty powybuchały i znów przestałem przestał em cokolwiek widzieć .
+484	PART+VERB	nie	nie	10	wiesz	wiedzieć	11	nie wiesz	nie wiedzieć	- Tylko ja o tym wiem , a ty jeszcze nie wiesz .
+485	VERB+ADP	jesteśmy	być	6	w	w	7	jesteśmy w	być w	Ale do katastrofy nie dochodzi , jesteśmy w końcu w teatrze .
+486	ADP+NOUN	w	w	28	czasie	czas	29	w czasie	w czas	Jeszcze bardziej testy skomplikuje stosowanie różnych manekinów : amerykański manekin mierzy skalę możliwych obrażeń głowy i klatki piersiowej ; europejski manekin dodatkowo będzie mierzyć wpływ różnych sił działających w czasie wypadku na pasażerów .
+487	ADP+NOUN	na	na	3	scenie	scena	4	na scenie	na scena	O godzinie 17.00 na scenie zagości zespół Dwa Kamraty , znany ze śląskich rozgłośni radiowych .
+488	ADP+NOUN	Przed	przed	0	sądem	sąd	1	Przed sądem	przed sąd	Przed sądem chce też udowodnić , że miał pieniądze na podwyżki dla lekarzy .
+489	ADP+ADV	na	na	5	tyle	tyle	6	na tyle	na tyle	- On czuje się już na tyle mocny , że już nawet o własnych siłach poszedł do szkoły odebrać świadectwo - tata z radością obserwuje przemianę Wojtka .
+490	PART+VERB	nie	nie	31	miało	mieć	32	nie miało	nie mieć	U podstaw tej różnicy leży przede wszystkim fakt , że dom ten po wyprowadzeniu się Szymanowskiego był użytkowany jako budynek lokatorski , stąd też jego wnętrze w momencie przekazania go muzeum nie miało z kompozytorem wiele wspólnego .
+491	ADP+PRON	ze	z	17	sobą	siebie	18	ze sobą	z siebie	Najpierw propozycje składają same gwiazdy , dyskutują je z trenerami głosu , przedstawiają producentowi , producenci dyskutują ze sobą , potem ze stacją Polsat , potem z Radiem Zet , na końcu z Markiem Sierockim - czy Polak to kupi , czy nie .
+492	ADP+NOUN	na	na	30	końcu	koniec	31	na końcu	na koniec	Najpierw propozycje składają same gwiazdy , dyskutują je z trenerami głosu , przedstawiają producentowi , producenci dyskutują ze sobą , potem ze stacją Polsat , potem z Radiem Zet , na końcu z Markiem Sierockim - czy Polak to kupi , czy nie .
+493	VERB+AUX	było	być	7	by	by	8	było by	być by	W tym pierwszym przypadku bardzo łatwo byłoby było by zdemaskować , że to o czym próbują powiedzieć jest sztuczne , nienaturalne , wyssane z szóstego palca ręki .
+494	ADP+PRON	o	o	13	czym	co	14	o czym	o co	W tym pierwszym przypadku bardzo łatwo byłoby było by zdemaskować , że to o czym próbują powiedzieć jest sztuczne , nienaturalne , wyssane z szóstego palca ręki .
+495	NOUN+NOUN	akt	akt	2	oskarżenia	oskarżenie	3	akt oskarżenia	akt oskarżenie	"Jak stwierdzał akt oskarżenia : "" Obowiązki swe porzucili pielęgniarze i pielęgniarki nawet w tych oddziałach , w których byli ciężko chorzy , furiaci oraz tam , gdzie byli podsądni oddani z mocy decyzji sądowej do szpitala na obserwację "" ."
+496	PRON+VERB	się	się	15	czuje	czuć	16	się czuje	się czuć	"Docenianie się za piękno zewnętrzne nie jest tak istotne jak docenianie się za to że się czuje , egzystuje , "" toczy "" po tym świecie ."
+497	PART+VERB	nie	nie	3	ma	mieć	4	nie ma	nie mieć	Ale dla mnie nie ma różnicy między Włochem , Polakiem czy Węgrem .
+498	PART+VERB	Nie	nie	0	widzę	widzieć	1	Nie widzę	nie widzieć	Nie widzę możliwości obniżania stawek podatku dochodowego - przede wszystkim ze względu na bilans handlowy i płatniczy .
+499	PART+VERB	nie	nie	20	ma	mieć	21	nie ma	nie mieć	Dyrygent pyta Wdowę , czy ma ochotę na polską zupę , na polski rosół , z koguta , jak już nie ma kury , bo z kury lepszy , wiadomo , bo nie tak tłusty , a z koguta , wiadomo , tłusty , ale lepszy taki niż w ogóle żaden .
+500	ADP+PRON	o	o	23	czym	co	24	o czym	o co	W 1877 roku na wniosek Walerego Eljasza - Radzikowskiego zwężeniu temu nadano miano Bramy Kraszewskiego , dla uczczenia jubileuszu 50-lecia pracy pisarza , o czym informuje tablica wmurowana po przeciwnej stronie potoku .
+501	ADP+PRON	o	o	15	co	co	16	o co	o co	To challenge fasolkowy , nawet nie muszę oglądać żadnego filmu , żeby domyślić się , o co chodzi , ale co tam , zerkam .
+502	PART+VERB	Nie	nie	1	wiem	wiedzieć	2	Nie wiem	nie wiedzieć	- Nie wiem jednak , co robić dalej .
+503	VERB+PRON	rzucała	rzucać	18	się	się	19	rzucała się	rzucać się	Dziś dyskutowaliśmy dyskutowali śmy w grupie o zakończeniu i czy właściwe jest , by pani w ostatniej scenie rzucała się z dachu wieżowca , a ponieważ trzon grupy znalazł się na Stwosza , więc kontynuowaliśmy kontynuowali śmy i tym sposobem Milena także poznała okrutny los niejakiej Lidki Borowskiej .
+504	PART+VERB	nie	nie	8	masz	mieć	9	nie masz	nie mieć	- Jajeczny , ja ci mówię , że nie masz świadków .
+505	VERB+PRON	mijają	mijać	1	się	się	2	mijają się	mijać się	Ludzie mijają się czasem latami bez słowa , chociaż mieszkają drzwi w drzwi , nieskorzy jesteśmy do poznawania się nawzajem , bardzo nam trudno się przełamać , powiedzieć coś więcej niż grzecznościowe formuły .
+506	PRON+VERB	się	się	8	ma	mieć	9	się ma	się mieć	- Jak się nie strzela goli , to się ma to co los przyniesie - stwierdził rozżalony szkoleniowiec Tarpana .
+507	ADP+ADV	na	na	39	tyle	tyle	40	na tyle	na tyle	Zagrała mroczna , szeleszcząca jak pustynny piasek muzyka Koniecznego , a między jeżdżącymi w górę i w dół częściami scenografii Mądzika poczęły się majestatycznie przesuwać piękne kostiumy Zofii de Ines , ledwo , ledwo wyłaniające się z mroków , na tyle jednak , abyśmy aby śmy docenili wysmakowany projekt .
+508	ADP+NOUN	w	w	3	życiu	życie	4	w życiu	w życie	Sandra pierwszy raz w życiu jest na dworcu .
+509	NOUN+VERB	zdaniem	zdanie	30	ma	mieć	31	zdaniem ma	zdanie mieć	Jeżeli nawet fundamentalny moralny i cywilizacyjny dylemat dostępu do opieki medycznej i jej finansowania oraz system podatkowy i wydatki państwa sygnatariusze uważają za sprawy dla fachowców , to czemu ich zdaniem ma służyć polityka ?
+510	ADP+NOUN	przed	przed	7	sądem	sąd	8	przed sądem	przed sąd	Kierowca ciężarówki powiedział nam wczoraj , iż przed sądem będzie się domagał odszkodowania od zarządcy drogi .
+511	PART+VERB	nie	nie	15	chcesz	chcieć	16	nie chcesz	nie chcieć	Ale po dwóch złotych medalach w Trieście i przed tobą otwiera się - chcesz czy nie chcesz - szansa by podbić świat .
+512	PART+VERB	nie	nie	9	wiedziała	wiedzieć	10	nie wiedziała	nie wiedzieć	- Pani oczywiście też nic wcześniej o tej wszczepce nie wiedziała - mruknął zgryźliwie , niezdolny powstrzymać się od desperackich uszczypliwości .
+513	ADP+NOUN	W	w	0	stanie	stan	1	W stanie	w stan	W stanie obrzydzenia przyprawiającego o nowe mdłości nie zauważył nawet , że wielki ból zaczyna z wolna zanikać .
+514	PART+VERB	nie	nie	5	wiesz	wiedzieć	6	nie wiesz	nie wiedzieć	To bardzo denerwujące , bo nie wiesz , o czym mówisz .
+515	ADP+PRON	o	o	8	czym	co	9	o czym	o co	To bardzo denerwujące , bo nie wiesz , o czym mówisz .
+516	VERB+PRON	ma	mieć	2	się	się	3	ma się	mieć się	Ale jak ma się takiego aniołka , to jakąś cenę trzeba za to zapłacić .
+517	ADP+NOUN	na	na	20	kontach	konto	21	na kontach	na konto	Mimo dużego zamieszania na rynku międzybankowym z powodu kryzysu zaufania , sektor przedsiębiorstw wydaje się dosyć odporny , bo zakumulował na kontach bankowych środki pieniężne , które stanowią teraz dogodną poduszkę płynnościową dla amortyzacji trudności z dostępem do finansowania zewnętrznego .
+518	NOUN+ADJ	ciąg	ciąg	23	dalszy	daleki	24	ciąg dalszy	ciąg daleki	"Czy po czystce wśród ambasadorów , których odwołano z powodu "" utraty zaufania "" , a konkretnie współpracy ze służbami specjalnymi , nastąpi ciąg dalszy zwolnień w MSZ ?"
+519	ADP+NOUN	w	w	19	gardło	gardło	20	w gardło	w gardło	Przyniosłem Przyniosł em z piwnicy albumy rodzinne , usiadłem usiadł em z flaszką whisky Canadian Club i waląc prosto w gardło złocisty napój , patrzyłem patrzył em na nasze zdjęcia , żeby odczarować tamten obraz .
+520	NOUN+VERB	prawo	prawo	20	ma	mieć	21	prawo ma	prawo mieć	Bo przecież - jak czytamy w uzasadnieniu do projektu rządowego - to Unia Europejska zdecydowała za nas , że takie prawo ma obowiązywać .
+521	PART+VERB	nie	nie	6	ma	mieć	7	nie ma	nie mieć	- Moja babcia żałuje , że nie ma już tradycji spotykania się w sąsiedztwie i wspólnego śpiewania piosenek - relacjonowała publiczności jedna z dziewczynek .
+522	VERB+PRON	zebrał	zebrać	21	się	się	22	zebrał się	zebrać się	Akurat wtedy , gdy kadrowicze rozpakowywali w Warszawie swój sprzęt po powrocie ze zgrupowania w Barsinghausen , w kościele w Kazimierzu zebrał się tłum wiernych , który modlił się o powodzenie naszej drużyny w zbliżających się mistrzostwach świata .
+523	VERB+PRON	ukazał	ukazać	7	się	się	8	ukazał się	ukazać się	Od 1930 roku , kiedy to potwór ukazał się po raz pierwszy , tysiące ludzi zapewniało , że go widziało .
+524	PART+VERB	Nie	nie	0	daj	dać	1	Nie daj	nie dać	Nie daj się schwytać , nie daj się otropić .
+525	VERB+PRON	daj	dać	1	się	się	2	daj się	dać się	Nie daj się schwytać , nie daj się otropić .
+526	PART+VERB	nie	nie	5	daj	dać	6	nie daj	nie dać	Nie daj się schwytać , nie daj się otropić .
+527	VERB+PRON	daj	dać	6	się	się	7	daj się	dać się	Nie daj się schwytać , nie daj się otropić .
+528	PART+VERB	nie	nie	1	wiem	wiedzieć	2	nie wiem	nie wiedzieć	Choćby nie wiem jak bardzo niezliczone były istoty czujące - ślubuję je wyzwolić .
+529	PART+VERB	nie	nie	13	życzy	życzyć	14	nie życzy	nie życzyć	Jej życzenia zbiły mnie z tropu ; kto jak kto , ale Mette nie życzy nikomu dobrze , nie widząc w tym swojego dobra .
+530	PART+VERB	nie	nie	18	widząc	widzieć	19	nie widząc	nie widzieć	Jej życzenia zbiły mnie z tropu ; kto jak kto , ale Mette nie życzy nikomu dobrze , nie widząc w tym swojego dobra .
+531	VERB+PRON	ciągnęła	ciągnąć	6	się	się	7	ciągnęła się	ciągnąć się	Potem przemawiali inni mówcy i debata ciągnęła się przez następną godzinę .
+532	VERB+PRON	spotkają	spotkać	3	się	się	4	spotkają się	spotkać się	Twoje dalekosiężne projekty spotkają się ze zrozumieniem najbliższej osoby .
+533	PART+VERB	nie	nie	7	ma	mieć	8	nie ma	nie mieć	Łukasz rozbija moje złudzenia : powyżej czterdziestki nie ma targetu .
+534	ADP+PRON	O	o	0	co	co	1	O co	o co	O co poszło ?
+535	ADP+NOUN	z	z	43	końca	koniec	44	z końca	z koniec	"Z perspektywy tego czasu , który dzieli nas od tamtych gorących ostatnich dni sesji można już - i chyba trzeba - podjąć próbę bardziej spokojnej niż wówczas oceny tego , w jakiej mierze usprawiedliwiony był tamten niepokój i rozgoryczenie cechujące wszystkie prawie sprawozdania z końca trzeciej sesji ; jak duża była ta "" kropla goryczy "" na tle ustalającej się coraz bardziej świadomości o ogromnych , niezaprzeczalnych dotychczasowych osiągnięciach Soboru ."
+536	ADP+PRON	ze	z	3	sobą	siebie	4	ze sobą	z siebie	I koniecznie zabierz ze sobą jakąś książkę .
+537	ADP+PRON	w	w	3	sobie	siebie	4	w sobie	w siebie	Wszystkiego doszukać się w sobie .
+538	ADP+NOUN	w	w	21	oczy	oko	22	w oczy	w oko	- Nie mam śmiałości - krygował się nadal fryzjer - a mam wielką prośbę do pana literata - i spozierał niepewnie w oczy Stefana .
+539	ADP+NOUN	w	w	13	słowach	słowo	14	w słowach	w słowo	Zrozpaczona matka nie może sobie darować , że nie odczytała wezwania na pomoc w słowach dziecka .
+540	PART+VERB	nie	nie	3	chcą	chcieć	4	nie chcą	nie chcieć	A jednak jakoś nie chcą mnie kąsać te paskudy ! - myślał stąpając ostrożnie .
+541	ADP+NOUN	w	w	11	oczach	oko	12	w oczach	w oko	To jakby płonęło mi 50 lat życia - opowiada ze łzami w oczach .
+542	ADP+PRON	o	o	24	czym	co	25	o czym	o co	Przyjaciółka , Barbara Limanowska , wie , co mówi , należy do matek - założycielek polskiego ruchu feministycznego , a matek należy słuchać ( o czym pouczają feministki ) .
+543	ADJ+NOUN	dalszym	daleki	7	ciągu	ciąg	8	dalszym ciągu	daleki ciąg	Tymczasem mój lot nie ustawał i w dalszym ciągu nie wiedziałem wiedział em , w jaki sposób wrócić na ziemię .
+544	VERB+PRON	Znamy	znać	0	się	się	1	Znamy się	znać się	Znamy się od kilku lat , więc kiedy Krzysztof powiedział , że dostają klucze do własnego mieszkania na warszawskim Gocławiu , nie mieliśmy mieli śmy wątpliwości , że to właśnie my zajmiemy się aranżacją wnętrz .
+545	ADP+NOUN	w	w	9	czasie	czas	10	w czasie	w czas	Policjanci będą mogli też dorabiać przy zabezpieczaniu imprez masowych w czasie wolnym od służby - za ich pracę płaciłby płacił by organizator imprezy .
+546	PART+VERB	Nie	nie	1	chcą	chcieć	2	Nie chcą	nie chcieć	- Nie chcą , bym by m ich utrzymywał .
+547	PART+VERB	nie	nie	1	ma	mieć	2	nie ma	nie mieć	Tu nie ma żadnego Legolandu .
+548	NOUN+NOUN	wotum	wotum	8	nieufności	nieufność	9	wotum nieufności	wotum nieufność	Nie złożyłem złożył em podpisu pod wnioskiem o wotum nieufności skierowanym do marszałka Sejmu .
+549	PART+VERB	nie	nie	9	robi	robić	10	nie robi	nie robić	To ich zabawy domowe , tego się przy obcych nie robi , ale swój jest swój .
+550	ADP+NOUN	w	w	8	oczach	oko	9	w oczach	w oko	Już bez strachu , z niedowierzaniem i błyskiem w oczach przekładała paczki z ręki do ręki .
+551	ADP+PRON	w	w	1	sobie	siebie	2	w sobie	w siebie	Miała w sobie coś z ikony .
+552	PART+VERB	Nie	nie	1	wiem	wiedzieć	2	Nie wiem	nie wiedzieć	- Nie wiem .
+553	PART+VERB	nie	nie	16	wiedzieli	wiedzieć	17	nie wiedzieli	nie wiedzieć	Słuchaj , to wspaniała kobieta , przekonywał Szczesiak , jak byśmy by śmy sami o tym nie wiedzieli .
+554	PART+VERB	nie	nie	19	robili	robić	20	nie robili	nie robić	Mam wrażenie , że gdyby wszyscy ci , którzy chrzczą dzieci , żeby je zasymilować z katolicką większością tego nie robili , to byłaby była by to nie dwójka a z dziesiątka w trzydziestoosobowej grupie .
+555	PART+VERB	nie	nie	16	chce	chcieć	17	nie chce	nie chcieć	Niezatapialny Jeffrey Archer wyszedł właśnie na wolność i musi wymyślić coś nowego : partia go już nie chce .
+556	ADP+NOUN	do	do	12	dymisji	dymisja	13	do dymisji	do dymisja	Poseł Włodzimierz Wasiński sądzi , że zmiany w rządzie nie ograniczą się do dymisji wicepremiera Janusza Tomaszewskiego .
+557	PART+VERB	nie	nie	13	wiem	wiedzieć	14	nie wiem	nie wiedzieć	Paweł Wójcik - Moja mama ma jasne włosy , jakie ma oczy to nie wiem .
+558	PART+VERB	nie	nie	6	ma	mieć	7	nie ma	nie mieć	Można postawić przy nich kreskę - nie ma nikogo w domu .
+559	PART+VERB	nie	nie	8	robią	robić	9	nie robią	nie robić	- Wiesz - mówi Aida - ludzie teraz nie robią zdjęć .
+560	VERB+PRON	spotkał	spotkać	11	się	się	12	spotkał się	spotkać się	- Informacje Bronisława Klimaszewskiego , jakoby 3 sierpnia 1994 r . spotkał się z Aleksandrem Kwaśniewskim w Juracie , są niezgodne z faktami .
+561	PART+VERB	nie	nie	11	ma	mieć	12	nie ma	nie mieć	- Na wsze czasy rozstajemy się z silną władzą prezydencką ; nie ma takiego parlamentu na świecie , który będzie skory do zwrócenia choćby cząstki władzy prezydentowi - ocenia Falandysz .
+562	ADP+ADV	na	na	28	tyle	tyle	29	na tyle	na tyle	"Ten ostatni koncertujący od siódmego roku życia przypomniał taką historyjkę ze swego dzieciństwa : "" Mój stary profesor położywszy na mnie rękę powiedział , że pewnego dnia będę na tyle dobrym skrzypkiem , by sam uczyć . """
+563	ADP+NOUN	w	w	8	czasie	czas	9	w czasie	w czas	Do 31 grudnia byli robotnicy przymusowi , którzy w czasie II wojny światowej byli zatrudnieni w placówkach Kościoła katolickiego w Niemczech , mogą składać wnioski o odszkodowania - przypomina fundacja Polsko - Niemieckie Pojednanie .
+564	PART+VERB	nie	nie	6	robią	robić	7	nie robią	nie robić	- Ale święci - dodał - nie robią polityki .
+565	ADP+PRON	ze	z	12	sobą	siebie	13	ze sobą	z siebie	"Wspólne ranne przyjście do biura to jak komunikat : "" A my ze sobą śpimy "" ."
+566	VERB+PRON	Chwalą	chwalić	0	się	się	1	Chwalą się	chwalić się	Chwalą się nawzajem za te wspaniałe filmy , które zrobili .
+567	PART+VERB	nie	nie	23	mam	mieć	24	nie mam	nie mieć	""" Na statku przegrałem przegrał em w "" Bingo "" ( b . dobra gra hazardowa ) 2 dolary i w tej chwili nie mam już nic , ale jutro dostajemy zaliczkę "" - informował Wacek rodziców ."
+568	VERB+PRON	decydowało	decydować	9	się	się	10	decydowało się	decydować się	Remont miał być przeprowadzony w marcu , ale wówczas decydowało się , kto będzie nowym właścicielem tej kamienicy .
+569	PART+VERB	nie	nie	6	mają	mieć	7	nie mają	nie mieć	- Celowo go nie kasują bądź nie mają , a później chwalą się przed znajomymi ile to razy udało im się uniknąć kary .
+570	ADP+NOUN	na	na	7	końcu	koniec	8	na końcu	na koniec	Ale jak płacimy , to się okaże na końcu - igra sobie Pan Marek z domysłami wątpiących .
+571	PART+VERB	nie	nie	19	wierzę	wierzyć	20	nie wierzę	nie wierzyć	Ab-Ram wyjrzał , czy nikt nie podsłuchuje , i wyznał : - Muszę stad odejść , ojcze , gdyż nie wierzę w bogów . . .
+572	ADP+NOUN	z	z	13	ziemi	ziemia	14	z ziemi	z ziemia	A to znaczy , że tak czy inaczej na morze można patrzeć tylko z ziemi .
+573	ADP+NOUN	w	w	2	powietrze	powietrze	3	w powietrze	w powietrze	Później strzałami w powietrze sterroryzował kasjerkę i zmusił ją do wydania pieniędzy .
+574	PRON+VERB	się	się	1	pogodzimy	pogodzić	2	się pogodzimy	się pogodzić	Jakoś się pogodzimy .
+575	PART+VERB	nie	nie	9	miała	mieć	10	nie miała	nie mieć	W efekcie ledwo wiąże koniec z końcem i nigdy nie miała na koncie więcej niż parę tysięcy dolarów .
+576	ADP+NOUN	na	na	11	koncie	konto	12	na koncie	na konto	W efekcie ledwo wiąże koniec z końcem i nigdy nie miała na koncie więcej niż parę tysięcy dolarów .
+577	ADP+PRON	O	o	1	co	co	2	O co	o co	- O co więc chodzi Anglikom , skoro od kilku lat co jakiś czas pojawia się film angielski poświęcony historii władców tego kraju ?
+578	PART+VERB	nie	nie	3	ma	mieć	4	nie ma	nie mieć	Jak widać , nie ma w tym obrazie Ameryki jednoznacznego rozkładu barw .
+579	PART+VERB	nie	nie	3	chcę	chcieć	4	nie chcę	nie chcieć	ARTUR - Ja nie chcę jeść , ja chcę zapanować nad sytuacją !
+580	ADP+PRON	o	o	10	co	co	11	o co	o co	Dziś znaczna część naszych rodaków w ogóle nie rozumie , o co w tym wszystkim chodzi .
+581	VERB+AUX	było	być	3	by	by	4	było by	być by	Jednak nieuczciwie byłoby było by nie wspomnieć o dobrych stronach filmu .
+582	PART+VERB	nie	nie	3	chciał	chcieć	4	nie chciał	nie chcieć	To sam Wei nie chciał wyjechać .
+583	NOUN+VERB	górach	góra	6	jest	być	7	górach jest	góra być	Opiekun dzieciaków sądził , że w górach jest już wiosna .
+584	ADP+NOUN	w	w	15	czasie	czas	16	w czasie	w czas	Radny niezależny ( wcześniej SLD ) Tomasz Woźniak oskarżył publicznie S . Pastuszewskiego , że w czasie gdy ten był wiceprezydentem miasta skorzystał z darmowych robót pewnej firmy w zamian za przyspieszenie prywatyzacji kamienicy , którą była ona zainteresowana .
+585	PART+VERB	nie	nie	8	wiedział	wiedzieć	9	nie wiedział	nie wiedzieć	Jeszcze po południu zawieszony prezes największego polskiego ubezpieczyciela nie wiedział , czy członkowie rady podejmą jakieś decyzje w jego sprawie .
+586	ADP+NOUN	w	w	11	czasie	czas	12	w czasie	w czas	Niektóre z nich , pamiętając , jak wcześniej nieludzko traktowano je w czasie rozwiązania , dopiero po wprowadzeniu zmian zdecydowały się na drugie dziecko .
+587	ADP+PRON	o	o	28	czym	co	29	o czym	o co	"Spójrzmy dalej : grozę konstytuuje wreszcie element metrorytmiczny , np . ostinato rytmiczne - z jednej , i nagłe zwroty "" pulsacji "" - z drugiej strony ( o czym była już mowa wcześniej ) ."
+588	PART+VERB	nie	nie	5	wierzyła	wierzyć	6	nie wierzyła	nie wierzyć	Szczerze mówiąc , ani trochę nie wierzyła w te patetyczne pierdóły o wędrówce dusz ani o kolejnych efektownych inkarnacjach : z konika polnego w antylopę , a później , jeśli będziesz grzeczna , w buddyjskiego mnicha .
+589	VERB+PRON	daje	dawać	6	się	się	7	daje się	dawać się	Tuli się do wychowawczyni i nie daje się ukoić nawet za pomocą najładniejszego pluszaka .
+590	ADP+NOUN	w	w	12	powietrzu	powietrze	13	w powietrzu	w powietrze	Dławiąca wilgoć zmienia nas wszystkich w Bombaju w płazy oddychające wodą zawartą w powietrzu ; człowiek uczy się z tym żyć – i to żyć z zadowoleniem – albo wyjeżdża .
+591	PART+VERB	Nie	nie	1	chcieli	chcieć	2	Nie chcieli	nie chcieć	- Nie chcieli zeznawać , dlatego zapadła decyzja o ich tymczasowym aresztowaniu - wyjaśnia T . Kaczmarek .
+592	ADP+NOUN	w	w	3	czasie	czas	4	w czasie	w czas	"Lech Wałęsa , w czasie spotkania z Prezydium Sejmu i Konwentem Seniorów : "" Proszę nie dotykać prezydenta , nie wchodzić mu na odcisk , bo jak przydzwonię , to będzie źle "" ."
+593	VERB+PRON	stosuje	stosować	20	się	się	21	stosuje się	stosować się	Zdecydowanie wolała , gdy , jak dawniej , mapa pojawiała na tle szklanej szyby niż tak jak teraz , kiedy stosuje się blue-box , więc palcem trafia w pustkę , a mapę widzi jedynie na monitorze .
+594	ADP+PRON	o	o	10	czym	co	11	o czym	o co	"Przez kilkanaście lat doczekali się też swojej wiernej publiczności , o czym można było się przekonać podczas sobotniego jubileuszowego koncertu w klubie "" Stajnia nr 8a "" ."
+595	ADP+NOUN	z	z	2	prośbą	prośba	3	z prośbą	z prośba	Zgodnie też z prośbą młodzieży ( tej oraz innej ) będziemy się starali drukować niektóre materiały krajoznawcze ( m.in . mapy ) tak , aby można je było wyjąć z numeru bez szkody dla pozostałej jego części .
+596	ADP+NOUN	na	na	8	koniec	koniec	9	na koniec	na koniec	""" Gdyby ściany sali miały ręce - stwierdził na koniec - przyklasnęłyby przyklasnęły by niewątpliwie temu wyrokowi ."
+597	PART+VERB	Nie	nie	1	ma	mieć	2	Nie ma	nie mieć	- Nie ma ludzi zdrowych , są tylko źle zdiagnozowani .
+598	ADP+NOUN	w	w	17	życiu	życie	18	w życiu	w życie	- Nie trzeba dobrze znać Kaczyńskich , by przekonać się , że jest dla nich najważniejszą osobą w życiu - dodaje Szczypińska .
+599	VERB+PRON	trzymam	trzymać	17	się	się	18	trzymam się	trzymać się	Albo to była strasznie obrzydliwa fasolka i wtedy zrywam się z miejsca , podskakuję , wrzeszczę , trzymam się za usta , krzycząc : „ Zaraz będę haftował ! ” – to pewien sposób na aplauz widowni .
+600	ADP+PRON	za	za	11	sobą	siebie	12	za sobą	za siebie	Jedni celebrują moment odejścia , inni czynią to pospiesznie - zamykają za sobą drzwi i odjeżdżają nie odwracając nawet głowy .
+601	PRON+VERB	się	się	15	dowiedzieć	dowiedzieć	16	się dowiedzieć	się dowiedzieć	Uradziliśmy Uradzili śmy natychmiast depeszować do Brukseli , by trzymano się tego śladu i postarano się dowiedzieć jak najwięcej o owym panu Folkstonie .
+602	VERB+PRON	spotkało	spotkać	5	się	się	6	spotkało się	spotkać się	"Jak co roku kilkaset osób spotkało się w warszawskiej kawiarni "" Rozdroże "" , gdzie po raz ósmy wręczono nagrody Kisiela ."
+603	VERB+PUNCT	Myślę	myśleć	0	,	,	1	Myślę ,	myśleć ,	Myślę , że niepotrzebnie , panie pośle - adresuję tę wypowiedź do pana posła Pęka - wprowadza pan wątek Huty Katowice .
+604	ADP+ADJ	Na	na	2	dobre	dobry	3	Na dobre	na dobry	"* "" Na dobre zacząłem zaczął em śpiewać dopiero w grupie Blackout i wszystko , co umiem , zawdzięczam Tadeuszowi Nalepie "" ( Jerzy Kozłowski o swoich występach z zespołem Nalepy w 1967 roku , "" Śpiewamy i Tańczymy "" , lipiec 1970 ) ."
+605	ADP+PRON	za	za	12	siebie	siebie	13	za siebie	za siebie	- Wyjmij skarpety z mojej walizki - rzucił Kwiczoł , nie patrząc za siebie .
+606	VERB+PRON	uśmiecha	uśmiechać	6	się	się	7	uśmiecha się	uśmiechać się	- Mamy się czym pochwalić - uśmiecha się burmistrz .
+607	PART+VERB	nie	nie	41	mają	mieć	42	nie mają	nie mieć	Żona pod opieką Psychiatry wyjątkowo sprawnie dochodzi do siebie , zwłaszcza od kiedy jej wytłumaczył , że ludzie tak naprawdę mogą mieszkać tylko w innych ludziach , depresja to nic innego , jak bezdomność , na depresję cierpią ludzie , którzy nie mają w kim mieszkać , a potem zaproponował , że otworzy przed nią swoje drzwi .
+608	VERB+PRON	ukazuje	ukazywać	6	się	się	7	ukazuje się	ukazywać się	"W pewnej chwili na małym ekranie ukazuje się plansza : "" Przepraszamy za zakłócenia "" ."
+609	PART+VERB	Nie	nie	0	daj	dać	1	Nie daj	nie dać	Nie daj się zbywać ogólnikami .
+610	VERB+PRON	daj	dać	1	się	się	2	daj się	dać się	Nie daj się zbywać ogólnikami .
+611	PART+VERB	nie	nie	10	wie	wiedzieć	11	nie wie	nie wiedzieć	- Pani nie ma żadnego umiaru - krzyczę - i nie wie pani , kiedy można błaznować , a kiedy nie .
+612	VERB+PRON	decyduje	decydować	11	się	się	12	decyduje się	decydować się	To , czy i jakie włosy wyrosną na głowie człowieka , decyduje się już we wczesnym stadium rozwoju embrionalnego .
+613	ADP+ADV	na	na	6	tyle	tyle	7	na tyle	na tyle	Uważałam Uważała m , iż jest na tyle dorosła , że zrozumie . . . i że mi wybaczy . . .
+614	ADP+NOUN	w	w	3	gardle	gardło	4	w gardle	w gardło	Coś dławiło mnie w gardle , ale powiedziałem powiedział em sobie , że nie będę przecież kota opłakiwał , więc z kamienną miną wyciągnąłem wyciągnął em odkurzacz i zacząłem zaczął em sprzątać .
+615	PART+VERB	Nie	nie	0	wiem	wiedzieć	1	Nie wiem	nie wiedzieć	Nie wiem , czy dożyjemy tego , że przewożone zwierzęta rzeźne , nie będą jeszcze dodatkowo cierpiały - powiedziała nam Anna Baranowska , sekretarz KTonZ .
+616	NOUN+NOUN	aktu	akt	9	oskarżenia	oskarżenie	10	aktu oskarżenia	akt oskarżenie	Proces nie zdążył się rozpocząć - nie odczytano bowiem aktu oskarżenia .
+617	ADP+NOUN	W	w	0	czasach	czas	1	W czasach	w czas	W czasach II wojny światowej wykorzystywane były m.in . takie maszyny , jak B-17 , B-24 , B-29 .
+618	ADP+NOUN	na	na	6	stanowisko	stanowisko	7	na stanowisko	na stanowisko	Wojciech Gąsienica - Byrcyn nie wróci na stanowisko dyrektora Tatrzańskiego Parku Narodowego , to już sprawa przesądzona .
+619	VERB+AUX	było	być	6	by	by	7	było by	być by	"Według Solany , "" dobrze byłoby było by mieć przejrzystą współpracę z Federacją Rosyjską "" w tej dziedzinie ."
+620	PART+VERB	Nie	nie	1	wiem	wiedzieć	2	Nie wiem	nie wiedzieć	- Nie wiem , jak zrodziła się ta inicjatywa .
+621	ADP+NOUN	w	w	10	powietrzu	powietrze	11	w powietrzu	w powietrze	Nawet wiatr zdawał się ten sam , bo podobnie wirowały w powietrzu resztki bawełny , a kartki z porzuconych kwitariuszy magazynowych wcale nie odfrunęły daleko .
+622	PART+PART	i	i	4	to	to	5	i to	i to	Niestety bardzo dużo - i to rzeczy z jednej strony kosztownych , z drugiej zaś niepopularnych .
+623	ADP+NOUN	w	w	15	życiu	życie	16	w życiu	w życie	Małgorzata Tusk , mama Kasi : - Uważamy z mężem , że Kasia powinna robić w życiu to , co lubi i co będzie sprawiać jej przyjemność .
+624	ADP+PRON	za	za	20	sobą	siebie	21	za sobą	za siebie	Kiedy z Gdańska wyszli Rosjanie , wysadziwszy całe stare miasto , dom po domu , ulicę po ulicy , zostawiając za sobą poczerniałe fronty kamienic , zgwałcone kobiety , porąbane fortepiany , splądrowane wille we Wrzeszczu , zawalone piwnice i schrony , w których ludzie powoli konali z głodu i zagryzali się nawzajem , Eugenia Włos już handlowała pod wypalonym budynkiem dworca .
+625	PART+VERB	Nie	nie	0	wiem	wiedzieć	1	Nie wiem	nie wiedzieć	Nie wiem .
+626	ADP+NOUN	z	z	9	nieba	niebo	10	z nieba	z niebo	- W Biłgoraju ludzie nigdy nie czekali na mannę z nieba - uważa poseł Henryk Wujec .
+627	PART+VERB	nie	nie	1	wiem	wiedzieć	2	nie wiem	nie wiedzieć	Zresztą nie wiem , może naprawdę lepiej było odejść .
+628	ADP+NOUN	z	z	6	głowy	głowa	7	z głowy	z głowa	Zdarzenie z kamykiem nie wychodziło mu z głowy .
+629	PART+VERB	Nie	nie	1	wiem	wiedzieć	2	Nie wiem	nie wiedzieć	- Nie wiem .
+630	ADP+ADV	na	na	3	tyle	tyle	4	na tyle	na tyle	Sprawa stała się na tyle poważna , że trafiła pod obrady Dumy .
+631	ADP+NOUN	ze	z	10	wstydu	wstyd	11	ze wstydu	z wstyd	Po ujawnieniu prowokacji dr Łukasz K . zamiast czerwienić się ze wstydu , pozwał do sądu Janusza Miliszkiewicza , autora książek o dziełach sztuki , który wytknął mu niekompetencję .
+632	PART+VERB	Nie	nie	1	ma	mieć	2	Nie ma	nie mieć	- Nie ma żadnej elastyczności z ich strony w rozmowach - twierdzi dyrektor Solarz .
+633	ADP+NOUN	w	w	25	gardle	gardło	26	w gardle	w gardło	- Niech pan zrobi , żeby moja Kasieńka stanęła w drzwiach i znowu mi zaśpiewała - pani Józefie , babci 7-letniej Kasi , głos grzęźnie w gardle .
+634	ADP+NOUN	w	w	1	czasach	czas	2	w czasach	w czas	Nawet w czasach hitlerowskiego szaleństwa starał się on wypełniać statutowe zadania .
+635	CCONJ+PRON	i	i	5	tego	to	6	i tego	i to	- Pretensje dotyczyły warunków konkursu i tego , że nie było dopowiedziane , czy budowla ma być podziemna , czy nadziemna - mówi Lech Szaraniec , dyrektor Muzeum Śląskiego .
+636	ADP+ADJ	na	na	3	najlepszy	dobry	4	na najlepszy	na dobry	Zebrane środki przekażemy na najlepszy z możliwych celów - pomoc dzieciom .
+637	PART+VERB	Nie	nie	1	ma	mieć	2	Nie ma	nie mieć	- Nie ma radykalnych zmian - przekonuje płk Zdzisław Gnatowski , oficer prasowy Sztabu Generalnego .
+638	VERB+PRON	wyróżnia	wyróżniać	4	się	się	5	wyróżnia się	wyróżniać się	Według tego samego kryterium wyróżnia się dwa rodzaje urządzeń elektrotermicznych : bezpośrednie i pośrednie , których działanie opiera się odpowiednio na nagrzewaniu elektrycznym bezpośrednim i pośrednim .
+639	VERB+AUX	Zrobił	zrobić	1	em	być	2	Zrobił em	zrobić być	Zrobiłem Zrobił em mały test , dociążyłem dociążył em spacerówkę 10 kg ciężarem i kółka zacęły się posłusznie skręcać jak również znacznie poprawiła się amortyzacja całego wózka .
+640	ADP+NOUN	w	w	9	czasie	czas	10	w czasie	w czas	Prokuratura podejrzewa posła Waldy Dzikowskiego o to , że w czasie , gdy był wójtem gminy Tarnowo Podgórne , poznański przedsiębiorca budowlany Marek Trzmielewski , odwdzięczając się za wygrane przetargi , za darmo przebudował mu dom .
+641	PART+VERB	nie	nie	4	ma	mieć	5	nie ma	nie mieć	Okazuje się , że nie ma w tym filmie zwycięzcy , a jest jedynie ofiara pewnego układu , w którym ktoś zdecydował za nią , kim ma być .
+642	PART+VERB	nie	nie	4	ma	mieć	5	nie ma	nie mieć	- We wnioskach NIK nie ma o tym ani słowa - przypomina wiceminister pracy .
+643	CCONJ+PRON	i	i	4	tym	to	5	i tym	i to	Delektował się rumieńcem Wandy i tym , że starała się uciec wzrokiem przed jego spojrzeniem , wycelowanym precyzyjnie w jej oczy .
+644	ADP+NOUN	w	w	3	oczy	oko	4	w oczy	w oko	Unikali patrzenia sobie w oczy , przełykając metaliczny smak śmierci .
