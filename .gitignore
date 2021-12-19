@@ -13,7 +13,7 @@ mwe_dataset_type_balanced.npy
 mwe_dataset_domain_balanced.npy
 
 # model dir
-models/
+# models/
 
 
 # Byte-compiled / optimized / DLL files
