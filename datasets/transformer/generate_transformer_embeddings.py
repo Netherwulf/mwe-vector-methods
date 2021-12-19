@@ -186,7 +186,7 @@ def substitute_and_embed(sentence, old_word_id, new_word, tokenizer, model,
 
 
 def read_tsv(filepath, tokenizer, model, layers):
-    filepath_dir = os.path.join(' '.join(filepath.split('/')[:-2]),
+    filepath_dir = os.path.join(os.path.join(filepath.split('/')[:-2]),
                                 'embeddings', 'transformer')
     filepath_name = filepath.split('/')[-1].split('.')[0]
 
@@ -198,7 +198,7 @@ def read_tsv(filepath, tokenizer, model, layers):
     write_line_to_file(
         complete_mwe_in_sent_output_file, '\t'.join([
             'mwe_type', 'first_word', 'first_word_id', 'second_word',
-            'second_word_id', 'mwe', 'sentence', 'is_correct',
+            'second_word_id', 'mwe', 'sentence', 'is_correct', 'dataset_type',
             'complete_mwe_in_sent', 'mwe_embedding',
             'first_word_only_embedding', 'second_word_only_embedding',
             'first_word_mwe_emb_diff', 'second_word_mwe_emb_diff',
@@ -206,13 +206,15 @@ def read_tsv(filepath, tokenizer, model, layers):
             'first_word_mwe_emb_prod', 'second_word_mwe_emb_prod'
         ]))
 
-    incomplete_mwe_in_sent_output_file = filepath_name + f'_embeddings_{len(layers)}_layers_incomplete_mwe_in_sent.tsv'
+    incomplete_mwe_in_sent_output_file = os.path.join(
+        filepath_dir, filepath_name +
+        f'_embeddings_{len(layers)}_layers_incomplete_mwe_in_sent.tsv')
     create_empty_file(incomplete_mwe_in_sent_output_file)
 
     write_line_to_file(
         incomplete_mwe_in_sent_output_file, '\t'.join([
             'mwe_type', 'first_word', 'first_word_id', 'second_word',
-            'second_word_id', 'mwe', 'sentence', 'is_correct',
+            'second_word_id', 'mwe', 'sentence', 'is_correct', 'dataset_type',
             'complete_mwe_in_sent', 'first_word_embedding', 'mwe_embedding',
             'first_word_mwe_emb_diff', 'first_word_mwe_emb_abs_diff',
             'first_word_mwe_emb_prod'
@@ -244,6 +246,7 @@ def read_tsv(filepath, tokenizer, model, layers):
             mwe = line_attributes[7]
             sentence = line_attributes[9]
             is_correct = str(line_attributes[10])
+            dataset_type = line_attributes[11]
             complete_mwe_in_sent = '1'
 
             # print(f'mwe_type = {mwe_type}',
@@ -327,7 +330,8 @@ def read_tsv(filepath, tokenizer, model, layers):
                         mwe_type, first_word,
                         str(first_word_id), second_word,
                         str(second_word_id), mwe, sentence, is_correct,
-                        complete_mwe_in_sent, ','.join(mwe_embedding),
+                        dataset_type, complete_mwe_in_sent,
+                        ','.join(mwe_embedding),
                         ','.join(first_word_only_embedding),
                         ','.join(second_word_only_embedding),
                         ','.join(first_word_mwe_emb_diff),
@@ -375,7 +379,8 @@ def read_tsv(filepath, tokenizer, model, layers):
                         mwe_type, first_word,
                         int(first_word_id), second_word,
                         int(second_word_id), mwe, sentence, is_correct,
-                        complete_mwe_in_sent, ','.join(first_word_embedding),
+                        dataset_type, complete_mwe_in_sent,
+                        ','.join(first_word_embedding),
                         ','.join(mwe_embedding),
                         ','.join(first_word_mwe_emb_diff),
                         ','.join(first_word_mwe_emb_abs_diff),
