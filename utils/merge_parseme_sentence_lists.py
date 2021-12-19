@@ -4,7 +4,8 @@ import sys
 import pandas as pd
 
 
-def merge_sentence_lists(correct_mwe_filepath, incorrect_mwe_filepath, output_filepath):
+def merge_sentence_lists(correct_mwe_filepath, incorrect_mwe_filepath,
+                         output_filepath):
     df_correct = pd.read_csv(correct_mwe_filepath, sep='\t')
     df_incorrect = pd.read_csv(incorrect_mwe_filepath, sep='\t')
 
@@ -17,11 +18,18 @@ def merge_sentence_lists(correct_mwe_filepath, incorrect_mwe_filepath, output_fi
 
 
 def main(args):
-    correct_mwe_filepath = os.path.join('parseme_correct_mwes.tsv')
-    incorrect_mwe_filepath = os.path.join('parseme_incorrect_mwes.tsv')
-    output_filepath = os.path.join('parseme_merged_mwes.tsv')
+    correct_mwe_filepath = os.path.join('..', 'storage', 'parseme', 'pl',
+                                        'preprocessed_data', 'dev',
+                                        'parseme_dev_correct_mwes.tsv')
+    incorrect_mwe_filepath = os.path.join('..', 'storage', 'parseme', 'pl',
+                                          'preprocessed_data', 'dev',
+                                          'parseme_dev_incorrect_mwes.tsv')
+    output_filepath = os.path.join('..', 'storage', 'parseme', 'pl',
+                                   'preprocessed_data', 'dev',
+                                   'parseme_dev_merged_mwes.tsv')
 
-    merge_sentence_lists(correct_mwe_filepath, incorrect_mwe_filepath, output_filepath)
+    merge_sentence_lists(correct_mwe_filepath, incorrect_mwe_filepath,
+                         output_filepath)
 
 
 if __name__ == '__main__':
