@@ -186,7 +186,7 @@ def substitute_and_embed(sentence, old_word_id, new_word, tokenizer, model,
 
 
 def read_tsv(filepath, tokenizer, model, layers):
-    filepath_dir = os.path.join(os.path.join(filepath.split('/')[:-2]),
+    filepath_dir = os.path.join(os.path.join(*filepath.split('/')[:-2]),
                                 'embeddings', 'transformer')
     filepath_name = filepath.split('/')[-1].split('.')[0]
 
