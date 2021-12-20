@@ -8,9 +8,9 @@ import sys
 import numpy as np
 import pandas as pd
 
-from cnn import get_cnn_model_pred
-from logistic_regression import get_lr_model_pred
-from random_forest import get_rf_model_pred
+from models.cnn import get_cnn_model_pred
+from models.logistic_regression import get_lr_model_pred
+from models.random_forest import get_rf_model_pred
 
 from imblearn.over_sampling import SMOTE, BorderlineSMOTE, SVMSMOTE, ADASYN
 from imblearn.under_sampling import RandomUnderSampler
@@ -41,9 +41,15 @@ def get_mwe(mwe_file, idx_list):
     with open(mwe_file, 'r', errors='replace') as in_file:
         content = in_file.readlines()
 
-        mwe_list = np.array([line.strip().split('\t')[0] for ind, line in enumerate(content) if ind in idx_list])
+        mwe_list = np.array([
+            line.strip().split('\t')[0] for ind, line in enumerate(content)
+            if ind in idx_list
+        ])
 
-        mwe_metadata = np.array([line.strip().split('\t') for ind, line in enumerate(content) if ind in idx_list])
+        mwe_metadata = np.array([
+            line.strip().split('\t') for ind, line in enumerate(content)
+            if ind in idx_list
+        ])
 
         mwe_dict = {}
 
@@ -66,10 +72,17 @@ def load_transformer_embeddings_data(dataset_file, mwe_file):
 
     embeddings_list = [elem.split(',') for elem in df[4].tolist()]
 
-    correct_idx_list = np.array([ind for ind, sentence in enumerate(embeddings_list) if 'tensor(nan)' not in sentence])
+    correct_idx_list = np.array([
+        ind for ind, sentence in enumerate(embeddings_list)
+        if 'tensor(nan)' not in sentence
+    ])
 
-    embeddings_list = [([float(re.findall(r"[-+]?\d*\.\d+|\d+", val)[0]) for val in sentence], label) for
-                       sentence, label in zip(embeddings_list, df[3].tolist()) if 'tensor(nan)' not in sentence]
+    embeddings_list = [
+        ([float(re.findall(r"[-+]?\d*\.\d+|\d+", val)[0])
+          for val in sentence], label)
+        for sentence, label in zip(embeddings_list, df[3].tolist())
+        if 'tensor(nan)' not in sentence
+    ]
 
     mwe_list, mwe_dict, mwe_metadata = get_mwe(mwe_file, correct_idx_list)
 
@@ -80,19 +93,18 @@ def load_transformer_embeddings_data(dataset_file, mwe_file):
 
     indices = np.arange(X.shape[0])
 
-    X_train, X_test, y_train, y_test, indices_train, indices_test = train_test_split(X,
-                                                                                     y,
-                                                                                     indices,
-                                                                                     test_size=0.20,
-                                                                                     random_state=42)
+    X_train, X_test, y_train, y_test, indices_train, indices_test = train_test_split(
+        X, y, indices, test_size=0.20, random_state=42)
 
     return X_train, X_test, y_train, y_test, indices_train, indices_test, mwe_list, mwe_dict, mwe_metadata
 
 
 def create_empty_file(filepath):
     with open(filepath, 'w') as f:
-        column_names_line = '\t'.join(['mwe', 'first_word_index', 'first_word_orth', 'first_word_lemma', 'sentence',
-                                       'is_correct', 'model_prediction'])
+        column_names_line = '\t'.join([
+            'mwe', 'first_word_index', 'first_word_orth', 'first_word_lemma',
+            'sentence', 'is_correct', 'model_prediction'
+        ])
         f.write(f"{column_names_line}\n")
         pass
 
@@ -102,7 +114,8 @@ def write_line_to_file(filepath, line):
         f.write(f'{line}\n')
 
 
-def write_prediction_result_to_file(filepath, mwe_ind, mwe_metadata, prediction):
+def write_prediction_result_to_file(filepath, mwe_ind, mwe_metadata,
+                                    prediction):
     sample_metadata = mwe_metadata[mwe_ind]
 
     mwe = sample_metadata[0]
@@ -112,26 +125,34 @@ def write_prediction_result_to_file(filepath, mwe_ind, mwe_metadata, prediction)
     first_word_lemma = sample_metadata[4]
     sentence = sample_metadata[5]
 
-    sample_description = '\t'.join([str(mwe), str(first_word_idx),
-                                    str(first_word_orth), str(first_word_lemma),
-                                    str(sentence), str(is_correct),
-                                    str(prediction)])
+    sample_description = '\t'.join([
+        str(mwe),
+        str(first_word_idx),
+        str(first_word_orth),
+        str(first_word_lemma),
+        str(sentence),
+        str(is_correct),
+        str(prediction)
+    ])
 
     write_line_to_file(filepath, sample_description)
 
 
-def get_evaluation_report(y_true, y_pred, indices_test, mwe_metadata, filepath):
+def get_evaluation_report(y_true, y_pred, indices_test, mwe_metadata,
+                          filepath):
     target_names = ['Incorrect MWE', 'Correct MWE']
 
     for pred_ind, prediction in enumerate(y_pred):
         mwe_ind = indices_test[pred_ind]
 
-        write_prediction_result_to_file(filepath, mwe_ind, mwe_metadata, prediction)
+        write_prediction_result_to_file(filepath, mwe_ind, mwe_metadata,
+                                        prediction)
 
     print(classification_report(y_true, y_pred, target_names=target_names))
 
 
-def get_majority_voting(y_pred, mwe_dict, indices_test, mwe_metadata, filepath):
+def get_majority_voting(y_pred, mwe_dict, indices_test, mwe_metadata,
+                        filepath):
     y_majority_pred = np.array([0 for _ in y_pred])
 
     for pred_ind, prediction in enumerate(y_pred):
@@ -144,61 +165,76 @@ def get_majority_voting(y_pred, mwe_dict, indices_test, mwe_metadata, filepath):
                 # f'ind_set containing mwe_ind: {ind_set}',
                 # sep = '\n')
 
-                predictions = [y_pred[indices_test.tolist().index(label_ind)] for label_ind in ind_set if
-                               label_ind in indices_test]
+                predictions = [
+                    y_pred[indices_test.tolist().index(label_ind)]
+                    for label_ind in ind_set if label_ind in indices_test
+                ]
                 # y_majority_pred[pred_ind] = statistics.mode(predictions)
 
                 final_prediction = int(s.mode(predictions)[0])
 
                 y_majority_pred[pred_ind] = final_prediction
 
-                write_prediction_result_to_file(filepath, mwe_ind, mwe_metadata, final_prediction)
+                write_prediction_result_to_file(filepath, mwe_ind,
+                                                mwe_metadata, final_prediction)
 
                 break
 
     return y_majority_pred
 
 
-def get_weighted_voting(y_pred, y_pred_max_probs, mwe_dict, indices_test, mwe_metadata, filepath):
+def get_weighted_voting(y_pred, y_pred_max_probs, mwe_dict, indices_test,
+                        mwe_metadata, filepath):
     y_majority_pred = np.array([0 for _ in y_pred])
 
     for pred_ind, prediction in enumerate(y_pred):
         mwe_ind = indices_test[pred_ind]
         for ind_set in mwe_dict.values():
             if mwe_ind in ind_set:
-                predictions_with_probs = [(y_pred[indices_test.tolist().index(label_ind)],
-                                           y_pred_max_probs[indices_test.tolist().index(label_ind)]) for label_ind in
-                                          ind_set if label_ind in indices_test]
+                predictions_with_probs = [
+                    (y_pred[indices_test.tolist().index(label_ind)],
+                     y_pred_max_probs[indices_test.tolist().index(label_ind)])
+                    for label_ind in ind_set if label_ind in indices_test
+                ]
 
                 weights_per_class = [0.0 for _ in range(2)]
 
                 for class_id in range(len(weights_per_class)):
-                    weights_per_class[class_id] = sum(
-                        [elem[1] for elem in predictions_with_probs if elem[0] == class_id])
+                    weights_per_class[class_id] = sum([
+                        elem[1] for elem in predictions_with_probs
+                        if elem[0] == class_id
+                    ])
 
                 final_prediction = int(np.argmax(weights_per_class))
 
                 y_majority_pred[pred_ind] = final_prediction
 
-                write_prediction_result_to_file(filepath, mwe_ind, mwe_metadata, final_prediction)
+                write_prediction_result_to_file(filepath, mwe_ind,
+                                                mwe_metadata, final_prediction)
 
                 break
 
     return y_majority_pred
 
 
-def get_treshold_voting(y_pred, y_pred_max_probs, mwe_dict, indices_test, class_tresholds, mwe_metadata, filepath):
+def get_treshold_voting(y_pred, y_pred_max_probs, mwe_dict, indices_test,
+                        class_tresholds, mwe_metadata, filepath):
     y_majority_pred = np.array([0 for _ in y_pred])
 
     for pred_ind, prediction in enumerate(y_pred):
         mwe_ind = indices_test[pred_ind]
         for ind_set in mwe_dict.values():
             if mwe_ind in ind_set:
-                predictions_with_probs = [(y_pred[indices_test.tolist().index(label_ind)],
-                                           y_pred_max_probs[indices_test.tolist().index(label_ind)]) for label_ind in
-                                          ind_set if label_ind in indices_test]
+                predictions_with_probs = [
+                    (y_pred[indices_test.tolist().index(label_ind)],
+                     y_pred_max_probs[indices_test.tolist().index(label_ind)])
+                    for label_ind in ind_set if label_ind in indices_test
+                ]
 
-                predictions = [elem[0] for elem in predictions_with_probs if elem[1] > class_tresholds[elem[0]]]
+                predictions = [
+                    elem[0] for elem in predictions_with_probs
+                    if elem[1] > class_tresholds[elem[0]]
+                ]
 
                 # return class 0 if there aren't any predictions above treshold
                 if len(predictions) == 0:
@@ -209,7 +245,8 @@ def get_treshold_voting(y_pred, y_pred_max_probs, mwe_dict, indices_test, class_
 
                 y_majority_pred[pred_ind] = final_prediction
 
-                write_prediction_result_to_file(filepath, mwe_ind, mwe_metadata, final_prediction)
+                write_prediction_result_to_file(filepath, mwe_ind,
+                                                mwe_metadata, final_prediction)
 
                 break
 
@@ -236,26 +273,34 @@ def save_dict(filepath, dict_to_save):
 
 def load_list_of_lists(filepath, sep):
     with open(filepath, 'r') as f:
-        loaded_list_of_lists = np.array([np.array([elem for elem in row.strip().split(sep)]) for row in f.readlines()])
+        loaded_list_of_lists = np.array([
+            np.array([elem for elem in row.strip().split(sep)])
+            for row in f.readlines()
+        ])
 
         return loaded_list_of_lists
 
 
 def preprocess_combined_embeddings(list_of_lists):
-    converted_list_of_lists = np.array([np.array([float(elem) for elem in row[1:]]) for row in list_of_lists[1:]])
+    converted_list_of_lists = np.array([
+        np.array([float(elem) for elem in row[1:]])
+        for row in list_of_lists[1:]
+    ])
 
     return converted_list_of_lists
 
 
 def list_of_lists_to_float(list_of_lists):
-    converted_list_of_lists = np.array([np.array([float(elem) for elem in row]) for row in list_of_lists])
+    converted_list_of_lists = np.array(
+        [np.array([float(elem) for elem in row]) for row in list_of_lists])
 
     return converted_list_of_lists
 
 
 def load_list(filepath):
     with open(filepath, 'r') as f:
-        loaded_list = np.array([elem for elem in f.readline().strip().split(',')])
+        loaded_list = np.array(
+            [elem for elem in f.readline().strip().split(',')])
 
         return loaded_list
 
@@ -421,7 +466,9 @@ def main(args):
             eval_only = False
             model_path = None
 
-        y_pred_probs = get_cnn_model_pred(X_train, y_train, X_test,
+        y_pred_probs = get_cnn_model_pred(X_train,
+                                          y_train,
+                                          X_test,
                                           eval_only=eval_only,
                                           model_path=model_path,
                                           input_shape=(X_train.shape[1], 1))
@@ -441,10 +488,13 @@ def main(args):
         y_pred_max_probs = [max(probs) for probs in y_pred_probs]
 
     if 'majority_voting' in args:
-        y_pred = get_majority_voting(y_pred, mwe_dict, indices_test, mwe_metadata, results_filepath)
+        y_pred = get_majority_voting(y_pred, mwe_dict, indices_test,
+                                     mwe_metadata, results_filepath)
 
     if 'weighted_voting' in args:
-        y_pred = get_weighted_voting(y_pred, y_pred_max_probs, mwe_dict, indices_test, mwe_metadata, results_filepath)
+        y_pred = get_weighted_voting(y_pred, y_pred_max_probs, mwe_dict,
+                                     indices_test, mwe_metadata,
+                                     results_filepath)
 
     if 'treshold_voting' in args:
         for first_class_treshold in [0.1 * n for n in range(4, 10, 1)]:
@@ -456,13 +506,17 @@ def main(args):
 
                 class_tresholds = [first_class_treshold, second_class_treshold]
 
-                y_pred = get_treshold_voting(y_pred, y_pred_max_probs, mwe_dict, indices_test, class_tresholds,
-                                             mwe_metadata, results_filepath)
+                y_pred = get_treshold_voting(y_pred, y_pred_max_probs,
+                                             mwe_dict, indices_test,
+                                             class_tresholds, mwe_metadata,
+                                             results_filepath)
 
-                get_evaluation_report(y_test, y_pred, indices_test, mwe_metadata, results_filepath)
+                get_evaluation_report(y_test, y_pred, indices_test,
+                                      mwe_metadata, results_filepath)
 
     else:
-        get_evaluation_report(y_test, y_pred, indices_test, mwe_metadata, results_filepath)
+        get_evaluation_report(y_test, y_pred, indices_test, mwe_metadata,
+                              results_filepath)
 
 
 if __name__ == '__main__':

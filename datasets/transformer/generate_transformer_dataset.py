@@ -55,14 +55,17 @@ def get_mwe(mwe_file):
 
     mwe_list = np.array([mwe for mwe in df['mwe'].tolist()])
 
-    mwe_metadata = np.array([[mwe_type, first_word, first_word_id, second_word, second_word_id, mwe, sentence,
-                              is_correct, complete_mwe_in_sent] for
-                             mwe_type, first_word, first_word_id, second_word, second_word_id, mwe, sentence,
-                             is_correct, complete_mwe_in_sent in
-                             zip(df['mwe_type'].tolist(), df['first_word'].tolist(), df['first_word_id'].tolist(),
-                                 df['second_word'].tolist(), df['second_word_id'].tolist(), df['mwe'].tolist(),
-                                 df['sentence'].tolist(), df['is_correct'].tolist(),
-                                 df['complete_mwe_in_sent'].tolist())])
+    mwe_metadata = np.array(
+        [[
+            mwe_type, first_word, first_word_id, second_word, second_word_id,
+            mwe, sentence, is_correct, complete_mwe_in_sent
+        ] for mwe_type, first_word, first_word_id, second_word, second_word_id,
+         mwe, sentence, is_correct, complete_mwe_in_sent in zip(
+             df['mwe_type'].tolist(), df['first_word'].tolist(),
+             df['first_word_id'].tolist(), df['second_word'].tolist(),
+             df['second_word_id'].tolist(), df['mwe'].tolist(),
+             df['sentence'].tolist(), df['is_correct'].tolist(),
+             df['complete_mwe_in_sent'].tolist())])
 
     mwe_dict = {}
 
@@ -114,55 +117,79 @@ def load_transformer_embeddings_data(dataset_file):
     df = pd.read_csv(dataset_file, sep='\t')
 
     print('Generating embeddings list...')
-    mwe_embedding = np.array(
-        [np.array([float(elem) for elem in line.split(',')]) for line in df['mwe_embedding'].tolist()])
-    first_word_only_embedding = np.array(
-        [np.array([float(elem) for elem in line.split(',')]) for line in df['first_word_only_embedding'].tolist()])
-    second_word_only_embedding = np.array(
-        [np.array([float(elem) for elem in line.split(',')]) for line in df['second_word_only_embedding'].tolist()])
-    first_word_mwe_emb_diff = np.array(
-        [np.array([float(elem) for elem in line.split(',')]) for line in df['first_word_mwe_emb_diff'].tolist()])
-    second_word_mwe_emb_diff = np.array(
-        [np.array([float(elem) for elem in line.split(',')]) for line in df['second_word_mwe_emb_diff'].tolist()])
-    first_word_mwe_emb_abs_diff = np.array(
-        [np.array([float(elem) for elem in line.split(',')]) for line in df['first_word_mwe_emb_abs_diff'].tolist()])
-    second_word_mwe_emb_abs_diff = np.array(
-        [np.array([float(elem) for elem in line.split(',')]) for line in df['second_word_mwe_emb_abs_diff'].tolist()])
-    first_word_mwe_emb_prod = np.array(
-        [np.array([float(elem) for elem in line.split(',')]) for line in df['first_word_mwe_emb_prod'].tolist()])
-    second_word_mwe_emb_prod = np.array(
-        [np.array([float(elem) for elem in line.split(',')]) for line in df['second_word_mwe_emb_prod'].tolist()])
+    mwe_embedding = np.array([
+        np.array([float(elem) for elem in line.split(',')])
+        for line in df['mwe_embedding'].tolist()
+    ])
+    first_word_only_embedding = np.array([
+        np.array([float(elem) for elem in line.split(',')])
+        for line in df['first_word_only_embedding'].tolist()
+    ])
+    second_word_only_embedding = np.array([
+        np.array([float(elem) for elem in line.split(',')])
+        for line in df['second_word_only_embedding'].tolist()
+    ])
+    first_word_mwe_emb_diff = np.array([
+        np.array([float(elem) for elem in line.split(',')])
+        for line in df['first_word_mwe_emb_diff'].tolist()
+    ])
+    second_word_mwe_emb_diff = np.array([
+        np.array([float(elem) for elem in line.split(',')])
+        for line in df['second_word_mwe_emb_diff'].tolist()
+    ])
+    first_word_mwe_emb_abs_diff = np.array([
+        np.array([float(elem) for elem in line.split(',')])
+        for line in df['first_word_mwe_emb_abs_diff'].tolist()
+    ])
+    second_word_mwe_emb_abs_diff = np.array([
+        np.array([float(elem) for elem in line.split(',')])
+        for line in df['second_word_mwe_emb_abs_diff'].tolist()
+    ])
+    first_word_mwe_emb_prod = np.array([
+        np.array([float(elem) for elem in line.split(',')])
+        for line in df['first_word_mwe_emb_prod'].tolist()
+    ])
+    second_word_mwe_emb_prod = np.array([
+        np.array([float(elem) for elem in line.split(',')])
+        for line in df['second_word_mwe_emb_prod'].tolist()
+    ])
 
-    embeddings_list = np.hstack((mwe_embedding, first_word_only_embedding, second_word_only_embedding,
-                                 first_word_mwe_emb_diff, second_word_mwe_emb_diff, first_word_mwe_emb_abs_diff,
-                                 second_word_mwe_emb_abs_diff, first_word_mwe_emb_prod, second_word_mwe_emb_prod))
+    embeddings_list = np.hstack(
+        (mwe_embedding, first_word_only_embedding, second_word_only_embedding,
+         first_word_mwe_emb_diff, second_word_mwe_emb_diff,
+         first_word_mwe_emb_abs_diff, second_word_mwe_emb_abs_diff,
+         first_word_mwe_emb_prod, second_word_mwe_emb_prod))
 
-    embeddings_list = [(embedding, label) for
-                       embedding, label in zip(embeddings_list, df['is_correct'].tolist())]
+    df['combined_embedding'] = embeddings_list
 
-    mwe_list, mwe_dict, mwe_metadata = get_mwe(dataset_file)
+    # embeddings_list = [
+    #     (embedding, label)
+    #     for embedding, label in zip(embeddings_list, df['is_correct'].tolist())
+    # ]
 
-    X = np.array([elem[0] for elem in embeddings_list])
+    # mwe_list, mwe_dict, mwe_metadata = get_mwe(dataset_file)
 
-    y = np.array([elem[1] for elem in embeddings_list])
-    y = y.astype(int)
+    # X = np.array([elem[0] for elem in embeddings_list])
 
-    indices = np.arange(X.shape[0])
+    # y = np.array([elem[1] for elem in embeddings_list])
+    # y = y.astype(int)
 
-    X_train, X_test, y_train, y_test, indices_train, indices_test = train_test_split(X,
-                                                                                     y,
-                                                                                     indices,
-                                                                                     test_size=0.20,
-                                                                                     random_state=42)
+    # indices = np.arange(X.shape[0])
 
-    return X_train, X_test, y_train, y_test, indices_train, indices_test, mwe_list, mwe_dict, mwe_metadata
+    # X_train, X_test, y_train, y_test, indices_train, indices_test = train_test_split(
+    #     X, y, indices, test_size=0.20, random_state=42)
+
+    # return X_train, X_test, y_train, y_test, indices_train, indices_test, mwe_list, mwe_dict, mwe_metadata
+    return df
 
 
 def create_empty_file(filepath):
     with open(filepath, 'w') as f:
-        column_names_line = '\t'.join(
-            ['mwe_type', 'first_word', 'first_word_id', 'second_word', 'second_word_id', 'mwe', 'sentence',
-             'is_correct', 'complete_mwe_in_sent'])
+        column_names_line = '\t'.join([
+            'mwe_type', 'first_word', 'first_word_id', 'second_word',
+            'second_word_id', 'mwe', 'sentence', 'is_correct',
+            'complete_mwe_in_sent'
+        ])
         f.write(f"{column_names_line}\n")
         pass
 
@@ -197,10 +224,12 @@ def load_dict(filepath):
 
 
 def get_smote_oversampler(smote_key):
-    smote_dict = {'smote': SMOTE(),
-                  'borderline': BorderlineSMOTE(),
-                  'svm': SVMSMOTE(),
-                  'adasyn': ADASYN()}
+    smote_dict = {
+        'smote': SMOTE(),
+        'borderline': BorderlineSMOTE(),
+        'svm': SVMSMOTE(),
+        'adasyn': ADASYN()
+    }
 
     return smote_dict[smote_key]
 
@@ -209,27 +238,66 @@ def main(args):
     # dataset_filepath = 'sentences_containing_mwe_from_kgr10_group_0_embeddings_1_layers_incomplete_mwe_in_sent.tsv'
     # mwe_filepath = 'sentences_containing_mwe_from_kgr10_group_0_mwe_list_incomplete_mwe_in_sent.tsv'
     # dataset_filepath = 'parseme_merged_mwes_embeddings_1_layers_complete_mwe_in_sent.tsv'
-    dataset_filepath = 'parseme_merged_mwes_embeddings_1_layers_complete_mwe_in_sent.tsv'
-
-    X_train, X_test, y_train, y_test, indices_train, indices_test, mwe_list, mwe_dict, mwe_metadata = load_transformer_embeddings_data(
-        dataset_filepath)
 
     # result_dir_name = 'parseme_transformer_embeddings_pl'
-    result_dir_name = 'parseme_fasttext_embeddings_pl'
+    result_dir_name = os.path.join('..', '..', 'storage', 'parseme', 'pl',
+                                   'embeddings', 'transformer')
 
-    os.mkdir(result_dir_name)
+    dataset_filepath = os.path.join(
+        result_dir_name,
+        'parseme_data_embeddings_1_layers_complete_mwe_in_sent.tsv')
 
-    print('Saving train data...')
-    save_list_of_lists(os.path.join(result_dir_name, "X_train.csv"), X_train)
-    save_list(os.path.join(result_dir_name, "y_train.csv"), y_train)
+    # X_train, X_test, y_train, y_test, indices_train, indices_test, mwe_list, mwe_dict, mwe_metadata = load_transformer_embeddings_data(
+    #     dataset_filepath)
+    df = load_transformer_embeddings_data(dataset_filepath)
+
+    if not os.path.exists(result_dir_name):
+        os.mkdir(result_dir_name)
+
+    # print('Saving train data...')
+    # save_list_of_lists(os.path.join(result_dir_name, "X_train.csv"), X_train)
+    # save_list(os.path.join(result_dir_name, "y_train.csv"), y_train)
+
+    df.to_csv(os.path.join(result_dir_name, 'parseme_pl_embeddings.tsv'),
+              sep='\t',
+              index=False)
 
     # SMOTE, Borderline SMOTE, SVM-SMOTE and ADASYN dataset variants
     for smote_type in ['smote', 'borderline', 'svm', 'adasyn']:
         print(f'Generating {smote_type} dataset variant...')
         oversample = get_smote_oversampler(smote_type)
-        transformed_X_train, transformed_y_train_smote = oversample.fit_resample(X_train, y_train)
-        save_list_of_lists(os.path.join(result_dir_name, f"X_train_{smote_type}.csv"), transformed_X_train)
-        save_list(os.path.join(result_dir_name, f"y_train_{smote_type}.csv"), transformed_y_train_smote)
+
+        X_train = df[df['dataset_type'] ==
+                     'train']['combined_embedding'].tolist()
+
+        y_train = df[df['dataset_type'] == 'train']['is_correct'].tolist()
+
+        transformed_X_train, transformed_y_train = oversample.fit_resample(
+            X_train, y_train)
+
+        transformed_X_train = np.array([
+            ','.join([str(elem) for elem in embedding])
+            for embedding in transformed_X_train
+        ])
+
+        transformed_y_train = np.array(
+            [str(label) for label in transformed_y_train])
+
+        transformed_df = pd.DataFrame({
+            'combined_embedding': transformed_X_train,
+            'is_correct': transformed_y_train
+        })
+
+        transformed_df.to_csv(os.path.join(
+            result_dir_name, f'parseme_pl_embeddings_train_{smote_type}.tsv'),
+                              sep='\t',
+                              index=False)
+
+        # save_list_of_lists(
+        #     os.path.join(result_dir_name, f"X_train_{smote_type}.csv"),
+        #     transformed_X_train)
+        # save_list(os.path.join(result_dir_name, f"y_train_{smote_type}.csv"),
+        #           transformed_y_train_smote)
 
     # Imblearn Pipeline dataset variant
     # print('Generating Imblearn Pipeline dataset variant...')
@@ -241,22 +309,24 @@ def main(args):
     # save_list_of_lists(os.path.join(result_dir_name, "X_train_pipeline.csv"), X_train_pipeline)
     # save_list(os.path.join(result_dir_name, "y_train_pipeline.csv"), y_train_pipeline)
 
-    print('Saving test data...')
-    save_list_of_lists(os.path.join(result_dir_name, "X_test.csv"), X_test)
-    save_list(os.path.join(result_dir_name, "y_test.csv"), y_test)
+    # print('Saving test data...')
+    # save_list_of_lists(os.path.join(result_dir_name, "X_test.csv"), X_test)
+    # save_list(os.path.join(result_dir_name, "y_test.csv"), y_test)
 
-    print('Saving indices files...')
-    save_list(os.path.join(result_dir_name, "indices_train.csv"), indices_train)
-    save_list(os.path.join(result_dir_name, "indices_test.csv"), indices_test)
+    # print('Saving indices files...')
+    # save_list(os.path.join(result_dir_name, "indices_train.csv"),
+    #           indices_train)
+    # save_list(os.path.join(result_dir_name, "indices_test.csv"), indices_test)
 
-    print('Saving mwe dict...')
-    save_dict(os.path.join(result_dir_name, 'mwe_dict.pkl'), mwe_dict)
+    # print('Saving mwe dict...')
+    # save_dict(os.path.join(result_dir_name, 'mwe_dict.pkl'), mwe_dict)
 
-    print('Saving mwe list...')
-    save_list(os.path.join(result_dir_name, 'mwe_list.csv'), mwe_list)
+    # print('Saving mwe list...')
+    # save_list(os.path.join(result_dir_name, 'mwe_list.csv'), mwe_list)
 
-    print('Saving mwe metadata...')
-    save_list_of_lists(os.path.join(result_dir_name, 'mwe_metadata.csv'), mwe_metadata)
+    # print('Saving mwe metadata...')
+    # save_list_of_lists(os.path.join(result_dir_name, 'mwe_metadata.csv'),
+    #                    mwe_metadata)
 
 
 if __name__ == '__main__':
