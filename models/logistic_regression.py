@@ -1,3 +1,4 @@
+import os
 import pickle
 
 from sklearn.linear_model import LogisticRegression
@@ -5,7 +6,11 @@ from sklearn.linear_model import LogisticRegression
 
 def create_lr_model():
 
-    return LogisticRegression(random_state=0, max_iter=4000, verbose=1, class_weight='balanced')
+    return LogisticRegression(random_state=0,
+                              max_iter=4000,
+                              verbose=1,
+                              class_weight='balanced',
+                              n_jobs=5)
 
 
 def train_lr_model(model, X, y):
@@ -39,7 +44,12 @@ def get_lr_model_pred(X_train, y_train, X_test):
 
     lr_model = train_lr_model(lr_model, X_train, y_train)
 
-    save_lr_model(lr_model, 'lr_model.pkl')
+    dir_name = os.path.join('storage', 'parseme', 'pl', 'checkpoints')
+
+    if not os.path.exists(dir_name):
+        os.mkdir(dir_name)
+
+    save_lr_model(lr_model, os.path.join(dir_name, 'lr_model.pkl'))
 
     y_pred = get_lr_model_predictions(lr_model, X_test)
 

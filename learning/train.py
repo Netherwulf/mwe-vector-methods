@@ -115,12 +115,16 @@ def write_line_to_file(filepath, line):
 
 
 def get_evaluation_report(y_true, y_pred, full_df, filepath):
-    columns_list = [column_name for column_name in list(
-        full_df.columns()) if 'emb' not in column_name]
+    columns_list = [
+        column_name for column_name in list(full_df.columns())
+        if 'emb' not in column_name
+    ]
     report_df = full_df[columns_list]
     report_df['prediction'] = y_pred
 
     target_names = ['Incorrect MWE', 'Correct MWE']
+
+    print(f'Saved evaluation results to: {filepath}')
 
     report_df.to_csv(filepath, sep='\t', index=False)
 
@@ -148,43 +152,42 @@ def get_majority_voting(y_pred, full_df, filepath):
 
     return y_majority_pred
 
-# TODO TU SKOŃCZYŁEŚ KK 15:47
 
-
+# TODO tu skończyłeś KK
 def get_weighted_voting(y_pred, y_pred_max_probs, full_df, filepath):
     y_majority_pred = np.array([0 for _ in y_pred])
 
+    df_test = full_df[full_df['dataset_type'] == 'test']
+
+    mwe_list = df_test['mwe'].tolist()
+
     for pred_ind, prediction in enumerate(y_pred):
-        mwe_ind = indices_test[pred_ind]
-        for ind_set in mwe_dict.values():
-            if mwe_ind in ind_set:
-                predictions_with_probs = [
-                    (y_pred[indices_test.tolist().index(label_ind)],
-                     y_pred_max_probs[indices_test.tolist().index(label_ind)])
-                    for label_ind in ind_set if label_ind in indices_test
-                ]
+        mwe = mwe_list[pred_ind]
+        ind_set = df_test.index[df_test['mwe'] == mwe]
 
-                weights_per_class = [0.0 for _ in range(2)]
+        predictions_with_probs = [(y_pred[label_ind],
+                                   y_pred_max_probs[label_ind])
+                                  for label_ind in ind_set]
 
-                for class_id in range(len(weights_per_class)):
-                    weights_per_class[class_id] = sum([
-                        elem[1] for elem in predictions_with_probs
-                        if elem[0] == class_id
-                    ])
+        weights_per_class = [0.0 for _ in range(2)]
 
-                final_prediction = int(np.argmax(weights_per_class))
+        for class_id in range(len(weights_per_class)):
+            weights_per_class[class_id] = sum([
+                elem[1] for elem in predictions_with_probs
+                if elem[0] == class_id
+            ])
 
-                y_majority_pred[pred_ind] = final_prediction
+        final_prediction = int(np.argmax(weights_per_class))
 
-                write_prediction_result_to_file(filepath, mwe_ind,
-                                                mwe_metadata, final_prediction)
+        y_majority_pred[pred_ind] = final_prediction
 
-                break
+        break
 
     return y_majority_pred
 
 
-def get_treshold_voting(y_pred, y_pred_max_probs, full_df, class_tresholds, filepath):
+def get_treshold_voting(y_pred, y_pred_max_probs, full_df, class_tresholds,
+                        filepath):
     y_majority_pred = np.array([0 for _ in y_pred])
 
     for pred_ind, prediction in enumerate(y_pred):
@@ -279,21 +282,29 @@ def list_to_type(list_to_convert, type_func):
 
 def main(args):
     if 'parseme' in args and 'transformer_embeddings' in args:
-        data_dir = os.path.join('..', 'storage', 'parseme', 'pl', 'embeddings',
+        data_dir = os.path.join('storage', 'parseme', 'pl', 'embeddings',
                                 'transformer')
 
     if 'parseme' in args and 'fasttext_embeddings' in args:
-        data_dir = os.path.join('..', 'storage', 'parseme', 'pl', 'embeddings',
+        data_dir = os.path.join('storage', 'parseme', 'pl', 'embeddings',
                                 'fasttext')
 
     if 'kgr10' in args and 'transformer_embeddings' in args:
-        data_dir = os.path.join('..', 'storage', 'kgr10', 'embeddings',
+        data_dir = os.path.join('storage', 'kgr10', 'embeddings',
                                 'transformer')
 
     # if 'transformer_embeddings' in args:
     train_filepath = os.path.join(data_dir, 'parseme_pl_embeddings.tsv')
 
     full_data_filepath = os.path.join(data_dir, 'parseme_pl_embeddings.tsv')
+
+    results_dir = os.path.join(*data_dir.split('/')[:-2], 'results')
+
+    if not os.path.exists(results_dir):
+        os.mkdir(results_dir)
+
+    results_filepath = os.path.join(results_dir,
+                                    'results_' + '_'.join(args) + '.tsv')
 
     if 'smote' in args:
         train_filepath = os.path.join(data_dir,
@@ -315,10 +326,10 @@ def main(args):
     train_df = pd.read_csv(train_filepath, sep='\t')
     full_df = pd.read_csv(full_data_filepath, sep='\t')
 
-    X_train = train_df[train_df['dataset_type']
-                       == 'train']['combined_embedding'].tolist()
-    y_train = train_df[train_df['dataset_type']
-                       == 'train']['is_correct'].tolist()
+    X_train = train_df[train_df['dataset_type'] ==
+                       'train']['combined_embedding'].tolist()
+    y_train = train_df[train_df['dataset_type'] ==
+                       'train']['is_correct'].tolist()
 
     X_dev = full_df[full_df['dataset_type'] ==
                     'dev']['combined_embedding'].tolist()
@@ -403,11 +414,6 @@ def main(args):
     #         X_train = np.array([embedding[300 * 2:] for embedding in X_train])
     #         X_test = np.array([embedding[300 * 2:] for embedding in X_test])
 
-    results_filepath = os.path.join(os.path.join(
-        data_dir.split('/')[:-2]), 'results_' + '_'.join(args) + '.tsv')
-
-    create_empty_file(results_filepath)
-
     if 'cnn' in args:
         print(f'X_train shape: {X_train.shape}')
         X_train = np.reshape(X_train, [X_train.shape[0], X_train.shape[1], 1])
@@ -425,6 +431,8 @@ def main(args):
 
         y_pred_probs = get_cnn_model_pred(X_train,
                                           y_train,
+                                          X_dev,
+                                          y_dev,
                                           X_test,
                                           eval_only=eval_only,
                                           model_path=model_path,
@@ -435,14 +443,14 @@ def main(args):
         y_pred = [np.argmax(probs) for probs in y_pred_probs]
 
     elif 'lr' in args:
-        y_pred, y_pred_probs = get_lr_model_pred(
-            X_train, y_train, X_dev, y_dev, X_test)
+        y_pred, y_pred_probs = get_lr_model_pred(X_train, y_train, X_dev,
+                                                 y_dev, X_test)
 
         y_pred_max_probs = [max(probs) for probs in y_pred_probs]
 
     elif 'rf' in args:
-        y_pred, y_pred_probs = get_rf_model_pred(
-            X_train, y_train, X_dev, y_dev, X_test)
+        y_pred, y_pred_probs = get_rf_model_pred(X_train, y_train, X_dev,
+                                                 y_dev, X_test)
 
         y_pred_max_probs = [max(probs) for probs in y_pred_probs]
 
@@ -456,24 +464,21 @@ def main(args):
     if 'treshold_voting' in args:
         for first_class_treshold in [0.1 * n for n in range(4, 10, 1)]:
             for second_class_treshold in [0.1 * n for n in range(4, 10, 1)]:
-                print(f'Evaluation results for tresholds:',
+                print('Evaluation results for tresholds:',
                       f'incorrect MWE treshold: {first_class_treshold}',
                       f'correct MWE treshold: {second_class_treshold}',
                       sep='\n')
 
                 class_tresholds = [first_class_treshold, second_class_treshold]
 
-                y_pred = get_treshold_voting(y_pred, y_pred_max_probs,
-                                             full_df,
-                                             class_tresholds,
-                                             results_filepath)
+                y_pred = get_treshold_voting(y_pred, y_pred_max_probs, full_df,
+                                             class_tresholds, results_filepath)
 
-                get_evaluation_report(
-                    y_test, y_pred, full_df, results_filepath)
+                get_evaluation_report(y_test, y_pred, full_df,
+                                      results_filepath)
 
     else:
-        get_evaluation_report(y_test, y_pred, full_df,
-                              results_filepath)
+        get_evaluation_report(y_test, y_pred, full_df, results_filepath)
 
 
 if __name__ == '__main__':

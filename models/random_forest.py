@@ -1,3 +1,4 @@
+import os
 import pickle
 
 from sklearn.ensemble import RandomForestClassifier
@@ -5,8 +6,11 @@ from sklearn.ensemble import RandomForestClassifier
 
 def create_rf_model():
 
-    return RandomForestClassifier(random_state=0, max_depth=13,
-                                  verbose=1, class_weight='balanced')
+    return RandomForestClassifier(random_state=0,
+                                  max_depth=13,
+                                  verbose=1,
+                                  class_weight='balanced',
+                                  n_jobs=5)
 
 
 def train_rf_model(model, X, y):
@@ -40,7 +44,15 @@ def get_rf_model_pred(X_train, y_train, X_test):
 
     rf_model = train_rf_model(rf_model, X_train, y_train)
 
-    save_rf_model(rf_model, 'rf_model.pkl')
+    dir_name = os.path.join('storage', 'parseme', 'pl', 'checkpoints')
+
+    if not os.path.exists(dir_name):
+        os.mkdir(dir_name)
+
+    save_rf_model(
+        rf_model,
+        os.path.join('storage', 'parseme', 'pl', 'checkpoints',
+                     'rf_model.pkl'))
 
     y_pred = get_rf_model_predictions(rf_model, X_test)
 
