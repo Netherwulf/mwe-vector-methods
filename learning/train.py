@@ -114,77 +114,44 @@ def write_line_to_file(filepath, line):
         f.write(f'{line}\n')
 
 
-def write_prediction_result_to_file(filepath, mwe_ind, mwe_metadata,
-                                    prediction):
-    sample_metadata = mwe_metadata[mwe_ind]
+def get_evaluation_report(y_true, y_pred, full_df, filepath):
+    columns_list = [column_name for column_name in list(
+        full_df.columns()) if 'emb' not in column_name]
+    report_df = full_df[columns_list]
+    report_df['prediction'] = y_pred
 
-    mwe = sample_metadata[0]
-    is_correct = sample_metadata[1]
-    first_word_idx = sample_metadata[2]
-    first_word_orth = sample_metadata[3]
-    first_word_lemma = sample_metadata[4]
-    sentence = sample_metadata[5]
-
-    sample_description = '\t'.join([
-        str(mwe),
-        str(first_word_idx),
-        str(first_word_orth),
-        str(first_word_lemma),
-        str(sentence),
-        str(is_correct),
-        str(prediction)
-    ])
-
-    write_line_to_file(filepath, sample_description)
-
-
-def get_evaluation_report(y_true, y_pred, indices_test, mwe_metadata,
-                          filepath):
     target_names = ['Incorrect MWE', 'Correct MWE']
 
-    for pred_ind, prediction in enumerate(y_pred):
-        mwe_ind = indices_test[pred_ind]
-
-        write_prediction_result_to_file(filepath, mwe_ind, mwe_metadata,
-                                        prediction)
+    report_df.to_csv(filepath, sep='\t', index=False)
 
     print(classification_report(y_true, y_pred, target_names=target_names))
 
 
-def get_majority_voting(y_pred, mwe_dict, indices_test, mwe_metadata,
-                        filepath):
+def get_majority_voting(y_pred, full_df, filepath):
     y_majority_pred = np.array([0 for _ in y_pred])
 
+    df_test = full_df[full_df['dataset_type'] == 'test']
+
+    mwe_list = df_test['mwe'].tolist()
+
     for pred_ind, prediction in enumerate(y_pred):
-        mwe_ind = indices_test[pred_ind]
-        for ind_set in mwe_dict.values():
-            if mwe_ind in ind_set:
-                # print(f'y_pred idx: {pred_ind}',
-                # f'y_pred value: {prediction}',
-                # f'mwe_ind: {mwe_ind}',
-                # f'ind_set containing mwe_ind: {ind_set}',
-                # sep = '\n')
+        mwe = mwe_list[pred_ind]
+        ind_set = df_test.index[df_test['mwe'] == mwe]
 
-                predictions = [
-                    y_pred[indices_test.tolist().index(label_ind)]
-                    for label_ind in ind_set if label_ind in indices_test
-                ]
-                # y_majority_pred[pred_ind] = statistics.mode(predictions)
+        predictions = [y_pred[mwe_ind] for mwe_ind in ind_set]
 
-                final_prediction = int(s.mode(predictions)[0])
+        final_prediction = int(s.mode(predictions)[0])
 
-                y_majority_pred[pred_ind] = final_prediction
+        y_majority_pred[pred_ind] = final_prediction
 
-                write_prediction_result_to_file(filepath, mwe_ind,
-                                                mwe_metadata, final_prediction)
-
-                break
+        break
 
     return y_majority_pred
 
+# TODO TU SKOŃCZYŁEŚ KK 15:47
 
-def get_weighted_voting(y_pred, y_pred_max_probs, mwe_dict, indices_test,
-                        mwe_metadata, filepath):
+
+def get_weighted_voting(y_pred, y_pred_max_probs, full_df, filepath):
     y_majority_pred = np.array([0 for _ in y_pred])
 
     for pred_ind, prediction in enumerate(y_pred):
@@ -217,8 +184,7 @@ def get_weighted_voting(y_pred, y_pred_max_probs, mwe_dict, indices_test,
     return y_majority_pred
 
 
-def get_treshold_voting(y_pred, y_pred_max_probs, mwe_dict, indices_test,
-                        class_tresholds, mwe_metadata, filepath):
+def get_treshold_voting(y_pred, y_pred_max_probs, full_df, class_tresholds, filepath):
     y_majority_pred = np.array([0 for _ in y_pred])
 
     for pred_ind, prediction in enumerate(y_pred):
@@ -311,72 +277,60 @@ def list_to_type(list_to_convert, type_func):
     return converted_list
 
 
-def load_dict(filepath):
-    with open(filepath, 'rb') as f:
-        loaded_dict = pkl.load(f)
-    return loaded_dict
-
-
 def main(args):
     if 'parseme' in args and 'transformer_embeddings' in args:
-        data_dir = 'parseme_transformer_embeddings_pl'
+        data_dir = os.path.join('..', 'storage', 'parseme', 'pl', 'embeddings',
+                                'transformer')
 
     if 'parseme' in args and 'fasttext_embeddings' in args:
-        data_dir = 'parseme_fasttext_embeddings_pl'
+        data_dir = os.path.join('..', 'storage', 'parseme', 'pl', 'embeddings',
+                                'fasttext')
 
     if 'kgr10' in args and 'transformer_embeddings' in args:
-        data_dir = 'transformer_embeddings_dataset'
+        data_dir = os.path.join('..', 'storage', 'kgr10', 'embeddings',
+                                'transformer')
 
     # if 'transformer_embeddings' in args:
-    X_train_filepath = os.path.join(data_dir, 'X_train.csv')
-    y_train_filepath = os.path.join(data_dir, 'y_train.csv')
+    train_filepath = os.path.join(data_dir, 'parseme_pl_embeddings.tsv')
 
-    X_test_filepath = os.path.join(data_dir, 'X_test.csv')
-    y_test_filepath = os.path.join(data_dir, 'y_test.csv')
+    full_data_filepath = os.path.join(data_dir, 'parseme_pl_embeddings.tsv')
 
     if 'smote' in args:
-        X_train_filepath = os.path.join(data_dir, 'X_train_smote.csv')
-        y_train_filepath = os.path.join(data_dir, 'y_train_smote.csv')
+        train_filepath = os.path.join(data_dir,
+                                      'parseme_pl_embeddings_train_smote.tsv')
 
     if 'borderline_smote' in args:
-        X_train_filepath = os.path.join(data_dir, 'X_train_borderline.csv')
-        y_train_filepath = os.path.join(data_dir, 'y_train_borderline.csv')
+        train_filepath = os.path.join(
+            data_dir, 'parseme_pl_embeddings_train_borderline.tsv')
 
     if 'svm_smote' in args:
-        X_train_filepath = os.path.join(data_dir, 'X_train_svm.csv')
-        y_train_filepath = os.path.join(data_dir, 'y_train_svm.csv')
+        train_filepath = os.path.join(data_dir,
+                                      'parseme_pl_embeddings_train_svm.tsv')
 
     if 'adasyn' in args:
-        X_train_filepath = os.path.join(data_dir, 'X_train_adasyn.csv')
-        y_train_filepath = os.path.join(data_dir, 'y_train_adasyn.csv')
+        train_filepath = os.path.join(
+            data_dir, 'parseme_pl_embeddings_train_adasyn.tsv')
 
-    indices_train_filepath = os.path.join(data_dir, 'indices_train.csv')
-    indices_test_filepath = os.path.join(data_dir, 'indices_test.csv')
+    print('Loading data...')
+    train_df = pd.read_csv(train_filepath, sep='\t')
+    full_df = pd.read_csv(full_data_filepath, sep='\t')
 
-    mwe_dict_filepath = os.path.join(data_dir, 'mwe_dict.pkl')
-    mwe_metadata_filepath = os.path.join(data_dir, 'mwe_metadata.csv')
+    X_train = train_df[train_df['dataset_type']
+                       == 'train']['combined_embedding'].tolist()
+    y_train = train_df[train_df['dataset_type']
+                       == 'train']['is_correct'].tolist()
 
-    print('Loading train data...')
-    X_train = list_of_lists_to_float(load_list_of_lists(X_train_filepath, ','))
-    y_train = list_to_type(load_list(y_train_filepath), float)
+    X_dev = full_df[full_df['dataset_type'] ==
+                    'dev']['combined_embedding'].tolist()
+    y_dev = full_df[full_df['dataset_type'] == 'dev']['is_correct'].tolist()
+
+    X_test = full_df[full_df['dataset_type'] ==
+                     'test']['combined_embedding'].tolist()
+    y_test = full_df[full_df['dataset_type'] == 'test']['is_correct'].tolist()
 
     if 'undersampling' in args:
         undersample = RandomUnderSampler(sampling_strategy='majority')
         X_train, y_train = undersample.fit_resample(X_train, y_train)
-
-    print('Loading test data...')
-    X_test = list_of_lists_to_float(load_list_of_lists(X_test_filepath, ','))
-    y_test = list_to_type(load_list(y_test_filepath), float)
-
-    print('Loading indices files...')
-    indices_train = list_to_type(load_list(indices_train_filepath), int)
-    indices_test = list_to_type(load_list(indices_test_filepath), int)
-
-    print('Loading mwe dict...')
-    mwe_dict = load_dict(mwe_dict_filepath)
-
-    print('Loading mwe metadata...')
-    mwe_metadata = load_list_of_lists(mwe_metadata_filepath, ',')
 
     if 'diff_vector_only' in args:
         X_train = np.array([embedding[768 * 2:] for embedding in X_train])
@@ -449,15 +403,18 @@ def main(args):
     #         X_train = np.array([embedding[300 * 2:] for embedding in X_train])
     #         X_test = np.array([embedding[300 * 2:] for embedding in X_test])
 
-    results_filepath = 'results_' + '_'.join(args) + '.tsv'
+    results_filepath = os.path.join(os.path.join(
+        data_dir.split('/')[:-2]), 'results_' + '_'.join(args) + '.tsv')
 
     create_empty_file(results_filepath)
 
     if 'cnn' in args:
         print(f'X_train shape: {X_train.shape}')
         X_train = np.reshape(X_train, [X_train.shape[0], X_train.shape[1], 1])
+        X_dev = np.reshape(X_dev, [X_dev.shape[0], X_dev.shape[1], 1])
         X_test = np.reshape(X_test, [X_test.shape[0], X_train.shape[1], 1])
         y_train = one_hot(y_train, depth=2)
+        y_dev = one_hot(y_dev, depth=2)
 
         if 'eval' in args:
             eval_only = True
@@ -478,22 +435,22 @@ def main(args):
         y_pred = [np.argmax(probs) for probs in y_pred_probs]
 
     elif 'lr' in args:
-        y_pred, y_pred_probs = get_lr_model_pred(X_train, y_train, X_test)
+        y_pred, y_pred_probs = get_lr_model_pred(
+            X_train, y_train, X_dev, y_dev, X_test)
 
         y_pred_max_probs = [max(probs) for probs in y_pred_probs]
 
     elif 'rf' in args:
-        y_pred, y_pred_probs = get_rf_model_pred(X_train, y_train, X_test)
+        y_pred, y_pred_probs = get_rf_model_pred(
+            X_train, y_train, X_dev, y_dev, X_test)
 
         y_pred_max_probs = [max(probs) for probs in y_pred_probs]
 
     if 'majority_voting' in args:
-        y_pred = get_majority_voting(y_pred, mwe_dict, indices_test,
-                                     mwe_metadata, results_filepath)
+        y_pred = get_majority_voting(y_pred, full_df, results_filepath)
 
     if 'weighted_voting' in args:
-        y_pred = get_weighted_voting(y_pred, y_pred_max_probs, mwe_dict,
-                                     indices_test, mwe_metadata,
+        y_pred = get_weighted_voting(y_pred, y_pred_max_probs, full_df,
                                      results_filepath)
 
     if 'treshold_voting' in args:
@@ -507,15 +464,15 @@ def main(args):
                 class_tresholds = [first_class_treshold, second_class_treshold]
 
                 y_pred = get_treshold_voting(y_pred, y_pred_max_probs,
-                                             mwe_dict, indices_test,
-                                             class_tresholds, mwe_metadata,
+                                             full_df,
+                                             class_tresholds,
                                              results_filepath)
 
-                get_evaluation_report(y_test, y_pred, indices_test,
-                                      mwe_metadata, results_filepath)
+                get_evaluation_report(
+                    y_test, y_pred, full_df, results_filepath)
 
     else:
-        get_evaluation_report(y_test, y_pred, indices_test, mwe_metadata,
+        get_evaluation_report(y_test, y_pred, full_df,
                               results_filepath)
 
 

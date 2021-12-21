@@ -160,6 +160,11 @@ def load_transformer_embeddings_data(dataset_file):
          first_word_mwe_emb_abs_diff, second_word_mwe_emb_abs_diff,
          first_word_mwe_emb_prod, second_word_mwe_emb_prod))
 
+    embeddings_list = np.array([
+        ','.join([str(elem) for elem in embedding])
+        for embedding in embeddings_list
+    ])
+
     df['combined_embedding'] = embeddings_list
 
     # embeddings_list = [
@@ -269,6 +274,11 @@ def main(args):
 
         X_train = df[df['dataset_type'] ==
                      'train']['combined_embedding'].tolist()
+
+        X_train = np.array([
+            np.array([float(elem) for elem in embedding.split(',')])
+            for embedding in X_train
+        ])
 
         y_train = df[df['dataset_type'] == 'train']['is_correct'].tolist()
 
