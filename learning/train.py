@@ -415,6 +415,9 @@ def main(args):
     #         X_test = np.array([embedding[300 * 2:] for embedding in X_test])
 
     if 'cnn' in args:
+        X_train = np.array(X_train)
+        X_dev = np.array(X_dev)
+        X_test = np.array(X_test)
         print(f'X_train shape: {X_train.shape}')
         X_train = np.reshape(X_train, [X_train.shape[0], X_train.shape[1], 1])
         X_dev = np.reshape(X_dev, [X_dev.shape[0], X_dev.shape[1], 1])
@@ -443,14 +446,12 @@ def main(args):
         y_pred = [np.argmax(probs) for probs in y_pred_probs]
 
     elif 'lr' in args:
-        y_pred, y_pred_probs = get_lr_model_pred(X_train, y_train, X_dev,
-                                                 y_dev, X_test)
+        y_pred, y_pred_probs = get_lr_model_pred(X_train, y_train, X_test)
 
         y_pred_max_probs = [max(probs) for probs in y_pred_probs]
 
     elif 'rf' in args:
-        y_pred, y_pred_probs = get_rf_model_pred(X_train, y_train, X_dev,
-                                                 y_dev, X_test)
+        y_pred, y_pred_probs = get_rf_model_pred(X_train, y_train, X_test)
 
         y_pred_max_probs = [max(probs) for probs in y_pred_probs]
 
