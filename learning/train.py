@@ -115,11 +115,14 @@ def write_line_to_file(filepath, line):
 
 
 def get_evaluation_report(y_true, y_pred, full_df, filepath):
+    test_df = full_df[full_df['dataset_type'] == 'test']
+
     columns_list = [
-        column_name for column_name in list(full_df.columns())
+        column_name for column_name in list(test_df.columns)
         if 'emb' not in column_name
     ]
-    report_df = full_df[columns_list]
+
+    report_df = test_df[columns_list]
     report_df['prediction'] = y_pred
 
     target_names = ['Incorrect MWE', 'Correct MWE']
@@ -326,18 +329,49 @@ def main(args):
     train_df = pd.read_csv(train_filepath, sep='\t')
     full_df = pd.read_csv(full_data_filepath, sep='\t')
 
-    X_train = train_df[train_df['dataset_type'] ==
-                       'train']['combined_embedding'].tolist()
-    y_train = train_df[train_df['dataset_type'] ==
-                       'train']['is_correct'].tolist()
+    if ('smote' in args or 'borderline_smote' in args or 'svm_smote' in args
+            or 'adasyn' in args):
+        X_train = train_df['combined_embedding'].tolist()
+
+        y_train = train_df['is_correct'].tolist()
+
+    else:
+        X_train = train_df[train_df['dataset_type'] ==
+                           'train']['combined_embedding'].tolist()
+
+        y_train = train_df[train_df['dataset_type'] ==
+                           'train']['is_correct'].tolist()
+
+    X_train = np.array([
+        np.array([float(elem) for elem in embedding.split(',')])
+        for embedding in X_train
+    ])
+
+    y_train = np.array([int(elem) for elem in y_train])
 
     X_dev = full_df[full_df['dataset_type'] ==
                     'dev']['combined_embedding'].tolist()
+
+    X_dev = np.array([
+        np.array([float(elem) for elem in embedding.split(',')])
+        for embedding in X_dev
+    ])
+
     y_dev = full_df[full_df['dataset_type'] == 'dev']['is_correct'].tolist()
+
+    y_dev = np.array([int(elem) for elem in y_dev])
 
     X_test = full_df[full_df['dataset_type'] ==
                      'test']['combined_embedding'].tolist()
+
+    X_test = np.array([
+        np.array([float(elem) for elem in embedding.split(',')])
+        for embedding in X_test
+    ])
+
     y_test = full_df[full_df['dataset_type'] == 'test']['is_correct'].tolist()
+
+    y_test = np.array([int(elem) for elem in y_test])
 
     if 'undersampling' in args:
         undersample = RandomUnderSampler(sampling_strategy='majority')

@@ -77,17 +77,18 @@ def get_dir_num():
     if len(
             glob.glob(
                 os.path.join('storage', 'parseme', 'pl', 'checkpoints',
-                             'models_*'))) == 0:
-        return last_dir_num
+                             'checkpoints_*'))) != 0:
 
-    else:
         for filepath in glob.glob(
                 os.path.join('storage', 'parseme', 'pl', 'checkpoints',
-                             'models_*')):
+                             'checkpoints_*')):
             if int(filepath.split('_')[-1]) > last_dir_num:
                 last_dir_num = int(filepath.split('_')[-1])
 
         return last_dir_num + 1
+
+    else:
+        return last_dir_num
 
 
 def train_cnn_model(model, X_train, y_train, X_dev, y_dev, epoch_num):
@@ -95,7 +96,7 @@ def train_cnn_model(model, X_train, y_train, X_dev, y_dev, epoch_num):
 
     # callback = EarlyStopping(monitor='loss', patience=10)
     dir_name = os.path.join('storage', 'parseme', 'pl', 'checkpoints',
-                            f'ckeckpoints_{get_dir_num()}')
+                            f'checkpoints_{get_dir_num()}')
 
     os.mkdir(dir_name)
 

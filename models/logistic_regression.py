@@ -7,10 +7,10 @@ from sklearn.linear_model import LogisticRegression
 def create_lr_model():
 
     return LogisticRegression(random_state=0,
-                              max_iter=4000,
+                              max_iter=3000,
                               verbose=1,
                               class_weight='balanced',
-                              n_jobs=5)
+                              n_jobs=10)
 
 
 def train_lr_model(model, X, y):
