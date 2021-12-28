@@ -137,7 +137,7 @@ def get_evaluation_report(y_true, y_pred, full_df, filepath):
 def get_majority_voting(y_pred, full_df, filepath):
     y_majority_pred = np.array([0 for _ in y_pred])
 
-    df_test = full_df[full_df['dataset_type'] == 'test']
+    df_test = full_df[full_df['dataset_type'] == 'test'].reset_index(drop=True)
 
     mwe_list = df_test['mwe'].tolist()
 
@@ -156,11 +156,10 @@ def get_majority_voting(y_pred, full_df, filepath):
     return y_majority_pred
 
 
-# TODO tu skończyłeś KK
 def get_weighted_voting(y_pred, y_pred_max_probs, full_df, filepath):
     y_majority_pred = np.array([0 for _ in y_pred])
 
-    df_test = full_df[full_df['dataset_type'] == 'test']
+    df_test = full_df[full_df['dataset_type'] == 'test'].reset_index(drop=True)
 
     mwe_list = df_test['mwe'].tolist()
 
@@ -290,7 +289,7 @@ def main(args):
 
     if 'parseme' in args and 'fasttext_embeddings' in args:
         data_dir = os.path.join('storage', 'parseme', 'pl', 'embeddings',
-                                'fasttext')
+                                'fasttext_dupplicates')
 
     if 'kgr10' in args and 'transformer_embeddings' in args:
         data_dir = os.path.join('storage', 'kgr10', 'embeddings',

@@ -245,8 +245,8 @@ def main(args):
     # dataset_filepath = 'parseme_merged_mwes_embeddings_1_layers_complete_mwe_in_sent.tsv'
 
     # result_dir_name = 'parseme_transformer_embeddings_pl'
-    result_dir_name = os.path.join('..', '..', 'storage', 'parseme', 'pl',
-                                   'embeddings', 'transformer')
+    result_dir_name = os.path.join('storage', 'parseme', 'pl', 'embeddings',
+                                   'transformer')
 
     dataset_filepath = os.path.join(
         result_dir_name,
