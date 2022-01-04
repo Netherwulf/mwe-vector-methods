@@ -229,13 +229,17 @@ def read_tsv(filepath, tokenizer, model, layers):
             line_attributes = line.split('\t')
 
             # KGR10 (Słowosieć) sentence list column mapping
-            mwe = line_attributes[0]
+            mwe_type = 'null'
             mwe_lemma = line_attributes[1]
-            is_correct = line_attributes[2]
-            complete_mwe_in_sent = line_attributes[3]
             first_word = line_attributes[5]
+            first_word_id = line_attributes[4]
             second_word = line_attributes[8]
+            second_word_id = line_attributes[7]
+            mwe = line_attributes[0]
             sentence = line_attributes[12]
+            is_correct = line_attributes[2]
+            dataset_type = 'null'
+            complete_mwe_in_sent = line_attributes[3]
 
             # PARSEME sentence list column mapping
             # mwe_type = line_attributes[0]
@@ -345,7 +349,7 @@ def read_tsv(filepath, tokenizer, model, layers):
             # only part of MWE appears in the sentence
             else:
                 first_word_embedding = get_word_embedding(
-                    sentence, [first_word_id], tokenizer, model, layers)
+                    sentence, first_word_id, tokenizer, model, layers)
 
                 mwe_embedding = substitute_and_embed(sentence, [first_word_id],
                                                      mwe, tokenizer, model,
