@@ -45,15 +45,13 @@ def find_best_checkpoint(dir_name):
         loss_value = float(
             filepath.split('_')[-1].split('.')[0] + '.' +
             filepath.split('.')[-2])
-        print(f'old_loss: {curr_loss}',
-              f'loss_value: {loss_value}',
-              f'new_filepath: {filepath}',
-              sep='\n')
 
         if loss_value < curr_loss:
             best_checkpoint = filepath
             curr_loss = loss_value
-    print(f'Best checkpoint: {best_checkpoint}')
+
+    print(f'Best checkpoint path: {best_checkpoint}')
+
     return best_checkpoint
 
 
@@ -71,17 +69,14 @@ def get_class_weights(train_labels):
     return class_weights
 
 
-def get_dir_num():
+def get_dir_num(dir_path):
     last_dir_num = 0
 
-    if len(
-            glob.glob(
-                os.path.join('storage', 'parseme', 'pl', 'checkpoints',
-                             'checkpoints_*'))) != 0:
+    if len(glob.glob(os.path.join(dir_path, 'checkpoints',
+                                  'checkpoint_*'))) != 0:
 
         for filepath in glob.glob(
-                os.path.join('storage', 'parseme', 'pl', 'checkpoints',
-                             'checkpoints_*')):
+                os.path.join(dir_path, 'checkpoints', 'checkpoint_*')):
             if int(filepath.split('_')[-1]) > last_dir_num:
                 last_dir_num = int(filepath.split('_')[-1])
 
@@ -91,12 +86,15 @@ def get_dir_num():
         return last_dir_num
 
 
-def train_cnn_model(model, X_train, y_train, X_dev, y_dev, epoch_num):
+def train_cnn_model(model, X_train, y_train, X_dev, y_dev, epoch_num,
+                    dataset_dir):
     epochs = epoch_num
 
     # callback = EarlyStopping(monitor='loss', patience=10)
-    dir_name = os.path.join('storage', 'parseme', 'pl', 'checkpoints',
-                            f'checkpoints_{get_dir_num()}')
+    # dataset_path = os.path.join('storage', 'parseme', 'pl')
+
+    dir_name = os.path.join(dataset_dir, 'checkpoints',
+                            f'checkpoints_{get_dir_num(dataset_dir)}')
 
     os.mkdir(dir_name)
 
@@ -123,8 +121,6 @@ def train_cnn_model(model, X_train, y_train, X_dev, y_dev, epoch_num):
 
     best_checkpoint_filepath = find_best_checkpoint(dir_name)
 
-    print(f'Current directory index: {dir_name}')
-
     # The model weights (that are considered the best) are loaded into the model.
     model.load_weights(best_checkpoint_filepath)
 
@@ -136,6 +132,7 @@ def get_cnn_model_pred(X_train,
                        X_dev,
                        y_dev,
                        X_test,
+                       dataset_dir,
                        eval_only=False,
                        model_path=None,
                        input_shape=(900, 1)):
@@ -146,7 +143,7 @@ def get_cnn_model_pred(X_train,
 
     else:
         cnn_model = train_cnn_model(cnn_model, X_train, y_train, X_dev, y_dev,
-                                    15)  # 1000 epochs
+                                    15, dataset_dir)  # 1000 epochs
 
     y_pred = cnn_model.predict(X_test)
 

@@ -229,25 +229,25 @@ def read_tsv(filepath, tokenizer, model, layers):
             line_attributes = line.split('\t')
 
             # KGR10 (Słowosieć) sentence list column mapping
-            # mwe = line_attributes[0]
-            # mwe_lemma = line_attributes[1]
-            # is_correct = line_attributes[2]
-            # complete_mwe_in_sent = line_attributes[3]
-            # first_word = line_attributes[5]
-            # second_word = line_attributes[8]
-            # sentence = line_attributes[12]
+            mwe = line_attributes[0]
+            mwe_lemma = line_attributes[1]
+            is_correct = line_attributes[2]
+            complete_mwe_in_sent = line_attributes[3]
+            first_word = line_attributes[5]
+            second_word = line_attributes[8]
+            sentence = line_attributes[12]
 
             # PARSEME sentence list column mapping
-            mwe_type = line_attributes[0]
-            first_word = line_attributes[1]
-            first_word_id = int(line_attributes[3])
-            second_word = line_attributes[4]
-            second_word_id = int(line_attributes[6])
-            mwe = line_attributes[7]
-            sentence = line_attributes[9]
-            is_correct = str(line_attributes[10])
-            dataset_type = line_attributes[11]
-            complete_mwe_in_sent = '1'
+            # mwe_type = line_attributes[0]
+            # first_word = line_attributes[1]
+            # first_word_id = int(line_attributes[3])
+            # second_word = line_attributes[4]
+            # second_word_id = int(line_attributes[6])
+            # mwe = line_attributes[7]
+            # sentence = line_attributes[9]
+            # is_correct = str(line_attributes[10])
+            # dataset_type = line_attributes[11]
+            # complete_mwe_in_sent = '1'
 
             # print(f'mwe_type = {mwe_type}',
             # f'first_word = {first_word}',
