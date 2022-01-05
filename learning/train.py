@@ -114,7 +114,7 @@ def write_line_to_file(filepath, line):
         f.write(f'{line}\n')
 
 
-def get_evaluation_report(y_true, y_pred, full_df, filepath):
+def get_evaluation_report(y_true, y_pred, full_df, predictions_filepath, evaluation_filepath):
     test_df = full_df[full_df['dataset_type'] == 'test']
 
     columns_list = [
@@ -127,9 +127,18 @@ def get_evaluation_report(y_true, y_pred, full_df, filepath):
 
     target_names = ['Incorrect MWE', 'Correct MWE']
 
-    print(f'Saved evaluation results to: {filepath}')
+    print(f'Saved prediction results to: {predictions_filepath}')
 
-    report_df.to_csv(filepath, sep='\t', index=False)
+    report_df.to_csv(predictions_filepath, sep='\t', index=False)
+
+    eval_report = classification_report(
+        y_true, y_pred, target_names=target_names, output_dict=True)
+
+    eval_df = pd.DataFrame(eval_report).transpose()
+
+    print(f'Saved evaluation results to: {evaluation_filepath}')
+
+    eval_df.to_csv(f'{evaluation_filepath}', sep='\t', index=False)
 
     print(classification_report(y_true, y_pred, target_names=target_names))
 
@@ -305,13 +314,23 @@ def main(args):
         full_data_filepath = os.path.join(data_dir,
                                           'parseme_pl_embeddings.tsv')
 
-        results_dir = os.path.join(*data_dir.split('/')[:-2], 'results')
+        pred_results_dir = os.path.join(
+            *data_dir.split('/')[:-2], 'prediction_results')
 
-        if not os.path.exists(results_dir):
-            os.mkdir(results_dir)
+        if not os.path.exists(pred_results_dir):
+            os.mkdir(pred_results_dir)
 
-        results_filepath = os.path.join(results_dir,
-                                        'results_' + '_'.join(args) + '.tsv')
+        pred_results_filepath = os.path.join(pred_results_dir,
+                                             'prediction_results_' + '_'.join(args) + '.tsv')
+
+        eval_results_dir = os.path.join(
+            *data_dir.split('/')[:-2], 'evaluation_results')
+
+        if not os.path.exists(eval_results_dir):
+            os.mkdir(eval_results_dir)
+
+        eval_results_filepath = os.path.join(eval_results_dir,
+                                             'evaluation_results_' + '_'.join(args) + '.tsv')
 
         if 'smote' in args:
             train_filepath = os.path.join(
@@ -549,11 +568,11 @@ def main(args):
         y_pred_max_probs = [max(probs) for probs in y_pred_probs]
 
     if 'majority_voting' in args:
-        y_pred = get_majority_voting(y_pred, full_df, results_filepath)
+        y_pred = get_majority_voting(y_pred, full_df, pred_results_filepath)
 
     if 'weighted_voting' in args:
         y_pred = get_weighted_voting(y_pred, y_pred_max_probs, full_df,
-                                     results_filepath)
+                                     pred_results_filepath)
 
     if 'treshold_voting' in args:
         for first_class_treshold in [0.1 * n for n in range(4, 10, 1)]:
@@ -566,13 +585,14 @@ def main(args):
                 class_tresholds = [first_class_treshold, second_class_treshold]
 
                 y_pred = get_treshold_voting(y_pred, y_pred_max_probs, full_df,
-                                             class_tresholds, results_filepath)
+                                             class_tresholds, pred_results_filepath)
 
-                get_evaluation_report(y_test, y_pred, full_df,
-                                      results_filepath)
+                get_evaluation_report(y_test, y_pred, full_df, pred_results_filepath,
+                                      eval_results_filepath)
 
     else:
-        get_evaluation_report(y_test, y_pred, full_df, results_filepath)
+        get_evaluation_report(y_test, y_pred, full_df, pred_results_filepath,
+                              eval_results_filepath)
 
 
 if __name__ == '__main__':

@@ -166,9 +166,14 @@ def substitute_and_embed(sentence, old_word_id, new_word, tokenizer, model,
         # if not word_occured:
         #     return False
 
-        second_word_emb = get_word_embedding(sentence_to_substitute,
-                                             old_word_id[1], tokenizer, model,
-                                             layers)
+        if len(old_word_id) > 1:
+            second_word_emb = get_word_embedding(sentence_to_substitute,
+                                                 old_word_id[1], tokenizer, model,
+                                                 layers)
+        else:
+            second_word_emb = get_word_embedding(sentence_to_substitute, old_word_id[0] + 1,
+                                                 tokenizer, model,
+                                                 layers)
         # second_word_emb, word_occured = get_word_embedding(sentence, second_word, tokenizer, model, layers, lemmatizer)
 
         # if not word_occured:
@@ -232,12 +237,12 @@ def read_tsv(filepath, tokenizer, model, layers):
             mwe_type = 'null'
             mwe_lemma = line_attributes[1]
             first_word = line_attributes[5]
-            first_word_id = line_attributes[4]
+            first_word_id = int(line_attributes[4])
             second_word = line_attributes[8]
-            second_word_id = line_attributes[7]
+            second_word_id = int(line_attributes[7])
             mwe = line_attributes[0]
             sentence = line_attributes[12]
-            is_correct = line_attributes[2]
+            is_correct = str(line_attributes[2])
             dataset_type = 'null'
             complete_mwe_in_sent = line_attributes[3]
 
@@ -322,9 +327,11 @@ def read_tsv(filepath, tokenizer, model, layers):
                 ]
 
                 mwe_embedding = [str(elem) for elem in mwe_embedding]
+
                 first_word_only_embedding = [
                     str(elem) for elem in first_word_only_embedding
                 ]
+
                 second_word_only_embedding = [
                     str(elem) for elem in second_word_only_embedding
                 ]
@@ -376,13 +383,14 @@ def read_tsv(filepath, tokenizer, model, layers):
                 first_word_embedding = [
                     str(elem) for elem in first_word_embedding
                 ]
+
                 mwe_embedding = [str(elem) for elem in mwe_embedding]
 
                 write_line_to_file(
                     incomplete_mwe_in_sent_output_file, '\t'.join([
                         mwe_type, first_word,
-                        int(first_word_id), second_word,
-                        int(second_word_id), mwe, sentence, is_correct,
+                        str(first_word_id), second_word,
+                        str(second_word_id), mwe, sentence, is_correct,
                         dataset_type, complete_mwe_in_sent,
                         ','.join(first_word_embedding),
                         ','.join(mwe_embedding),
