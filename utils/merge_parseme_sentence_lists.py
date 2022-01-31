@@ -4,8 +4,7 @@ import sys
 import pandas as pd
 
 
-def merge_sentence_lists(correct_mwe_filepath, incorrect_mwe_filepath,
-                         output_filepath):
+def merge_sentence_lists(correct_mwe_filepath, incorrect_mwe_filepath):
     df_correct = pd.read_csv(correct_mwe_filepath, sep='\t')
     df_incorrect = pd.read_csv(incorrect_mwe_filepath, sep='\t')
 
@@ -18,34 +17,30 @@ def merge_sentence_lists(correct_mwe_filepath, incorrect_mwe_filepath,
 
 
 def main(args):
-    for dataset_type_idx, dataset_type in enumerate(['train', 'dev', 'test']):
+    dir_path = os.path.join('storage', 'parseme', 'en', 'preprocessed_data')
+
+    for dataset_type_idx, dataset_type in enumerate(['train', 'test',
+                                                     'dev'][:-1]):
         correct_mwe_filepath = os.path.join(
-            '..', 'storage', 'parseme', 'pl', 'preprocessed_data',
-            dataset_type, f'parseme_{dataset_type}_correct_mwes.tsv')
+            dir_path, dataset_type, f'parseme_{dataset_type}_correct_mwes.tsv')
 
         incorrect_mwe_filepath = os.path.join(
-            '..', 'storage', 'parseme', 'pl', 'preprocessed_data',
-            dataset_type, f'parseme_{dataset_type}_incorrect_mwes.tsv')
-
-        output_filepath = os.path.join(
-            '..', 'storage', 'parseme', 'pl', 'preprocessed_data',
-            f'parseme_{dataset_type}_merged_mwes.tsv')
+            dir_path, dataset_type,
+            f'parseme_{dataset_type}_incorrect_mwes.tsv')
 
         if dataset_type_idx == 0:
             df = merge_sentence_lists(correct_mwe_filepath,
-                                      incorrect_mwe_filepath, output_filepath)
+                                      incorrect_mwe_filepath)
             df['dataset_type'] = dataset_type
 
         else:
             curr_df = merge_sentence_lists(correct_mwe_filepath,
-                                           incorrect_mwe_filepath,
-                                           output_filepath)
+                                           incorrect_mwe_filepath)
             curr_df['dataset_type'] = dataset_type
 
             df = df.append(curr_df)
 
-    df.to_csv(os.path.join('..', 'storage', 'parseme', 'pl',
-                           'preprocessed_data', 'parseme_data.tsv'),
+    df.to_csv(os.path.join(dir_path, 'parseme_merged_data.tsv'),
               sep='\t',
               index=False)
 

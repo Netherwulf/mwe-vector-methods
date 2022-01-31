@@ -11,17 +11,17 @@ from tensorflow.keras.callbacks import ModelCheckpoint, EarlyStopping
 def create_cnn_model(input_shape=(900, 1)):
     model = models.Sequential()
 
-    model.add(
-        layers.Conv1D(1024, 5, activation='relu', input_shape=input_shape))
+    model.add(layers.Conv1D(256, 5, activation='relu',
+                            input_shape=input_shape))  # 1024
     model.add(layers.MaxPooling1D(3))
     model.add(layers.Dropout(0.2))
-    model.add(layers.Conv1D(512, 5, activation='relu'))
+    model.add(layers.Conv1D(128, 5, activation='relu'))  # 512
     model.add(layers.MaxPooling1D(3))
     model.add(layers.Dropout(0.2))
     # model.add(layers.Conv1D(256, 5, activation='relu'))
     # model.add(layers.MaxPooling1D(3))
     # model.add(layers.Dropout(0.2))
-    model.add(layers.Conv1D(256, 5, activation='relu'))  # 256
+    model.add(layers.Conv1D(64, 5, activation='relu'))  # 256
     model.add(layers.GlobalMaxPooling1D())
     model.add(layers.Flatten())
     model.add(layers.Dense(2, activation='softmax'))
@@ -72,8 +72,7 @@ def get_class_weights(train_labels):
 def get_dir_num(dir_path):
     last_dir_num = 0
 
-    if len(glob.glob(os.path.join(dir_path, 'checkpoints',
-                                  'checkpoint_*'))) != 0:
+    if len(glob.glob(os.path.join(dir_path, 'checkpoint_*'))) != 0:
 
         for filepath in glob.glob(
                 os.path.join(dir_path, 'checkpoints', 'checkpoint_*')):
@@ -93,8 +92,13 @@ def train_cnn_model(model, X_train, y_train, X_dev, y_dev, epoch_num,
     # callback = EarlyStopping(monitor='loss', patience=10)
     # dataset_path = os.path.join('storage', 'parseme', 'pl')
 
+    checkpoints_dir = os.path.join(dataset_dir, 'checkpoints')
+
+    if not os.path.exists(checkpoints_dir):
+        os.mkdir(checkpoints_dir)
+
     dir_name = os.path.join(dataset_dir, 'checkpoints',
-                            f'checkpoints_{get_dir_num(dataset_dir)}')
+                            f'checkpoint_{get_dir_num(checkpoints_dir)}')
 
     os.mkdir(dir_name)
 
@@ -114,7 +118,7 @@ def train_cnn_model(model, X_train, y_train, X_dev, y_dev, epoch_num,
         X_train,
         y_train,
         validation_data=(X_dev, y_dev),
-        batch_size=32,  # 128
+        batch_size=4,  # 128
         epochs=epochs,
         class_weight=get_class_weights(y_train),
         callbacks=[model_checkpoint_callback])

@@ -178,7 +178,8 @@ def read_mwe(file_path, ft_model, incorrect_mwe_file):
 
 
 def get_count_dict(file_path, incorrect_mwe_file=False, type_based=False):
-    with open(file_path, 'r', encoding='utf-8') as correct_mwe_file:
+    with open(file_path, 'r', encoding='utf-8',
+              buffering=2000000) as correct_mwe_file:
         content = correct_mwe_file.readlines()
 
         count_dict = {}
@@ -221,7 +222,8 @@ def read_mwe_balanced(file_path,
     for domain in count_dict.keys():
         imbalanced_sample_size += count_dict[domain]
 
-    with open(file_path, 'r', encoding='utf-8') as correct_mwe_file:
+    with open(file_path, 'r', encoding='utf-8',
+              buffering=2000000) as correct_mwe_file:
         content = correct_mwe_file.readlines()
 
         mwe_list = [('*' * 200, '*' * 200) for _ in range(len(content))]

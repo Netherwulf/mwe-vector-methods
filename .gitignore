@@ -17,11 +17,17 @@ mwe_dataset_domain_balanced.npy
 # pretrained models dir
 storage/pretrained_models/
 
+# dirs containing preprocessed data
+preprocessed_data/
+
 # model checkpoints dir
 checkpoints/
 
 # embeddings dirs
 embeddings/
+
+# results dirs
+results/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

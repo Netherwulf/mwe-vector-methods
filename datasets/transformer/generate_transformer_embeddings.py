@@ -3,6 +3,7 @@ import re
 import sys
 
 import morfeusz2
+import numpy as np
 import torch
 
 from transformers import AutoTokenizer, AutoModel
@@ -13,44 +14,27 @@ def init_lemmatizer():
     return morfeusz2.Morfeusz()  # initialize Morfeusz object
 
 
-# def get_word_idx(sent: str, word: str):  # (sent: str, word: str, lemmatizer)
-#     return sent.index(word)
-#     sentence = sent[:]
-#     sentence = [str(lemmatizer.analyse(word_elem)[0][2][1]) if word_elem not in string.punctuation else word_elem for
-#                 word_elem in sentence.split(' ')]
-#     word_lemma = lemmatizer.analyse(word)[0][2][1]
-#
-#     if word_lemma in sentence:
-#         return sentence.index(word_lemma), True
-#
-#     else:
-#         print(f'word: {word_lemma} doesnt occur in sentence: \n{sentence}')
-#         return -1, False
-
-
 def get_word_offset_ids(sentence, word_id, offset_mapping):
     sent_offsets = [(ele.start(), ele.end())
                     for ele in re.finditer(r'\S+', sentence)]
-    # print(f'sentence = {sentence}',
-    # f'sent_offsets = {sent_offsets}',
-    # f'word_id = {word_id}',
-    # sep='\n')
-    word_offset = sent_offsets[word_id]
-    # print(f'word_offset = {word_offset}',
-    #       f'offset_mapping = {offset_mapping}',
-    #       sep='\n')
+
+    try:
+        word_offset = sent_offsets[word_id]
+    except IndexError:
+        print('IndexError: word_offset = sent_offsets[word_id]',
+              f'sentence: {sentence}',
+              f'word_id: {word_id}',
+              f'sent_offsets: {sent_offsets}',
+              f'offset_mapping: {offset_mapping[0]}',
+              '\n',
+              sep='\n')
+
+        return [0]
+
     word_offset_mappings_ind = [
         ind for ind, elem in enumerate(offset_mapping[0])
         if elem[0] == word_offset[0] or elem[1] == word_offset[1]
     ]
-
-    # print(f'sentence = {sentence}',
-    # f'word_id = {word_id}',
-    # f'sent_offsets = {sent_offsets}',
-    # f'word_offset = {word_offset}',
-    # f'offset_mapping = {offset_mapping}',
-    # f'word_offset_mappings_ind = {word_offset_mappings_ind}',
-    # sep='\n')
 
     return word_offset_mappings_ind
 
@@ -64,14 +48,13 @@ def get_hidden_states(encoded, offset_ids, model, layers):
 
     # Get all hidden states
     states = output.hidden_states
+
     # Stack and sum all requested layers
     output = torch.stack([states[i] for i in layers]).sum(0).squeeze()
+
     # Only select the tokens that constitute the requested word
     word_tokens_output = output[offset_ids]
-    # print(f'states = {states}',
-    #       f'output = {output}',
-    #       f'word_tokens_output = {word_tokens_output}',
-    #       sep='\n')
+
     return word_tokens_output.mean(dim=0).to('cpu').numpy()
 
 
@@ -91,35 +74,24 @@ def get_word_vector(sent, word_id, tokenizer, model, layers):
         key: encoded[key]
         for key in encoded.keys() if key != 'offset_mapping'
     }
-    # get all token idxs that belong to the word of interest
-    # token_ids_word = np.where(np.array(encoded.word_ids()) == idx)
-    # print(f'encoded KEYS = {encoded.keys()}',
-    # f'offset_mapping = {offset_mapping}',
-    # f'word_id = {encoded["input_ids"]}',
-    # f'decoded sentence = {tokenizer.decode(encoded["input_ids"][0])}',
-    # sep='\n')
+
     return get_hidden_states(encoded, offset_ids, model, layers)
 
 
 def create_empty_file(filepath):
-    with open(filepath, 'w') as _:
+    with open(filepath, 'x', buffering=2000000) as _:
         pass
 
 
 def write_line_to_file(filepath, line):
-    with open(filepath, 'a') as f:
+    with open(filepath, 'a', buffering=2000000) as f:
         f.write(f'{line}\n')
 
 
 def get_word_embedding(sentence, word_id, tokenizer, model, layers):
-    # idx = get_word_idx(sentence, word)  # (sentence, word, lemmatizer)
-    # idx, word_occured = get_word_idx(sentence, word, lemmatizer)
-
     word_embedding = get_word_vector(sentence, word_id, tokenizer, model,
                                      layers)
-    # print(f'word id = {word_id}',
-    # f'word embedding = {word_embedding}',
-    # sep='\n')
+
     return word_embedding  # , word_occured
 
 
@@ -151,33 +123,21 @@ def substitute_and_embed(sentence, old_word_id, new_word, tokenizer, model,
                 ' '.join(sentence_words[old_word_id[1] + 1:])
             ])
 
-    # print(f'sentence = {sentence}',
-    # f'sentence_to_substitute = {sentence_to_substitute}',
-    # sep='\n')
-
     if len(new_word.split(' ')) > 1:
         first_word, second_word = new_word.split(' ')
 
         first_word_emb = get_word_embedding(sentence_to_substitute,
                                             old_word_id[0], tokenizer, model,
                                             layers)
-        # first_word_emb, word_occured = get_word_embedding(sentence, first_word, tokenizer, model, layers, lemmatizer)
-
-        # if not word_occured:
-        #     return False
 
         if len(old_word_id) > 1:
             second_word_emb = get_word_embedding(sentence_to_substitute,
-                                                 old_word_id[1], tokenizer, model,
-                                                 layers)
+                                                 old_word_id[1], tokenizer,
+                                                 model, layers)
         else:
-            second_word_emb = get_word_embedding(sentence_to_substitute, old_word_id[0] + 1,
-                                                 tokenizer, model,
-                                                 layers)
-        # second_word_emb, word_occured = get_word_embedding(sentence, second_word, tokenizer, model, layers, lemmatizer)
-
-        # if not word_occured:
-        #     return False
+            second_word_emb = get_word_embedding(sentence_to_substitute,
+                                                 old_word_id[0] + 1, tokenizer,
+                                                 model, layers)
 
         emb = [(first_word_elem + second_word_elem) / 2
                for first_word_elem, second_word_elem in zip(
@@ -208,7 +168,8 @@ def read_tsv(filepath, tokenizer, model, layers):
             'first_word_only_embedding', 'second_word_only_embedding',
             'first_word_mwe_emb_diff', 'second_word_mwe_emb_diff',
             'first_word_mwe_emb_abs_diff', 'second_word_mwe_emb_abs_diff',
-            'first_word_mwe_emb_prod', 'second_word_mwe_emb_prod'
+            'first_word_mwe_emb_prod', 'second_word_mwe_emb_prod',
+            'combined_embedding'
         ]))
 
     incomplete_mwe_in_sent_output_file = os.path.join(
@@ -222,10 +183,10 @@ def read_tsv(filepath, tokenizer, model, layers):
             'second_word_id', 'mwe', 'sentence', 'is_correct', 'dataset_type',
             'complete_mwe_in_sent', 'first_word_embedding', 'mwe_embedding',
             'first_word_mwe_emb_diff', 'first_word_mwe_emb_abs_diff',
-            'first_word_mwe_emb_prod'
+            'first_word_mwe_emb_prod', 'combined_embedding'
         ]))
 
-    with open(filepath, 'r', errors='replace') as in_file:
+    with open(filepath, 'r', errors='replace', buffering=2000000) as in_file:
         content = in_file.readlines()
 
         for line in content[1:]:
@@ -234,40 +195,42 @@ def read_tsv(filepath, tokenizer, model, layers):
             line_attributes = line.split('\t')
 
             # KGR10 (Słowosieć) sentence list column mapping
-            mwe_type = 'null'
-            mwe_lemma = line_attributes[1]
-            first_word = line_attributes[5]
-            first_word_id = int(line_attributes[4])
-            second_word = line_attributes[8]
-            second_word_id = int(line_attributes[7])
-            mwe = line_attributes[0]
-            sentence = line_attributes[12]
-            is_correct = str(line_attributes[2])
-            dataset_type = 'null'
-            complete_mwe_in_sent = line_attributes[3]
+            # mwe_type = 'null'
+            # mwe_lemma = line_attributes[1]
+            # first_word = line_attributes[5]
+            # first_word_id = int(line_attributes[4])
+            # second_word = line_attributes[8]
+            # second_word_id = int(line_attributes[7])
+            # mwe = line_attributes[0]
+            # sentence = line_attributes[12]
+            # is_correct = str(line_attributes[2])
+            # dataset_type = 'null'
+            # complete_mwe_in_sent = line_attributes[3]
+
+            # MeWeX detected MWEs in KGR10 corpus sentence list column mapping
+            # mwe_type = 'null'
+            # mwe_lemma = line_attributes[1]
+            # first_word = line_attributes[4]
+            # first_word_id = int(line_attributes[3])
+            # second_word = line_attributes[7]
+            # second_word_id = int(line_attributes[6])
+            # mwe = line_attributes[0]
+            # sentence = line_attributes[11]
+            # is_correct = 'null'
+            # dataset_type = 'null'
+            # complete_mwe_in_sent = line_attributes[2]
 
             # PARSEME sentence list column mapping
-            # mwe_type = line_attributes[0]
-            # first_word = line_attributes[1]
-            # first_word_id = int(line_attributes[3])
-            # second_word = line_attributes[4]
-            # second_word_id = int(line_attributes[6])
-            # mwe = line_attributes[7]
-            # sentence = line_attributes[9]
-            # is_correct = str(line_attributes[10])
-            # dataset_type = line_attributes[11]
-            # complete_mwe_in_sent = '1'
-
-            # print(f'mwe_type = {mwe_type}',
-            # f'first_word = {first_word}',
-            # f'first_word_id = {first_word_id}',
-            # f'second_word = {second_word}',
-            # f'second_word_id = {second_word_id}',
-            # f'mwe = {mwe}',
-            # f'sentence = {sentence}',
-            # f'is_correct = {is_correct}',
-            # f'complete_mwe_in_sent = {complete_mwe_in_sent}',
-            # sep='\n')
+            mwe_type = line_attributes[0]
+            first_word = line_attributes[1]
+            first_word_id = int(line_attributes[3])
+            second_word = line_attributes[4]
+            second_word_id = int(line_attributes[6])
+            mwe = line_attributes[7]
+            sentence = line_attributes[9]
+            is_correct = str(line_attributes[10])
+            dataset_type = line_attributes[11]
+            complete_mwe_in_sent = '1'
 
             # complete MWE appears in the sentence
             if complete_mwe_in_sent == '1':
@@ -336,6 +299,13 @@ def read_tsv(filepath, tokenizer, model, layers):
                     str(elem) for elem in second_word_only_embedding
                 ]
 
+                combined_embedding = np.hstack(
+                    (mwe_embedding, first_word_only_embedding,
+                     second_word_only_embedding, first_word_mwe_emb_diff,
+                     second_word_mwe_emb_diff, first_word_mwe_emb_abs_diff,
+                     second_word_mwe_emb_abs_diff, first_word_mwe_emb_prod,
+                     second_word_mwe_emb_prod))
+
                 write_line_to_file(
                     complete_mwe_in_sent_output_file, '\t'.join([
                         mwe_type, first_word,
@@ -350,7 +320,8 @@ def read_tsv(filepath, tokenizer, model, layers):
                         ','.join(first_word_mwe_emb_abs_diff),
                         ','.join(second_word_mwe_emb_abs_diff),
                         ','.join(first_word_mwe_emb_prod),
-                        ','.join(second_word_mwe_emb_prod)
+                        ','.join(second_word_mwe_emb_prod),
+                        ','.join(combined_embedding)
                     ]))
 
             # only part of MWE appears in the sentence
@@ -386,6 +357,11 @@ def read_tsv(filepath, tokenizer, model, layers):
 
                 mwe_embedding = [str(elem) for elem in mwe_embedding]
 
+                combined_embedding = np.hstack(
+                    (first_word_embedding, mwe_embedding,
+                     first_word_mwe_emb_diff, first_word_mwe_emb_abs_diff,
+                     first_word_mwe_emb_prod))
+
                 write_line_to_file(
                     incomplete_mwe_in_sent_output_file, '\t'.join([
                         mwe_type, first_word,
@@ -396,13 +372,12 @@ def read_tsv(filepath, tokenizer, model, layers):
                         ','.join(mwe_embedding),
                         ','.join(first_word_mwe_emb_diff),
                         ','.join(first_word_mwe_emb_abs_diff),
-                        ','.join(first_word_mwe_emb_prod)
+                        ','.join(first_word_mwe_emb_prod),
+                        ','.join(combined_embedding)
                     ]))
 
 
 def main(args):
-    # Use last four layers by default
-    # layers = [-4, -3, -2, -1] if layers is None else layers
     model_name = 'allegro/herbert-base-cased'  # bet-base-cased
     layers = 1  # layers = 4
 

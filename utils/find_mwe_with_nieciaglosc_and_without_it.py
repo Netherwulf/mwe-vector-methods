@@ -8,11 +8,15 @@ def get_mwes_with_nieciaglosc_and_without_it(filepath):
         print(f'Reading content of file: {filepath}')
         content = file.readlines()
         print('Initializing mwe_with_nieciaglosc list')
-        mwe_with_nieciaglosc = np.array(['*' * 200 for _ in range(int(len(content)))])
+        mwe_with_nieciaglosc = np.array(
+            ['*' * 200 for _ in range(int(len(content)))])
         print('Initializing mwe_without_nieciaglosc list')
-        mwe_without_nieciaglosc = np.array(['*' * 200 for _ in range(int(len(content)))])
+        mwe_without_nieciaglosc = np.array(
+            ['*' * 200 for _ in range(int(len(content)))])
         print('Initializing mwe_with_and_without_nieciaglosc list')
-        mwe_with_and_without_nieciaglosc = np.array([('*' * 20, '*' * 50, '*' * 200) for _ in range(int(len(content)))])
+        mwe_with_and_without_nieciaglosc = np.array([
+            ('*' * 20, '*' * 50, '*' * 200) for _ in range(int(len(content)))
+        ])
         print('Finished initializing lists...')
         mwe_with_nieciaglosc_count = 0
         mwe_without_nieciaglosc_count = 0
@@ -32,24 +36,31 @@ def get_mwes_with_nieciaglosc_and_without_it(filepath):
 
                 if mwe in mwe_without_nieciaglosc:
                     print(f'New mwe with and without nieciągłość: {mwe}')
-                    mwe_with_and_without_nieciaglosc[mwe_with_and_without_nieciaglosc_count] = (measure_value, ' + '.join(mwe_types), mwe)
+                    mwe_with_and_without_nieciaglosc[
+                        mwe_with_and_without_nieciaglosc_count] = (
+                            measure_value, ' + '.join(mwe_types), mwe)
                     mwe_with_and_without_nieciaglosc_count += 1
 
             if 'nieciągłość' not in mwe_types:
 
                 if mwe not in mwe_without_nieciaglosc:
-                    mwe_without_nieciaglosc[mwe_without_nieciaglosc_count] = mwe
+                    mwe_without_nieciaglosc[
+                        mwe_without_nieciaglosc_count] = mwe
                     mwe_without_nieciaglosc_count += 1
 
                 if mwe in mwe_with_nieciaglosc:
                     print(f'New mwe with and without nieciągłość: {mwe}')
-                    mwe_with_and_without_nieciaglosc[mwe_with_and_without_nieciaglosc_count] = (measure_value, ' + '.join(mwe_types), mwe)
+                    mwe_with_and_without_nieciaglosc[
+                        mwe_with_and_without_nieciaglosc_count] = (
+                            measure_value, ' + '.join(mwe_types), mwe)
                     mwe_with_and_without_nieciaglosc_count += 1
 
             if i % 1000000 == 0 and i > 0:
                 print(f'Processed {i} files...')
 
-        mwe_with_and_without_nieciaglosc = np.array(elem for elem in mwe_with_and_without_nieciaglosc if elem != ('*' * 20, '*' * 50, '*' * 200))
+        mwe_with_and_without_nieciaglosc = np.array(
+            elem for elem in mwe_with_and_without_nieciaglosc
+            if elem != ('*' * 20, '*' * 50, '*' * 200))
 
         return mwe_with_and_without_nieciaglosc
 

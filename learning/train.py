@@ -114,7 +114,8 @@ def write_line_to_file(filepath, line):
         f.write(f'{line}\n')
 
 
-def get_evaluation_report(y_true, y_pred, full_df, predictions_filepath, evaluation_filepath):
+def get_evaluation_report(y_true, y_pred, full_df, predictions_filepath,
+                          evaluation_filepath):
     test_df = full_df[full_df['dataset_type'] == 'test']
 
     columns_list = [
@@ -127,18 +128,21 @@ def get_evaluation_report(y_true, y_pred, full_df, predictions_filepath, evaluat
 
     target_names = ['Incorrect MWE', 'Correct MWE']
 
-    print(f'Saved prediction results to: {predictions_filepath}')
+    print(f'Saving prediction results to: {predictions_filepath}')
 
     report_df.to_csv(predictions_filepath, sep='\t', index=False)
 
-    eval_report = classification_report(
-        y_true, y_pred, target_names=target_names, output_dict=True)
+    eval_report = classification_report(y_true,
+                                        y_pred,
+                                        target_names=target_names,
+                                        output_dict=True,
+                                        digits=4)
 
     eval_df = pd.DataFrame(eval_report).transpose()
 
-    print(f'Saved evaluation results to: {evaluation_filepath}')
+    print(f'Saving evaluation results to: {evaluation_filepath}')
 
-    eval_df.to_csv(f'{evaluation_filepath}', sep='\t', index=False)
+    eval_df.to_csv(f'{evaluation_filepath}', sep='\t')
 
     print(classification_report(y_true, y_pred, target_names=target_names))
 
@@ -292,8 +296,6 @@ def list_to_type(list_to_convert, type_func):
 
 
 def main(args):
-    if 'kgr10' in args:
-        storage_dir = os.path.join('storage', 'kgr10')
 
     if 'parseme' in args and 'transformer_embeddings' in args:
         data_dir = os.path.join('storage', 'parseme', 'pl', 'embeddings',
@@ -303,9 +305,22 @@ def main(args):
         data_dir = os.path.join('storage', 'parseme', 'pl', 'embeddings',
                                 'fasttext_dupplicates')
 
+    if 'kgr10' in args:
+        storage_dir = os.path.join('storage', 'kgr10')
+
     if 'kgr10' in args and 'transformer_embeddings' in args:
-        data_dir = os.path.join('storage', 'kgr10',
-                                'transformer_embeddings_dataset')
+        data_dir = os.path.join('storage', 'kgr10', 'embeddings',
+                                'transformer')
+
+        train_filepath = os.path.join(
+            data_dir,
+            'sentences_containing_mwe_from_kgr10_group_0_embeddings_1_layers_incomplete_mwe_in_sent_with_splits.tsv'
+        )
+
+        full_data_filepath = os.path.join(
+            data_dir,
+            'sentences_containing_mwe_from_kgr10_group_0_embeddings_1_layers_incomplete_mwe_in_sent_with_splits.tsv'
+        )
 
     if 'parseme' in args:
         storage_dir = os.path.join('storage', 'parseme', 'pl')
@@ -314,222 +329,102 @@ def main(args):
         full_data_filepath = os.path.join(data_dir,
                                           'parseme_pl_embeddings.tsv')
 
-        pred_results_dir = os.path.join(
-            *data_dir.split('/')[:-2], 'prediction_results')
+    pred_results_dir = os.path.join(*data_dir.split('/')[:-2],
+                                    'prediction_results')
 
-        if not os.path.exists(pred_results_dir):
-            os.mkdir(pred_results_dir)
+    if not os.path.exists(pred_results_dir):
+        os.mkdir(pred_results_dir)
 
-        pred_results_filepath = os.path.join(pred_results_dir,
-                                             'prediction_results_' + '_'.join(args) + '.tsv')
+    pred_results_filepath = os.path.join(
+        pred_results_dir, 'prediction_results_' + '_'.join(args) + '.tsv')
 
-        eval_results_dir = os.path.join(
-            *data_dir.split('/')[:-2], 'evaluation_results')
+    eval_results_dir = os.path.join(*data_dir.split('/')[:-2],
+                                    'evaluation_results')
 
-        if not os.path.exists(eval_results_dir):
-            os.mkdir(eval_results_dir)
+    if not os.path.exists(eval_results_dir):
+        os.mkdir(eval_results_dir)
 
-        eval_results_filepath = os.path.join(eval_results_dir,
-                                             'evaluation_results_' + '_'.join(args) + '.tsv')
+    eval_results_filepath = os.path.join(
+        eval_results_dir, 'evaluation_results_' + '_'.join(args) + '.tsv')
 
-        if 'smote' in args:
-            train_filepath = os.path.join(
-                data_dir, 'parseme_pl_embeddings_train_smote.tsv')
+    if 'smote' in args:
+        train_filepath = os.path.join(data_dir,
+                                      'parseme_pl_embeddings_train_smote.tsv')
 
-        if 'borderline_smote' in args:
-            train_filepath = os.path.join(
-                data_dir, 'parseme_pl_embeddings_train_borderline.tsv')
+    if 'borderline_smote' in args:
+        train_filepath = os.path.join(
+            data_dir, 'parseme_pl_embeddings_train_borderline.tsv')
 
-        if 'svm_smote' in args:
-            train_filepath = os.path.join(
-                data_dir, 'parseme_pl_embeddings_train_svm.tsv')
+    if 'svm_smote' in args:
+        train_filepath = os.path.join(data_dir,
+                                      'parseme_pl_embeddings_train_svm.tsv')
 
-        if 'adasyn' in args:
-            train_filepath = os.path.join(
-                data_dir, 'parseme_pl_embeddings_train_adasyn.tsv')
+    if 'adasyn' in args:
+        train_filepath = os.path.join(
+            data_dir, 'parseme_pl_embeddings_train_adasyn.tsv')
 
-        print('Loading data...')
-        train_df = pd.read_csv(train_filepath, sep='\t')
-        full_df = pd.read_csv(full_data_filepath, sep='\t')
+    print('Loading data...')
+    train_df = pd.read_csv(train_filepath, sep='\t', on_bad_lines='skip')
+    #    nrows=100)
+    full_df = pd.read_csv(full_data_filepath, sep='\t', on_bad_lines='skip')
+    #   nrows=100)
 
-        if ('smote' in args or 'borderline_smote' in args
-                or 'svm_smote' in args or 'adasyn' in args):
-            X_train = train_df['combined_embedding'].tolist()
+    if ('smote' in args or 'borderline_smote' in args or 'svm_smote' in args
+            or 'adasyn' in args):
+        X_train = train_df['combined_embedding'].tolist()
 
-            y_train = train_df['is_correct'].tolist()
+        y_train = train_df['is_correct'].tolist()
 
-        else:
-            X_train = train_df[train_df['dataset_type'] ==
-                               'train']['combined_embedding'].tolist()
+    else:
+        X_train = train_df[train_df['dataset_type'] ==
+                           'train']['combined_embedding'].tolist()
 
-            y_train = train_df[train_df['dataset_type'] ==
-                               'train']['is_correct'].tolist()
+        y_train = train_df[train_df['dataset_type'] ==
+                           'train']['is_correct'].tolist()
 
-        X_train = np.array([
-            np.array([float(elem) for elem in embedding.split(',')])
-            for embedding in X_train
-        ])
+    X_train = np.array([
+        np.array([float(elem) for elem in embedding.split(',')])
+        for embedding in X_train
+    ])
 
-        y_train = np.array([int(elem) for elem in y_train])
+    y_train = np.array([int(elem) for elem in y_train])
 
-        X_dev = full_df[full_df['dataset_type'] ==
-                        'dev']['combined_embedding'].tolist()
+    X_dev = full_df[full_df['dataset_type'] ==
+                    'dev']['combined_embedding'].tolist()
 
-        X_dev = np.array([
-            np.array([float(elem) for elem in embedding.split(',')])
-            for embedding in X_dev
-        ])
+    X_dev = np.array([
+        np.array([float(elem) for elem in embedding.split(',')])
+        for embedding in X_dev
+    ])
 
-        y_dev = full_df[full_df['dataset_type'] ==
-                        'dev']['is_correct'].tolist()
+    y_dev = full_df[full_df['dataset_type'] == 'dev']['is_correct'].tolist()
 
-        y_dev = np.array([int(elem) for elem in y_dev])
+    y_dev = np.array([int(elem) for elem in y_dev])
 
-        X_test = full_df[full_df['dataset_type'] ==
-                         'test']['combined_embedding'].tolist()
+    X_test = full_df[full_df['dataset_type'] ==
+                     'test']['combined_embedding'].tolist()
 
-        X_test = np.array([
-            np.array([float(elem) for elem in embedding.split(',')])
-            for embedding in X_test
-        ])
+    X_test = np.array([
+        np.array([float(elem) for elem in embedding.split(',')])
+        for embedding in X_test
+    ])
 
-        y_test = full_df[full_df['dataset_type'] ==
-                         'test']['is_correct'].tolist()
+    y_test = full_df[full_df['dataset_type'] == 'test']['is_correct'].tolist()
 
-        y_test = np.array([int(elem) for elem in y_test])
+    y_test = np.array([int(elem) for elem in y_test])
 
-        if 'undersampling' in args:
-            undersample = RandomUnderSampler(sampling_strategy='majority')
-            X_train, y_train = undersample.fit_resample(X_train, y_train)
+    if 'undersampling' in args:
+        undersample = RandomUnderSampler(sampling_strategy='majority')
+        X_train, y_train = undersample.fit_resample(X_train, y_train)
 
-        if 'diff_vector_only' in args:
-            X_train = np.array([embedding[768 * 2:] for embedding in X_train])
-            X_test = np.array([embedding[768 * 2:] for embedding in X_test])
-
-    if 'kgr10' in args and 'transformer_embeddings' in args:
-        print('Loading train data...')
-        X_train = preprocess_combined_embeddings(
-            load_list_of_lists(
-                os.path.join(data_dir,
-                             "transformer_fasttext_diff_vectors_X_train.tsv"),
-                '\t'))
-        print(
-            f'len of first sample in train set after preprocessing: {len(X_train[0])}'
-        )
-        X_train = np.array([elem[301:] for elem in X_train])
-        print(
-            f'len of first sample in train set after preprocessing: {len(X_train[0])}'
-        )
-        y_train = list_to_type(
-            load_list(
-                os.path.join(data_dir, "fasttext_transformer_y_train.csv")),
-            float)
-
-        print('Loading test data...')
-        X_test = preprocess_combined_embeddings(
-            load_list_of_lists(
-                os.path.join(data_dir,
-                             "transformer_fasttext_diff_vectors_X_test.tsv"),
-                '\t'))
-        X_test = np.array([elem[301:] for elem in X_test])
-        y_test = list_to_type(
-            load_list(os.path.join(data_dir,
-                                   "fasttext_transformer_y_test.csv")), float)
-
-        print('Loading indices files...')
-        indices_train = list_to_type(
-            load_list(
-                os.path.join(data_dir,
-                             "fasttext_transformer_train_indices_list.csv")),
-            int)
-        indices_test = list_to_type(
-            load_list(
-                os.path.join(data_dir,
-                             "fasttext_transformer_test_indices_list.csv")),
-            int)
-
-        print('Loading mwe dict...')
-        mwe_dict = load_dict(os.path.join(data_dir, 'mwe_dict.pkl'))
-
-        print('Loading mwe list...')
-        mwe_list = load_list(os.path.join(data_dir, 'mwe_list.csv'))
-
-        print('Loading mwe metadata...')
-        mwe_metadata = load_list_of_lists(
-            os.path.join(data_dir, 'mwe_metadata.csv'), ',')
-
-    # elif 'fasttext_transformer_embeddings' in args:
-    #     data_dir = 'transformer_embeddings_dataset'
-    #
-    #     print('Loading train data...')
-    #     X_train = preprocess_combined_embeddings(
-    #         load_list_of_lists(os.path.join(data_dir, "transformer_fasttext_diff_vectors_X_train.tsv"), '\t'))
-    #     y_train = list_to_type(load_list(os.path.join(data_dir, "fasttext_transformer_y_train.csv")), float)
-    #
-    #     print('Loading test data...')
-    #     X_test = preprocess_combined_embeddings(
-    #         load_list_of_lists(os.path.join(data_dir, "transformer_fasttext_diff_vectors_X_test.tsv"), '\t'))
-    #     y_test = list_to_type(load_list(os.path.join(data_dir, "fasttext_transformer_y_test.csv")), float)
-    #
-    #     print('Loading indices files...')
-    #     indices_train = list_to_type(load_list(os.path.join(data_dir, "fasttext_transformer_train_indices_list.csv")), int)
-    #     indices_test = list_to_type(load_list(os.path.join(data_dir, "fasttext_transformer_test_indices_list.csv")), int)
-    #
-    #     print('Loading mwe dict...')
-    #     mwe_dict = load_dict(os.path.join(data_dir, 'mwe_dict.pkl'))
-    #
-    #     print('Loading mwe list...')
-    #     mwe_list = load_list(os.path.join(data_dir, 'mwe_list.csv'))
-    #
-    #     print('Loading mwe metadata...')
-    #     mwe_metadata = load_list_of_lists(os.path.join(data_dir, 'mwe_metadata.csv'), ',')
-    #
-    # elif 'fasttext_embeddings' in args:
-    #     data_dir = 'transformer_embeddings_dataset'
-    #
-    #     print('Loading train data...')
-    #     X_train = preprocess_combined_embeddings(
-    #         load_list_of_lists(os.path.join(data_dir, "transformer_fasttext_diff_vectors_X_train.tsv"), '\t'))
-    #     print(f'len of first sample in train set after preprocessing: {len(X_train[0])}')
-    #     X_train = np.array([elem[1:301] for elem in X_train])
-    #     print(f'len of first sample in train set after preprocessing: {len(X_train[0])}')
-    #     y_train = list_to_type(load_list(os.path.join(data_dir, "fasttext_transformer_y_train.csv")), float)
-    #
-    #     print('Loading test data...')
-    #     X_test = preprocess_combined_embeddings(
-    #         load_list_of_lists(os.path.join(data_dir, "transformer_fasttext_diff_vectors_X_test.tsv"), '\t'))
-    #     X_test = np.array([elem[1:301] for elem in X_test])
-    #     y_test = list_to_type(load_list(os.path.join(data_dir, "fasttext_transformer_y_test.csv")), float)
-    #
-    #     print('Loading indices files...')
-    #     indices_train = list_to_type(load_list(os.path.join(data_dir, "fasttext_transformer_train_indices_list.csv")), int)
-    #     indices_test = list_to_type(load_list(os.path.join(data_dir, "fasttext_transformer_test_indices_list.csv")), int)
-    #
-    #     print('Loading mwe dict...')
-    #     mwe_dict = load_dict(os.path.join(data_dir, 'mwe_dict.pkl'))
-    #
-    #     print('Loading mwe list...')
-    #     mwe_list = load_list(os.path.join(data_dir, 'mwe_list.csv'))
-    #
-    #     print('Loading mwe metadata...')
-    #     mwe_metadata = load_list_of_lists(os.path.join(data_dir, 'mwe_metadata.csv'), ',')
-    #
-    # else:
-    #     dataset_filepath = 'mwe_dataset.npy'
-    #     # dataset_filepath = 'mwe_dataset_cbow.npy'
-    #     # dataset_filepath = 'mwe_dataset_domain_balanced.npy'  # domain-balanced dataset
-    #
-    #     X_train, X_test, y_train, y_test = load_data(dataset_filepath)
-    #
-    #     if 'diff_vector_only' in args:
-    #         X_train = np.array([embedding[300 * 2:] for embedding in X_train])
-    #         X_test = np.array([embedding[300 * 2:] for embedding in X_test])
+    if 'diff_vector_only' in args:
+        X_train = np.array([embedding[768 * 2:] for embedding in X_train])
+        X_test = np.array([embedding[768 * 2:] for embedding in X_test])
 
     if 'cnn' in args:
         X_train = np.array(X_train)
         X_dev = np.array(X_dev)
         X_test = np.array(X_test)
-        print(f'X_train shape: {X_train.shape}')
         X_train = np.reshape(X_train, [X_train.shape[0], X_train.shape[1], 1])
         X_dev = np.reshape(X_dev, [X_dev.shape[0], X_dev.shape[1], 1])
         X_test = np.reshape(X_test, [X_test.shape[0], X_train.shape[1], 1])
@@ -585,9 +480,11 @@ def main(args):
                 class_tresholds = [first_class_treshold, second_class_treshold]
 
                 y_pred = get_treshold_voting(y_pred, y_pred_max_probs, full_df,
-                                             class_tresholds, pred_results_filepath)
+                                             class_tresholds,
+                                             pred_results_filepath)
 
-                get_evaluation_report(y_test, y_pred, full_df, pred_results_filepath,
+                get_evaluation_report(y_test, y_pred, full_df,
+                                      pred_results_filepath,
                                       eval_results_filepath)
 
     else:
