@@ -32,6 +32,10 @@ results/
 # unpacked archives
 storage/bnc/raw_data/dict_lexical_items/
 
+# British National Corpus (BNC)
+storage/bnc/raw_data/BNC
+storage/bnc/raw_data/bnc.zip
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
