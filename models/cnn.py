@@ -11,17 +11,18 @@ from tensorflow.keras.callbacks import ModelCheckpoint, EarlyStopping
 def create_cnn_model(input_shape=(900, 1)):
     model = models.Sequential()
 
-    model.add(layers.Conv1D(256, 5, activation='relu',
-                            input_shape=input_shape))  # 1024
+    model.add(
+        layers.Conv1D(1024, 5, activation='relu',
+                      input_shape=input_shape))  # 1024
     model.add(layers.MaxPooling1D(3))
     model.add(layers.Dropout(0.2))
-    model.add(layers.Conv1D(128, 5, activation='relu'))  # 512
+    model.add(layers.Conv1D(512, 5, activation='relu'))  # 512
     model.add(layers.MaxPooling1D(3))
     model.add(layers.Dropout(0.2))
     # model.add(layers.Conv1D(256, 5, activation='relu'))
     # model.add(layers.MaxPooling1D(3))
     # model.add(layers.Dropout(0.2))
-    model.add(layers.Conv1D(64, 5, activation='relu'))  # 256
+    model.add(layers.Conv1D(256, 5, activation='relu'))  # 256
     model.add(layers.GlobalMaxPooling1D())
     model.add(layers.Flatten())
     model.add(layers.Dense(2, activation='softmax'))
@@ -74,8 +75,7 @@ def get_dir_num(dir_path):
 
     if len(glob.glob(os.path.join(dir_path, 'checkpoint_*'))) != 0:
 
-        for filepath in glob.glob(
-                os.path.join(dir_path, 'checkpoints', 'checkpoint_*')):
+        for filepath in glob.glob(os.path.join(dir_path, 'checkpoint_*')):
             if int(filepath.split('_')[-1]) > last_dir_num:
                 last_dir_num = int(filepath.split('_')[-1])
 
@@ -124,6 +124,8 @@ def train_cnn_model(model, X_train, y_train, X_dev, y_dev, epoch_num,
         callbacks=[model_checkpoint_callback])
 
     best_checkpoint_filepath = find_best_checkpoint(dir_name)
+
+    print(f'Best checkpoint file path: {best_checkpoint_filepath}')
 
     # The model weights (that are considered the best) are loaded into the model.
     model.load_weights(best_checkpoint_filepath)

@@ -1,4 +1,5 @@
 import csv
+import datetime
 import os
 import pickle as pkl
 import re
@@ -19,6 +20,10 @@ from scipy import stats as s
 from sklearn.metrics import classification_report
 from sklearn.model_selection import train_test_split
 from tensorflow import one_hot
+
+
+def get_curr_time():
+    return f'{datetime.datetime.now().strftime("%H:%M:%S")}'
 
 
 def load_data(dataset_file):
@@ -61,42 +66,6 @@ def get_mwe(mwe_file, idx_list):
                 mwe_dict[mwe] = np.append(mwe_dict[mwe], mwe_ind)
 
         return mwe_list, mwe_dict, mwe_metadata
-
-
-def load_transformer_embeddings_data(dataset_file, mwe_file):
-    print(f'Reading file: {dataset_file.split("/")[-1]}')
-    df = pd.read_csv(dataset_file, sep='\t', header=None)
-
-    print('Generating embeddings list...')
-    df[4] = df[0] + ',' + df[1] + ',' + df[2]
-
-    embeddings_list = [elem.split(',') for elem in df[4].tolist()]
-
-    correct_idx_list = np.array([
-        ind for ind, sentence in enumerate(embeddings_list)
-        if 'tensor(nan)' not in sentence
-    ])
-
-    embeddings_list = [
-        ([float(re.findall(r"[-+]?\d*\.\d+|\d+", val)[0])
-          for val in sentence], label)
-        for sentence, label in zip(embeddings_list, df[3].tolist())
-        if 'tensor(nan)' not in sentence
-    ]
-
-    mwe_list, mwe_dict, mwe_metadata = get_mwe(mwe_file, correct_idx_list)
-
-    X = np.array([elem[0] for elem in embeddings_list])
-
-    y = np.array([elem[1] for elem in embeddings_list])
-    y = y.astype(int)
-
-    indices = np.arange(X.shape[0])
-
-    X_train, X_test, y_train, y_test, indices_train, indices_test = train_test_split(
-        X, y, indices, test_size=0.20, random_state=42)
-
-    return X_train, X_test, y_train, y_test, indices_train, indices_test, mwe_list, mwe_dict, mwe_metadata
 
 
 def create_empty_file(filepath):
@@ -237,64 +206,6 @@ def get_treshold_voting(y_pred, y_pred_max_probs, full_df, class_tresholds,
     return y_majority_pred
 
 
-def save_list_of_lists(filepath, list_of_lists):
-    with open(filepath, "w") as f:
-        wr = csv.writer(f)
-        wr.writerows(list_of_lists)
-
-
-def save_list(filepath, list_to_save):
-    list_string = ','.join([str(elem) for elem in list_to_save])
-
-    with open(filepath, "w") as f:
-        f.write(f'{list_string}\n')
-
-
-def save_dict(filepath, dict_to_save):
-    with open(filepath, 'wb') as f:
-        pkl.dump(dict_to_save, f)
-
-
-def load_list_of_lists(filepath, sep):
-    with open(filepath, 'r') as f:
-        loaded_list_of_lists = np.array([
-            np.array([elem for elem in row.strip().split(sep)])
-            for row in f.readlines()
-        ])
-
-        return loaded_list_of_lists
-
-
-def preprocess_combined_embeddings(list_of_lists):
-    converted_list_of_lists = np.array([
-        np.array([float(elem) for elem in row[1:]])
-        for row in list_of_lists[1:]
-    ])
-
-    return converted_list_of_lists
-
-
-def list_of_lists_to_float(list_of_lists):
-    converted_list_of_lists = np.array(
-        [np.array([float(elem) for elem in row]) for row in list_of_lists])
-
-    return converted_list_of_lists
-
-
-def load_list(filepath):
-    with open(filepath, 'r') as f:
-        loaded_list = np.array(
-            [elem for elem in f.readline().strip().split(',')])
-
-        return loaded_list
-
-
-def list_to_type(list_to_convert, type_func):
-    converted_list = np.array([type_func(elem) for elem in list_to_convert])
-
-    return converted_list
-
-
 def main(args):
 
     if 'parseme' in args and 'transformer_embeddings' in args:
@@ -363,50 +274,61 @@ def main(args):
         train_filepath = os.path.join(
             data_dir, 'parseme_pl_embeddings_train_adasyn.tsv')
 
-    print('Loading data...')
+    print(f'{get_curr_time()} : Loading data...')
     train_df = pd.read_csv(train_filepath, sep='\t', on_bad_lines='skip')
     #    nrows=100)
     full_df = pd.read_csv(full_data_filepath, sep='\t', on_bad_lines='skip')
     #   nrows=100)
-
+    print(f'{get_curr_time()} : Getting train data...')
     if ('smote' in args or 'borderline_smote' in args or 'svm_smote' in args
             or 'adasyn' in args):
+        num_train_samples = -1
+
         X_train = train_df['combined_embedding'].tolist()
 
         y_train = train_df['is_correct'].tolist()
 
     else:
+        num_train_samples = 200000
+
         X_train = train_df[train_df['dataset_type'] ==
                            'train']['combined_embedding'].tolist()
 
         y_train = train_df[train_df['dataset_type'] ==
                            'train']['is_correct'].tolist()
 
+    print(f'{get_curr_time()} : Ommiting difference vectors...')
     X_train = np.array([
-        np.array([float(elem) for elem in embedding.split(',')])
-        for embedding in X_train
+        np.array([
+            float(elem) for elem in (embedding.split(',')[:768 * 2] +
+                                     embedding.split(',')[768 * 3:])
+        ]) for embedding in X_train[:num_train_samples]
     ])
 
-    y_train = np.array([int(elem) for elem in y_train])
-
+    y_train = np.array([int(elem) for elem in y_train[:num_train_samples]])
+    print(f'{get_curr_time()} : Getting dev data...')
     X_dev = full_df[full_df['dataset_type'] ==
                     'dev']['combined_embedding'].tolist()
 
     X_dev = np.array([
-        np.array([float(elem) for elem in embedding.split(',')])
-        for embedding in X_dev
+        np.array([
+            float(elem) for elem in (embedding.split(',')[:768 * 2] +
+                                     embedding.split(',')[768 * 3:])
+        ]) for embedding in X_dev
     ])
 
     y_dev = full_df[full_df['dataset_type'] == 'dev']['is_correct'].tolist()
 
     y_dev = np.array([int(elem) for elem in y_dev])
-
+    print(f'{get_curr_time()} : Getting test data...')
     X_test = full_df[full_df['dataset_type'] ==
                      'test']['combined_embedding'].tolist()
 
     X_test = np.array([
-        np.array([float(elem) for elem in embedding.split(',')])
-        for embedding in X_test
+        np.array([
+            float(elem) for elem in (embedding.split(',')[:768 * 2] +
+                                     embedding.split(',')[768 * 3:])
+        ]) for embedding in X_test
     ])
 
     y_test = full_df[full_df['dataset_type'] == 'test']['is_correct'].tolist()
@@ -422,6 +344,7 @@ def main(args):
         X_test = np.array([embedding[768 * 2:] for embedding in X_test])
 
     if 'cnn' in args:
+        print(f'{get_curr_time()} : Converting data for CNN model...')
         X_train = np.array(X_train)
         X_dev = np.array(X_dev)
         X_test = np.array(X_test)
@@ -437,7 +360,7 @@ def main(args):
         else:
             eval_only = False
             model_path = None
-
+        print(f'{get_curr_time()} : Training CNN model...')
         y_pred_probs = get_cnn_model_pred(X_train,
                                           y_train,
                                           X_dev,
@@ -449,7 +372,7 @@ def main(args):
                                           input_shape=(X_train.shape[1], 1))
 
         y_pred_max_probs = [max(probs) for probs in y_pred_probs]
-
+        print(f'{get_curr_time()} : Getting predictions on test set...')
         y_pred = [np.argmax(probs) for probs in y_pred_probs]
 
     elif 'lr' in args:
@@ -463,9 +386,11 @@ def main(args):
         y_pred_max_probs = [max(probs) for probs in y_pred_probs]
 
     if 'majority_voting' in args:
+        print(f'{get_curr_time()} : Generating majority voting results...')
         y_pred = get_majority_voting(y_pred, full_df, pred_results_filepath)
 
     if 'weighted_voting' in args:
+        print(f'{get_curr_time()} : Generating weighted voting results...')
         y_pred = get_weighted_voting(y_pred, y_pred_max_probs, full_df,
                                      pred_results_filepath)
 
@@ -482,12 +407,16 @@ def main(args):
                 y_pred = get_treshold_voting(y_pred, y_pred_max_probs, full_df,
                                              class_tresholds,
                                              pred_results_filepath)
-
+                print(
+                    f'{get_curr_time()} : Generating and saving evaluation results...'
+                )
                 get_evaluation_report(y_test, y_pred, full_df,
                                       pred_results_filepath,
                                       eval_results_filepath)
 
     else:
+        print(
+            f'{get_curr_time()} : Generating and saving evaluation results...')
         get_evaluation_report(y_test, y_pred, full_df, pred_results_filepath,
                               eval_results_filepath)
 

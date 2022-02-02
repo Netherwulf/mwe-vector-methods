@@ -1,4 +1,5 @@
 import csv
+import datetime
 import os
 import pickle as pkl
 import re
@@ -69,6 +70,21 @@ def load_transformer_embeddings_data(dataset_file):
     return df
 
 
+def get_curr_time():
+    return f'{datetime.datetime.now().strftime("%H:%M:%S")}'
+
+
+def save_mwe_list(embeddings_list, labels_list, filepath):
+    with open(filepath, 'w') as out_file:
+        out_file.write('\t'.join(['combined_embedding', 'is_correct']) + '\n')
+
+        for emb_ind, emb in enumerate(embeddings_list):
+            out_file.write('\t'.join([
+                '\t'.join([str(elem for elem in emb)]),
+                str(labels_list[emb_ind])
+            ]) + '\n')
+
+
 def get_smote_oversampler(smote_key):
     smote_dict = {
         'smote': SMOTE(),
@@ -80,54 +96,63 @@ def get_smote_oversampler(smote_key):
     return smote_dict[smote_key]
 
 
-def generate_smote_datasets(filepath):
+def generate_smote_datasets(filepath, num_samples):
     result_dir_name = os.path.join(os.path.join(*filepath.split('/')[:-1]))
 
     file_name = filepath.split('/')[-1].split('.')[0]
-
+    print(f'{get_curr_time()} : Loading data...')
     df = pd.read_csv(filepath, sep='\t', on_bad_lines='skip')
 
     # SMOTE, Borderline SMOTE, SVM-SMOTE and ADASYN dataset variants
     for smote_type in ['smote', 'borderline', 'svm', 'adasyn'][2:-1]:
-        print(f'Generating {smote_type} dataset variant...')
+        print(
+            f'{get_curr_time()} : Generating {smote_type} dataset variant...')
+
         oversample = get_smote_oversampler(smote_type)
-
-        X_train = df[(df['dataset_type'] == 'train') | (
-            df['dataset_type'] == 'null')]['combined_embedding'].tolist()
-
+        print(f'{get_curr_time()} : Getting train samples...')
+        X_train = df[(df['dataset_type'] == 'train') |
+                     (df['dataset_type'] == 'null'
+                      )]['combined_embedding'].tolist()[:num_samples]
+        print(f'{get_curr_time()} : Ommiting difference vectors...')
         X_train = np.array([
-            np.array([float(elem) for elem in embedding.split(',')])
-            for embedding in X_train
+            np.array([
+                float(elem) for elem in (embedding.split(',')[:768 * 2] +
+                                         embedding.split(',')[768 * 3:])
+            ]) for embedding in X_train
         ])
-
-        y_train = df[(df['dataset_type'] == 'train') |
-                     (df['dataset_type'] == 'null')]['is_correct'].tolist()
-
+        print(f'{get_curr_time()} : Getting labels...')
+        y_train = df[(df['dataset_type'] == 'train') | (
+            df['dataset_type'] == 'null')]['is_correct'].tolist()[:num_samples]
+        print(f'{get_curr_time()} : Generating synthetic samples...')
         transformed_X_train, transformed_y_train = oversample.fit_resample(
             X_train, y_train)
+        # print(f'{get_curr_time()} : Converting embeddings to string...')
+        # transformed_X_train = np.array([
+        #     ','.join([str(elem) for elem in embedding])
+        #     for embedding in transformed_X_train
+        # ])
 
-        transformed_X_train = np.array([
-            ','.join([str(elem) for elem in embedding])
-            for embedding in transformed_X_train
-        ])
-
-        transformed_y_train = np.array(
-            [str(label) for label in transformed_y_train])
-
-        transformed_df = pd.DataFrame({
-            'combined_embedding': transformed_X_train,
-            'is_correct': transformed_y_train
-        })
-
-        transformed_df.to_csv(os.path.join(result_dir_name,
-                                           f'{file_name}_{smote_type}.tsv'),
-                              sep='\t',
-                              index=False)
+        # transformed_y_train = np.array(
+        #     [str(label) for label in transformed_y_train])
+        # print(f'{get_curr_time()} : Generating dataframe...')
+        # transformed_df = pd.DataFrame({
+        #     'combined_embedding': transformed_X_train,
+        #     'is_correct': transformed_y_train
+        # })
+        print(f'{get_curr_time()} : Saving dataframe...')
+        save_mwe_list(
+            transformed_X_train, transformed_y_train,
+            os.path.join(result_dir_name, f'{file_name}_{smote_type}.tsv'))
+        # transformed_df.to_csv(os.path.join(result_dir_name,
+        #                                    f'{file_name}_{smote_type}.tsv'),
+        #                       sep='\t',
+        #                       index=False)
 
 
 def main(args):
+    num_samples = 200000
     for filepath in args:
-        generate_smote_datasets(filepath)
+        generate_smote_datasets(filepath, num_samples)
 
 
 if __name__ == '__main__':
