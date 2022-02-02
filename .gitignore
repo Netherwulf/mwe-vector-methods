@@ -29,6 +29,9 @@ embeddings/
 # results dirs
 results/
 
+# unpacked archives
+storage/bnc/raw_data/dict_lexical_items/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
