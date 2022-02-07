@@ -123,29 +123,14 @@ def generate_smote_datasets(filepath, num_samples):
         print(f'{get_curr_time()} : Generating synthetic samples...')
         transformed_X_train, transformed_y_train = oversample.fit_resample(
             X_train, y_train)
-        # print(f'{get_curr_time()} : Converting embeddings to string...')
-        # transformed_X_train = np.array([
-        #     ','.join([str(elem) for elem in embedding])
-        #     for embedding in transformed_X_train
-        # ])
 
-        # transformed_y_train = np.array(
-        #     [str(label) for label in transformed_y_train])
-        # print(f'{get_curr_time()} : Generating dataframe...')
-        # transformed_df = pd.DataFrame({
-        #     'combined_embedding': transformed_X_train,
-        #     'is_correct': transformed_y_train
-        # })
         print(
             f'{get_curr_time()} : Saving dataframe to: {os.path.join(result_dir_name, f"{file_name}_{smote_type}.tsv")}'
         )
+
         save_mwe_list(
             transformed_X_train, transformed_y_train,
             os.path.join(result_dir_name, f'{file_name}_{smote_type}.tsv'))
-        # transformed_df.to_csv(os.path.join(result_dir_name,
-        #                                    f'{file_name}_{smote_type}.tsv'),
-        #                       sep='\t',
-        #                       index=False)
 
 
 def main(args):
