@@ -1,15 +1,12 @@
-import csv
 import datetime
 import os
-import pickle as pkl
-import re
 import sys
 
 import numpy as np
 import pandas as pd
 
 from imblearn.over_sampling import SMOTE, BorderlineSMOTE, SVMSMOTE, ADASYN
-from sklearn.model_selection import train_test_split
+# from sklearn.model_selection import train_test_split
 
 
 def load_transformer_embeddings_data(dataset_file):
@@ -80,7 +77,7 @@ def save_mwe_list(embeddings_list, labels_list, filepath):
 
         for emb_ind, emb in enumerate(embeddings_list):
             out_file.write('\t'.join([
-                '\t'.join([str(elem for elem in emb)]),
+                ','.join([str(elem) for elem in emb]),
                 str(labels_list[emb_ind])
             ]) + '\n')
 
@@ -139,7 +136,9 @@ def generate_smote_datasets(filepath, num_samples):
         #     'combined_embedding': transformed_X_train,
         #     'is_correct': transformed_y_train
         # })
-        print(f'{get_curr_time()} : Saving dataframe...')
+        print(
+            f'{get_curr_time()} : Saving dataframe to: {os.path.join(result_dir_name, f"{file_name}_{smote_type}.tsv")}'
+        )
         save_mwe_list(
             transformed_X_train, transformed_y_train,
             os.path.join(result_dir_name, f'{file_name}_{smote_type}.tsv'))

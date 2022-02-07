@@ -259,16 +259,20 @@ def main(args):
         eval_results_dir, 'evaluation_results_' + '_'.join(args) + '.tsv')
 
     if 'smote' in args:
-        train_filepath = os.path.join(data_dir,
-                                      'parseme_pl_embeddings_train_smote.tsv')
+        train_filepath = os.path.join(
+            data_dir,
+            'sentences_containing_mwe_from_kgr10_group_0_embeddings_1_layers_incomplete_mwe_in_sent_with_splits_smote.tsv'
+        )
 
     if 'borderline_smote' in args:
         train_filepath = os.path.join(
             data_dir, 'parseme_pl_embeddings_train_borderline.tsv')
 
     if 'svm_smote' in args:
-        train_filepath = os.path.join(data_dir,
-                                      'parseme_pl_embeddings_train_svm.tsv')
+        train_filepath = os.path.join(
+            data_dir,
+            'sentences_containing_mwe_from_kgr10_group_0_embeddings_1_layers_incomplete_mwe_in_sent_with_splits_svm.tsv'
+        )
 
     if 'adasyn' in args:
         train_filepath = os.path.join(
