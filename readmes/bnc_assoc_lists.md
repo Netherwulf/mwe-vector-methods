@@ -10,6 +10,6 @@ All lists are in the  <code>storage/bnc/preprocessed_data</code> directory.
     - list starts from the end of the 3rd quartile
     - filtered with structural part-of-speech templates
 
-3. Chi2 ($\chi^2$)
+3. Chi2
     - list starts from the end of the 3rd quartile
     - filtered with structural part-of-speech templates
