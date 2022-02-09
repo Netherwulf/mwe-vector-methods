@@ -378,7 +378,7 @@ def read_tsv(filepath, tokenizer, model, layers):
 
 
 def main(args):
-    model_name = 'allegro/herbert-base-cased'  # bet-base-cased
+    model_name = 'allegro/herbert-base-cased'  # bert-base-cased
     layers = 1  # layers = 4
 
     layers = [layer_num for layer_num in range(-1 * layers - 1, -1, 1)
