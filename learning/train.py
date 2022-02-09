@@ -286,8 +286,6 @@ def main(args):
     print(f'{get_curr_time()} : Getting train data...')
     if ('smote' in args or 'borderline_smote' in args or 'svm_smote' in args
             or 'adasyn' in args):
-        num_train_samples = -1
-
         X_train = train_df['combined_embedding'].tolist()
 
         y_train = train_df['is_correct'].tolist()
@@ -295,21 +293,29 @@ def main(args):
     else:
         num_train_samples = 200000
 
-        X_train = train_df[train_df['dataset_type'] ==
-                           'train']['combined_embedding'].tolist()
+        X_train = train_df[train_df['dataset_type'] == 'train'][
+            'combined_embedding'].tolist()[:num_train_samples]
 
         y_train = train_df[train_df['dataset_type'] ==
-                           'train']['is_correct'].tolist()
+                           'train']['is_correct'].tolist()[:num_train_samples]
 
-    print(f'{get_curr_time()} : Ommiting difference vectors...')
-    X_train = np.array([
-        np.array([
-            float(elem) for elem in (embedding.split(',')[:768 * 2] +
-                                     embedding.split(',')[768 * 3:])
-        ]) for embedding in X_train[:num_train_samples]
-    ])
+    if ('smote' in args or 'borderline_smote' in args or 'svm_smote' in args
+            or 'adasyn' in args):
+        X_train = np.array([
+            np.array([float(elem) for elem in embedding.split(',')])
+            for embedding in X_train
+        ])
 
-    y_train = np.array([int(elem) for elem in y_train[:num_train_samples]])
+    else:
+        print(f'{get_curr_time()} : Ommiting difference vectors...')
+        X_train = np.array([
+            np.array([
+                float(elem) for elem in (embedding.split(',')[:768 * 2] +
+                                         embedding.split(',')[768 * 3:])
+            ]) for embedding in X_train
+        ])
+
+    y_train = np.array([int(elem) for elem in y_train])
     print(f'{get_curr_time()} : Getting dev data...')
     X_dev = full_df[full_df['dataset_type'] ==
                     'dev']['combined_embedding'].tolist()
@@ -339,6 +345,11 @@ def main(args):
 
     y_test = np.array([int(elem) for elem in y_test])
 
+    print(f'X_train shape: {X_train.shape}',
+          f'X_dev shape: {X_dev.shape}',
+          f'X_test shape: {X_test.shape}',
+          sep='\n')
+
     if 'undersampling' in args:
         undersample = RandomUnderSampler(sampling_strategy='majority')
         X_train, y_train = undersample.fit_resample(X_train, y_train)
@@ -354,7 +365,7 @@ def main(args):
         X_test = np.array(X_test)
         X_train = np.reshape(X_train, [X_train.shape[0], X_train.shape[1], 1])
         X_dev = np.reshape(X_dev, [X_dev.shape[0], X_dev.shape[1], 1])
-        X_test = np.reshape(X_test, [X_test.shape[0], X_train.shape[1], 1])
+        X_test = np.reshape(X_test, [X_test.shape[0], X_test.shape[1], 1])
         y_train = one_hot(y_train, depth=2)
         y_dev = one_hot(y_dev, depth=2)
 
