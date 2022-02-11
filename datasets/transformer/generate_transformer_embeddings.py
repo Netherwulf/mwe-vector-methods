@@ -43,6 +43,7 @@ def get_hidden_states(encoded, offset_ids, model, layers):
     """Push input IDs through model. Stack and sum `layers` (last four by default).
        Select only those subword token outputs that belong to our word of interest
        and average them."""
+
     with torch.no_grad():
         output = model(**encoded)
 
@@ -221,23 +222,41 @@ def read_tsv(filepath, tokenizer, model, layers):
             # complete_mwe_in_sent = line_attributes[2]
 
             # PARSEME sentence list column mapping
-            mwe_type = line_attributes[0]
-            first_word = line_attributes[1]
-            first_word_id = int(line_attributes[3])
-            second_word = line_attributes[4]
-            second_word_id = int(line_attributes[6])
-            mwe = line_attributes[7]
-            sentence = line_attributes[9]
-            is_correct = str(line_attributes[10])
-            dataset_type = line_attributes[11]
+            # mwe_type = line_attributes[0]
+            # first_word = line_attributes[1]
+            # first_word_id = int(line_attributes[3])
+            # second_word = line_attributes[4]
+            # second_word_id = int(line_attributes[6])
+            # mwe = line_attributes[7]
+            # sentence = line_attributes[9]
+            # is_correct = str(line_attributes[10])
+            # dataset_type = line_attributes[11]
+            # complete_mwe_in_sent = '1'
+
+            # BNC sentence list column mapping
+            mwe_type = f'{line_attributes[0]}+{line_attributes[1]}'
+            first_word = line_attributes[2]
+            first_word_id = int(line_attributes[4])
+            second_word = line_attributes[3]
+            second_word_id = int(line_attributes[5])
+            mwe = f'{line_attributes[2]} {line_attributes[3]}'
+            sentence = line_attributes[6]
+            is_correct = '0'
+            dataset_type = 'null'
             complete_mwe_in_sent = '1'
 
             # complete MWE appears in the sentence
             if complete_mwe_in_sent == '1':
+                # try:
                 first_word_embedding = get_word_embedding(
                     sentence, first_word_id, tokenizer, model, layers)
                 second_word_embedding = get_word_embedding(
                     sentence, second_word_id, tokenizer, model, layers)
+                # except RuntimeError:
+                #     print(
+                #         f'embedding too short for words: {first_word} - {second_word}'
+                #     )
+                #     continue
 
                 mwe_embedding = [
                     (first_word_elem + second_word_elem) / 2
@@ -245,6 +264,7 @@ def read_tsv(filepath, tokenizer, model, layers):
                         first_word_embedding, second_word_embedding)
                 ]
 
+                # try:
                 first_word_only_embedding = substitute_and_embed(
                     sentence, [first_word_id, second_word_id], first_word,
                     tokenizer, model, layers)
@@ -252,6 +272,12 @@ def read_tsv(filepath, tokenizer, model, layers):
                 second_word_only_embedding = substitute_and_embed(
                     sentence, [first_word_id, second_word_id], second_word,
                     tokenizer, model, layers)
+
+                # except RuntimeError:
+                #     print(
+                #         f'embedding too short for sentence and words: {sentence} - {first_word} - {second_word}'
+                #     )
+                #     continue
 
                 first_word_mwe_emb_diff = [
                     str(mwe_elem - first_word_elem)
@@ -326,12 +352,19 @@ def read_tsv(filepath, tokenizer, model, layers):
 
             # only part of MWE appears in the sentence
             else:
+                # try:
                 first_word_embedding = get_word_embedding(
                     sentence, first_word_id, tokenizer, model, layers)
 
                 mwe_embedding = substitute_and_embed(sentence, [first_word_id],
                                                      mwe, tokenizer, model,
                                                      layers)
+
+                # except RuntimeError:
+                #     print(
+                #         f'embedding too short for sentence and id: {sentence} - {first_word_id}'
+                #     )
+                #     continue
 
                 first_word_mwe_emb_diff = [
                     str(mwe_elem - first_word_elem)
@@ -378,7 +411,7 @@ def read_tsv(filepath, tokenizer, model, layers):
 
 
 def main(args):
-    model_name = 'allegro/herbert-base-cased'  # bert-base-cased
+    model_name = 'xlm-roberta-base'  # allegro/herbert-base-cased
     layers = 1  # layers = 4
 
     layers = [layer_num for layer_num in range(-1 * layers - 1, -1, 1)
@@ -386,6 +419,11 @@ def main(args):
 
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     model = AutoModel.from_pretrained(model_name, output_hidden_states=True)
+
+    use_cuda = False
+
+    device = "cuda:0" if torch.cuda.is_available() and use_cuda else "cpu"
+    model = model.to(device)
 
     # lemmatizer = init_lemmatizer()
 

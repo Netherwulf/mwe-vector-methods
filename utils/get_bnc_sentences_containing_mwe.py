@@ -48,22 +48,24 @@ if __name__ == '__main__':
     # get sentences containing MWEs from the list
 
     # load MWE lists
-    incorr_lists_dir = os.path.join('storage', 'bnc', 'preprocessed_data')
+    mwe_lists_dir = os.path.join('storage', 'bnc', 'preprocessed_data')
 
     pmi_incorr_list_filename = 'bnc_pmi_greater_than_1_incorrect_mwe.tsv'
-    dice_incorr_list_filename = 'bnc_dice_end_of_3rd_quatile_incorrect_mwe.tsv'
+    dice_incorr_list_filename = 'bnc_dice_end_of_3rd_quartile_incorrect_mwe.tsv'
     chi2_incorr_list_filename = 'bnc_chi2_end_of_3rd_quartile_incorrect_mwe.tsv'
 
-    for incorr_list_filename in [
-            pmi_incorr_list_filename, dice_incorr_list_filename,
-            chi2_incorr_list_filename
-    ]:
+    corr_lists_filename = 'en_correct_mwe.tsv'
 
-        incorr_list_path = os.path.join(incorr_lists_dir, incorr_list_filename)
+    for mwe_list_filename in [
+            pmi_incorr_list_filename, dice_incorr_list_filename,
+            chi2_incorr_list_filename, corr_lists_filename
+    ][3:]:
+
+        mwe_list_path = os.path.join(mwe_lists_dir, mwe_list_filename)
         print(
-            f'{get_curr_time()} : Read incorrect MWE list for {incorr_list_filename.split("_")[1]} measure...'
+            f'{get_curr_time()} : Read incorrect MWE list for {mwe_list_filename.split("_")[1]} measure...'
         )
-        incorr_mwe_df = pd.read_csv(incorr_list_path, sep='\t')
+        incorr_mwe_df = pd.read_csv(mwe_list_path, sep='\t')
 
         incorr_mwe_list = [(str(first_word), str(second_word))
                            for first_word, second_word in zip(
@@ -71,11 +73,14 @@ if __name__ == '__main__':
                                incorr_mwe_df['second_word'].tolist())
                            if first_word != '’' and second_word != '’']
 
-        measure_name = incorr_list_filename.split('_')[1]
+        measure_name = mwe_list_filename.split('_')[1]
+
+        if measure_name != 'correct':
+            measure_name = f'{measure_name}_incorrect'
 
         write_row_to_file(os.path.join(
             'storage', 'bnc', 'preprocessed_data',
-            f'{measure_name}_incorrect_sentence_list.tsv'), [
+            f'{measure_name}_sentence_list.tsv'), [
                 'first_word_tag', 'second_word_tag', 'first_word',
                 'second_word', 'first_word_id', 'second_word_id', 'sentence'
             ],
@@ -96,10 +101,16 @@ if __name__ == '__main__':
                         mwe_row = incorr_mwe_df.iloc[[mwe_ind
                                                       ]].values.tolist()[0]
 
+                        # ommit MWEs from previous run
+                        # if sents_count < 81177:
+                        #     continue
+
                         write_row_to_file(os.path.join(
                             'storage', 'bnc', 'preprocessed_data',
-                            f'{measure_name}_incorrect_sentence_list.tsv'), [
-                                mwe_row[0], mwe_row[1], mwe_row[2], mwe_row[3],
+                            f'{measure_name}_sentence_list.tsv'), [
+                                mwe_row[0], mwe_row[1],
+                                str(mwe_row[2]),
+                                str(mwe_row[3]),
                                 str(first_word_id[0]),
                                 str(first_word_id[0] + 1), ' '.join(sentence)
                             ],
