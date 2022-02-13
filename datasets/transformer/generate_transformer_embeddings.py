@@ -66,7 +66,8 @@ def get_word_vector(sent, word_id, tokenizer, model, layers):
                                     padding='longest',
                                     add_special_tokens=True,
                                     return_tensors="pt",
-                                    return_offsets_mapping=True)
+                                    return_offsets_mapping=True,
+                                    truncation=True)
     offset_mapping = encoded['offset_mapping']
 
     offset_ids = get_word_offset_ids(sent, word_id, offset_mapping)
