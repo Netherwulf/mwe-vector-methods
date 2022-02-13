@@ -421,10 +421,10 @@ def main(args):
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     model = AutoModel.from_pretrained(model_name, output_hidden_states=True)
 
-    use_cuda = False
+    # use_cuda = True
 
-    device = "cuda:0" if torch.cuda.is_available() and use_cuda else "cpu"
-    model = model.to(device)
+    # device = "cuda:0" if torch.cuda.is_available() and use_cuda else "cpu"
+    # model = model.to(device)
 
     # lemmatizer = init_lemmatizer()
 
