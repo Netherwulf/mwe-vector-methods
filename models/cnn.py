@@ -118,7 +118,7 @@ def train_cnn_model(model, X_train, y_train, X_dev, y_dev, epoch_num,
         X_train,
         y_train,
         validation_data=(X_dev, y_dev),
-        batch_size=4,  # 128
+        batch_size=8,  # 128
         epochs=epochs,
         class_weight=get_class_weights(y_train),
         callbacks=[model_checkpoint_callback])

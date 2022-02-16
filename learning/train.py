@@ -1,3 +1,4 @@
+import argparse
 import csv
 import datetime
 import os
@@ -24,6 +25,22 @@ from tensorflow import one_hot
 
 def get_curr_time():
     return f'{datetime.datetime.now().strftime("%H:%M:%S")}'
+
+
+def log_message(message):
+    print(f'{datetime.datetime.now().strftime("%H:%M:%S")} : {message}')
+
+
+def parse_args():
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument('--undersampled',
+                        help='use undersampled version of the dataset',
+                        action='store_true')
+
+    args = parser.parse_args()
+
+    return args
 
 
 def load_data(dataset_file):
@@ -232,6 +249,11 @@ def main(args):
             data_dir,
             'sentences_containing_mwe_from_kgr10_group_0_embeddings_1_layers_incomplete_mwe_in_sent_with_splits.tsv'
         )
+
+    if 'undersampled' in args:
+        train_filepath = f'{train_filepath.split(".")[0]}_undersampled.tsv'
+
+        full_data_filepath = f'{full_data_filepath.split(".")[0]}_undersampled.tsv'
 
     if 'parseme' in args:
         storage_dir = os.path.join('storage', 'parseme', 'pl')
