@@ -293,8 +293,8 @@ def main(args):
     if 'svm_smote' in args:
         train_filepath = os.path.join(
             data_dir,
-            'sentences_containing_mwe_from_kgr10_group_0_embeddings_1_layers_incomplete_mwe_in_sent_with_splits_svm.tsv'
-        )
+            # 'sentences_containing_mwe_from_kgr10_group_0_embeddings_1_layers_incomplete_mwe_in_sent_with_splits_svm.tsv'
+            'parseme_pl_embeddings_train_svm.tsv')
 
     if 'adasyn' in args:
         train_filepath = os.path.join(

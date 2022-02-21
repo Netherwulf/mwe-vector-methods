@@ -60,12 +60,12 @@ def load_tf_model(model_path):
 
 def get_tf_model_prediction(model, sample):
     sample = np.array([
-        elem
-        for elem in np.concatenate([sample[:768 * 2], sample[768 * 3:]
-                                    ])  # for sentences containing MeWeX MWEs
-        # elem for elem in np.concatenate([
-        #     sample[:768 * 2], sample[768 * 5:768 * 6], sample[768 * 7:768 * 8]
-        # ])
+        # elem
+        # for elem in np.concatenate([sample[:768 * 2], sample[768 * 3:]
+        #                             ])  # for sentences containing MeWeX MWEs
+        elem for elem in np.concatenate([
+            sample[:768 * 2], sample[768 * 5:768 * 6], sample[768 * 7:768 * 8]
+        ])  # for polish PARSEME data
     ])
 
     sample = np.reshape(sample, (1, sample.shape[0], 1))
@@ -118,7 +118,7 @@ def get_predictions(model_path, data_path, output_path, column_idx,
                 ])
 
                 # check if there is an invalid embedding
-                if len(sample) != 5 * 768:  # 9 * 768
+                if len(sample) != 9 * 768:  # 5 * 768
                     log_message(f'invalid sample size: {len(sample)}')
                     line_idx += 1
                     continue
