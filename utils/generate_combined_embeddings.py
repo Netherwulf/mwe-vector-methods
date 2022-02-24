@@ -174,45 +174,74 @@ def get_emb(line_elems, emb_type, columns_dict):
 
 def generate_embedding(filepath, out_filepath, embedding_types, ft_model_path):
     ft_model = load_fasttext(ft_model_path)
+    base_output_filename = out_filepath.split('/')[-1].split('.')[0]
 
-    with open(filepath, 'r', encoding='utf-8',
-              buffering=2000) as in_file, open(out_filepath,
-                                               'a',
-                                               encoding='utf-8',
-                                               buffering=2000) as out_file:
-        line_idx = 0
+    for emb_type in embedding_types:
+        log_message(f'Generating {emb_type} embeddings')
 
-        for line in in_file:
-            if line_idx == 0:
-                column_names = line.rstrip().split('\t')
+        out_filename = f"{base_output_filename}_{emb_type}.tsv"
 
-                column_names += ['first_word_ft_emb', 'second_word_ft_emb']
+        out_filepath = '/'.join(out_filepath.split('/')[:-1] + [out_filename])
 
-                column_names += embedding_types
+        with open(filepath, 'r', encoding='utf-8',
+                  buffering=2000) as in_file, open(out_filepath,
+                                                   'a',
+                                                   encoding='utf-8',
+                                                   buffering=2000) as out_file:
+            line_idx = 0
 
-                columns_dict = get_columns_dict(column_names)
+            for line in in_file:
+                if line_idx == 0:
+                    column_names = line.rstrip().split('\t')
 
-                out_file.write('\t'.join([column
-                                          for column in column_names]) + '\n')
+                    emb_column_names = [
+                        column_name for column_name in column_names
+                        if 'emb' in column_name
+                    ]
+                    emb_column_idx = [
+                        column_names.index(column_name)
+                        for column_name in emb_column_names
+                    ]
 
-                line_idx += 1
-                continue
+                    column_names += ['first_word_ft_emb', 'second_word_ft_emb']
 
-            else:
-                line_elems = line.rstrip().split('\t')
+                    column_names += [emb_type]
 
-                line_elems += get_ft_emb(line_elems, columns_dict, ft_model)
+                    columns_dict = get_columns_dict(column_names)
 
-                for emb_type in embedding_types:
+                    column_names = [
+                        column_name
+                        for i, column_name in enumerate(column_names)
+                        if i not in emb_column_idx
+                    ]
+
+                    out_file.write(
+                        '\t'.join([column for column in column_names]) + '\n')
+
+                    line_idx += 1
+                    continue
+
+                else:
+                    line_elems = line.rstrip().split('\t')
+
+                    line_elems += get_ft_emb(line_elems, columns_dict,
+                                             ft_model)
+
                     line_elems += [get_emb(line_elems, emb_type, columns_dict)]
 
-                out_file.write(
-                    '\t'.join([line_elem for line_elem in line_elems]) + '\n')
+                    line_elems = [
+                        elem for i, elem in enumerate(line_elems)
+                        if i not in emb_column_idx
+                    ]
 
-                line_idx += 1
+                    out_file.write(
+                        '\t'.join([line_elem
+                                   for line_elem in line_elems]) + '\n')
 
-            if line_idx != 0 and line_idx % 10000 == 0:
-                log_message(f'Processed {line_idx} files...')
+                    line_idx += 1
+
+                if line_idx != 0 and line_idx % 10000 == 0:
+                    log_message(f'Processed {line_idx} files...')
 
 
 def main():

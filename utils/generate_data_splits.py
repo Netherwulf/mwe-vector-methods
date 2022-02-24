@@ -14,7 +14,9 @@ def assign_data_splits(filepath):
 
     output_filepath = os.path.join(output_dir, output_filename)
 
-    print(f'{datetime.datetime.now().strftime("%H:%M:%S")} : Loading data...')
+    print(
+        f'{datetime.datetime.now().strftime("%H:%M:%S")} : Loading data from: {filepath}'
+    )
     df = pd.read_csv(filepath, sep='\t')
     print(f'{datetime.datetime.now().strftime("%H:%M:%S")} : Data loaded...')
     df['dataset_type'] = 'null'
@@ -49,7 +51,7 @@ def assign_data_splits(filepath):
                 out_file.write('\n')
     # df.to_csv(output_filepath, sep='\t', index=False)
     print(
-        f'{datetime.datetime.now().strftime("%H:%M:%S")} : Saved to {output_filepath}...'
+        f'{datetime.datetime.now().strftime("%H:%M:%S")} : Saved to: {output_filepath}'
     )
 
 

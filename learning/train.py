@@ -20,7 +20,7 @@ from imblearn.pipeline import Pipeline
 from scipy import stats as s
 from sklearn.metrics import classification_report
 from sklearn.model_selection import train_test_split
-from tensorflow import one_hot
+from tensorflow import one_hot, config
 
 
 def get_curr_time():
@@ -41,6 +41,23 @@ def parse_args():
     args = parser.parse_args()
 
     return args
+
+
+def limit_gpu_memory(memory_size):
+    gpus = config.experimental.list_physical_devices('GPU')
+
+    for device in gpus:
+        config.experimental.set_memory_growth(device, True)
+
+    if gpus:
+        try:
+            config.experimental.set_virtual_device_configuration(
+                gpus[0], [
+                    config.experimental.VirtualDeviceConfiguration(
+                        memory_limit=memory_size)
+                ])
+        except RuntimeError as e:
+            print(e)
 
 
 def load_data(dataset_file):
@@ -224,6 +241,144 @@ def get_treshold_voting(y_pred, y_pred_max_probs, full_df, class_tresholds,
 
 
 def main(args):
+    gpu_memory_limit = 10240  # 4096 * 3
+    # limit_gpu_memory(gpu_memory_limit)
+
+    if 'bnc' in args:
+        data_dir = os.path.join('storage', 'bnc', 'embeddings', 'transformer')
+        storage_dir = os.path.join('storage', 'bnc')
+
+        if 'pmi' and 'baseline' in args:
+            train_filepath = os.path.join(
+                data_dir,
+                'correct_pmi_dataset_with_combined_embs_baseline_with_splits.tsv'
+            )
+
+            full_data_filepath = os.path.join(
+                data_dir,
+                'correct_pmi_dataset_with_combined_embs_baseline_with_splits.tsv'
+            )
+
+        if 'pmi' and 'diff_emb' in args:
+            train_filepath = os.path.join(
+                data_dir,
+                'correct_pmi_dataset_with_combined_embs_diff_emb_with_splits.tsv'
+            )
+
+            full_data_filepath = os.path.join(
+                data_dir,
+                'correct_pmi_dataset_with_combined_embs_diff_emb_with_splits.tsv'
+            )
+
+        if 'pmi' and 'prod_emb' in args:
+            train_filepath = os.path.join(
+                data_dir,
+                'correct_pmi_dataset_with_combined_embs_prod_emb_with_splits.tsv'
+            )
+
+            full_data_filepath = os.path.join(
+                data_dir,
+                'correct_pmi_dataset_with_combined_embs_prod_emb_with_splits.tsv'
+            )
+
+        if 'pmi' and 'mean_emb' in args:
+            train_filepath = os.path.join(
+                data_dir,
+                'correct_pmi_dataset_with_combined_embs_mean_emb_with_splits.tsv'
+            )
+
+            full_data_filepath = os.path.join(
+                data_dir,
+                'correct_pmi_dataset_with_combined_embs_mean_emb_with_splits.tsv'
+            )
+
+        if 'dice' and 'baseline' in args:
+            train_filepath = os.path.join(
+                data_dir,
+                'correct_dice_dataset_with_combined_embs_baseline_with_splits.tsv'
+            )
+
+            full_data_filepath = os.path.join(
+                data_dir,
+                'correct_dice_dataset_with_combined_embs_baseline_with_splits.tsv'
+            )
+
+        if 'dice' and 'diff_emb' in args:
+            train_filepath = os.path.join(
+                data_dir,
+                'correct_dice_dataset_with_combined_embs_diff_emb_with_splits.tsv'
+            )
+
+            full_data_filepath = os.path.join(
+                data_dir,
+                'correct_dice_dataset_with_combined_embs_diff_emb_with_splits.tsv'
+            )
+
+        if 'dice' and 'prod_emb' in args:
+            train_filepath = os.path.join(
+                data_dir,
+                'correct_dice_dataset_with_combined_embs_prod_emb_with_splits.tsv'
+            )
+
+            full_data_filepath = os.path.join(
+                data_dir,
+                'correct_dice_dataset_with_combined_embs_prod_emb_with_splits.tsv'
+            )
+
+        if 'dice' and 'mean_emb' in args:
+            train_filepath = os.path.join(
+                data_dir,
+                'correct_dice_dataset_with_combined_embs_mean_emb_with_splits.tsv'
+            )
+
+            full_data_filepath = os.path.join(
+                data_dir,
+                'correct_dice_dataset_with_combined_embs_mean_emb_with_splits.tsv'
+            )
+
+        if 'chi2' and 'baseline' in args:
+            train_filepath = os.path.join(
+                data_dir,
+                'correct_chi2_dataset_with_combined_embs_baseline_with_splits.tsv'
+            )
+
+            full_data_filepath = os.path.join(
+                data_dir,
+                'correct_chi2_dataset_with_combined_embs_baseline_with_splits.tsv'
+            )
+
+        if 'chi2' and 'diff_emb' in args:
+            train_filepath = os.path.join(
+                data_dir,
+                'correct_chi2_dataset_with_combined_embs_diff_emb_with_splits.tsv'
+            )
+
+            full_data_filepath = os.path.join(
+                data_dir,
+                'correct_chi2_dataset_with_combined_embs_diff_emb_with_splits.tsv'
+            )
+
+        if 'chi2' and 'prod_emb' in args:
+            train_filepath = os.path.join(
+                data_dir,
+                'correct_chi2_dataset_with_combined_embs_prod_emb_with_splits.tsv'
+            )
+
+            full_data_filepath = os.path.join(
+                data_dir,
+                'correct_chi2_dataset_with_combined_embs_prod_emb_with_splits.tsv'
+            )
+
+        if 'chi2' and 'mean_emb' in args:
+            train_filepath = os.path.join(
+                data_dir,
+                'correct_chi2_dataset_with_combined_embs_mean_emb_with_splits.tsv'
+            )
+
+            full_data_filepath = os.path.join(
+                data_dir,
+                'correct_chi2_dataset_with_combined_embs_mean_emb_with_splits.tsv'
+            )
 
     if 'parseme' in args and 'transformer_embeddings' in args:
         data_dir = os.path.join('storage', 'parseme', 'pl', 'embeddings',
@@ -303,8 +458,18 @@ def main(args):
     print(f'{get_curr_time()} : Loading data...')
     train_df = pd.read_csv(train_filepath, sep='\t', on_bad_lines='skip')
     #    nrows=100)
+
     full_df = pd.read_csv(full_data_filepath, sep='\t', on_bad_lines='skip')
     #   nrows=100)
+
+    if 'bnc' in args:
+        emb_column = [
+            column_name for column_name in list(train_df.columns)
+            if column_name in ['baseline', 'diff_emb', 'prod_emb', 'mean_emb']
+        ][0]
+        train_df = train_df.rename(columns={emb_column: 'combined_embedding'})
+        full_df = full_df.rename(columns={emb_column: 'combined_embedding'})
+
     print(f'{get_curr_time()} : Getting train data...')
     if ('smote' in args or 'borderline_smote' in args or 'svm_smote' in args
             or 'adasyn' in args):
@@ -328,7 +493,7 @@ def main(args):
             for embedding in X_train
         ])
 
-    else:
+    elif 'bnc' not in args:
         print(f'{get_curr_time()} : Ommiting difference vectors...')
         X_train = np.array([
             np.array([
@@ -337,17 +502,29 @@ def main(args):
             ]) for embedding in X_train
         ])
 
+    else:
+        X_train = np.array([
+            np.array([float(elem) for elem in embedding.split(',')])
+            for embedding in X_train
+        ])
+
     y_train = np.array([int(elem) for elem in y_train])
     print(f'{get_curr_time()} : Getting dev data...')
     X_dev = full_df[full_df['dataset_type'] ==
                     'dev']['combined_embedding'].tolist()
 
-    X_dev = np.array([
-        np.array([
-            float(elem) for elem in (embedding.split(',')[:768 * 2] +
-                                     embedding.split(',')[768 * 3:])
-        ]) for embedding in X_dev
-    ])
+    if 'bnc' not in args:
+        X_dev = np.array([
+            np.array([
+                float(elem) for elem in (embedding.split(',')[:768 * 2] +
+                                         embedding.split(',')[768 * 3:])
+            ]) for embedding in X_dev
+        ])
+    else:
+        X_dev = np.array([
+            np.array([float(elem) for elem in embedding.split(',')])
+            for embedding in X_dev
+        ])
 
     y_dev = full_df[full_df['dataset_type'] == 'dev']['is_correct'].tolist()
 
@@ -356,12 +533,18 @@ def main(args):
     X_test = full_df[full_df['dataset_type'] ==
                      'test']['combined_embedding'].tolist()
 
-    X_test = np.array([
-        np.array([
-            float(elem) for elem in (embedding.split(',')[:768 * 2] +
-                                     embedding.split(',')[768 * 3:])
-        ]) for embedding in X_test
-    ])
+    if 'bnc' not in args:
+        X_test = np.array([
+            np.array([
+                float(elem) for elem in (embedding.split(',')[:768 * 2] +
+                                         embedding.split(',')[768 * 3:])
+            ]) for embedding in X_test
+        ])
+    else:
+        X_test = np.array([
+            np.array([float(elem) for elem in embedding.split(',')])
+            for embedding in X_test
+        ])
 
     y_test = full_df[full_df['dataset_type'] == 'test']['is_correct'].tolist()
 
