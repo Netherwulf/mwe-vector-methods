@@ -25,15 +25,16 @@ def create_cnn_model(input_shape=(900, 1)):
     model.add(layers.Conv1D(256, 5, activation='relu'))  # 256
     model.add(layers.GlobalMaxPooling1D())
     model.add(layers.Flatten())
-    model.add(layers.Dense(2, activation='softmax'))
+    model.add(layers.Dense(2, activation='sigmoid'))  # softmax
 
-    model.compile(optimizer=keras.optimizers.Adam(learning_rate=1e-5),
-                  loss='binary_crossentropy',
-                  metrics=[
-                      'AUC', 'accuracy',
-                      keras.metrics.Precision(),
-                      keras.metrics.Recall()
-                  ])
+    model.compile(
+        optimizer=keras.optimizers.Adam(learning_rate=0.0001),
+        loss='binary_crossentropy',
+        metrics=[
+            'accuracy'  # 'AUC'
+            # keras.metrics.Precision(),
+            # keras.metrics.Recall()
+        ])
     model.summary()
 
     return model
@@ -118,7 +119,7 @@ def train_cnn_model(model, X_train, y_train, X_dev, y_dev, epoch_num,
         X_train,
         y_train,
         validation_data=(X_dev, y_dev),
-        batch_size=8,  # 128
+        batch_size=128,  # 128
         epochs=epochs,
         class_weight=get_class_weights(y_train),
         callbacks=[model_checkpoint_callback])

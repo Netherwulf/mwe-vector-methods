@@ -86,7 +86,7 @@ def get_diff_emb(line_elems, column_dict):
             column_dict['second_word_mwe_emb_abs_diff']].split(',')
     ])
 
-    # get element-wise average between above vectors
+    # get element-wise absolute between above vectors
     avg_diff = np.mean([first_comp_mwe_diff, second_comp_mwe_diff], axis=0)
 
     # concat component_diff and avg_diff

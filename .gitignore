@@ -29,6 +29,12 @@ embeddings/
 # results dirs
 results/
 
+# evaluation results
+evaluation_results/
+
+# prediction results
+prediction_results/
+
 # unpacked archives
 storage/bnc/raw_data/dict_lexical_items/
 
