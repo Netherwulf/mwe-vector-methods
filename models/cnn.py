@@ -77,8 +77,8 @@ def get_dir_num(dir_path):
     if len(glob.glob(os.path.join(dir_path, 'checkpoint_*'))) != 0:
 
         for filepath in glob.glob(os.path.join(dir_path, 'checkpoint_*')):
-            if int(filepath.split('_')[-1]) > last_dir_num:
-                last_dir_num = int(filepath.split('_')[-1])
+            if int(filepath.split('_')[1]) > last_dir_num:
+                last_dir_num = int(filepath.split('_')[1])
 
         return last_dir_num + 1
 

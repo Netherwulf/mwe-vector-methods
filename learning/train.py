@@ -419,9 +419,9 @@ def main(args):
         )
 
     if 'undersampled' in args:
-        train_filepath = f'{train_filepath.split(".")[0]}_undersampled.tsv'
+        train_filepath = f'{train_filepath.split(".")[0]}_undersampled_ratio_1.3.tsv'
 
-        full_data_filepath = f'{full_data_filepath.split(".")[0]}_undersampled.tsv'
+        full_data_filepath = f'{full_data_filepath.split(".")[0]}_undersampled_ratio_1.3.tsv'
 
     if 'parseme' in args:
         storage_dir = os.path.join('storage', 'parseme', 'pl')
@@ -469,15 +469,16 @@ def main(args):
             data_dir, 'parseme_pl_embeddings_train_adasyn.tsv')
 
     print(f'{get_curr_time()} : Loading data...')
-    train_df = pd.read_csv(train_filepath, sep='\t',
-                           on_bad_lines='skip').dropna()
+    train_df = pd.read_csv(train_filepath, sep='\t', on_bad_lines='skip')
     #    nrows=100)
 
-    full_df = pd.read_csv(full_data_filepath, sep='\t',
-                          on_bad_lines='skip').dropna()
+    full_df = pd.read_csv(full_data_filepath, sep='\t', on_bad_lines='skip')
     #   nrows=100)
 
     if 'bnc' in args:
+        train_df = train_df.dropna()
+        full_df = full_df.dropna()
+
         emb_column = [
             column_name for column_name in list(train_df.columns)
             if column_name in ['baseline', 'diff_emb', 'prod_emb', 'mean_emb']

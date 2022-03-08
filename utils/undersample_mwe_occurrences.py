@@ -25,7 +25,7 @@ def parse_args():
     parser.add_argument('--col_count',
                         help='number of columns in file',
                         type=int)
-    parser.add_argument('--undersampled_class',
+    parser.add_argument('--class_to_undersample',
                         help='class to undersample',
                         type=int)
     parser.add_argument('--undersampling_ratio',
@@ -88,20 +88,21 @@ def undersample_mwe_occurrences(filepath, occurrences_num, mwe_col_ind,
                 print(f'Processed {line_count} lines')
 
 
-def undersample_class_simple(filepath, undersampled_class,
+def undersample_class_simple(filepath, class_to_undersample,
                              undersampling_ratio):
     filename = filepath.split('/')[-1].split('.')[0]
     dir_path = os.path.join(*filepath.split('/')[:-1])
-    output_path = os.path.join(dir_path, f'{filename}_undersampled.tsv')
+    output_path = os.path.join(
+        dir_path, f'{filename}_undersampled_ratio_{undersampling_ratio}.tsv')
 
     df = pd.read_csv(filepath, sep='\t', on_bad_lines='skip')
 
     result_df = pd.DataFrame(columns=df.columns)
 
     for dataset_type in ['train', 'dev', 'test']:
-        df_not_to_undersample = df[(df['is_correct'] != undersampled_class)
+        df_not_to_undersample = df[(df['is_correct'] != class_to_undersample)
                                    & (df['dataset_type'] == dataset_type)]
-        df_to_undersample = df[(df['is_correct'] == undersampled_class)
+        df_to_undersample = df[(df['is_correct'] == class_to_undersample)
                                & (df['dataset_type'] == dataset_type)]
 
         df_undersampled = df_to_undersample.sample(n=int(
@@ -133,14 +134,15 @@ def main():
     # class_col_idx = args.class_col_idx  # 10
     # col_count = args.col_count  # 12
     # log_batch_size = 10000
-    undersampled_class = args.undersampled_class  # 0
+    class_to_undersample = args.class_to_undersample  # 0
     undersampling_ratio = args.undersampling_ratio  # 1.2
 
     # for filepath in args:
     # undersample_mwe_occurrences(filepath, max_mwe_occurrences, mwe_col_idx,
     #                             class_col_idx, col_count, log_batch_size,
-    #                             undersampled_class)
-    undersample_class_simple(filepath, undersampled_class, undersampling_ratio)
+    #                             class_to_undersample)
+    undersample_class_simple(filepath, class_to_undersample,
+                             undersampling_ratio)
 
 
 if __name__ == '__main__':

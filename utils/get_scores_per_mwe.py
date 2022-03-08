@@ -4,6 +4,8 @@ import datetime
 import numpy as np
 import pandas as pd
 
+from scipy import stats as s
+
 
 def log_message(message):
     print(f'{datetime.datetime.now().strftime("%H:%M:%S")} : {message}')
@@ -22,6 +24,9 @@ def parse_args():
     parser.add_argument('--save_true_labels',
                         action='store_true',
                         help="include column with true labels in output file")
+    parser.add_argument('--majority_voting',
+                        action='store_true',
+                        help="use majority voting instead of weighted voting")
 
     args = parser.parse_args()
 
@@ -29,6 +34,36 @@ def parse_args():
 
 
 def get_majority_results(data_path, output_path, extract_test,
+                         save_true_labels):
+    df = pd.read_csv(data_path, sep='\t')
+
+    if extract_test:
+        df = df[df['dataset_type'] == 'test']
+
+    mwe_weighted_pred_dict = {}
+
+    for mwe in df['mwe'].unique().tolist():
+        predictions = [
+            y_pred for y_pred in df[df['mwe'] == mwe]['prediction'].tolist()
+        ]
+
+        weighted_pred = int(s.mode(predictions)[0])
+
+        mwe_weighted_pred_dict[mwe] = weighted_pred
+
+    df['majority_pred_is_correct'] = df['mwe'].map(mwe_weighted_pred_dict)
+
+    mwe_df = df.drop_duplicates(subset=['mwe'])
+
+    output_columns = ['mwe', 'majority_pred_is_correct']
+
+    if save_true_labels:
+        output_columns += ['is_correct']
+
+    mwe_df.to_csv(output_path, sep='\t', index=False, columns=output_columns)
+
+
+def get_weighted_results(data_path, output_path, extract_test,
                          save_true_labels):
     df = pd.read_csv(data_path, sep='\t')
 
@@ -78,8 +113,13 @@ def main():
     extract_test = True if args.extract_test else False
     save_true_labels = True if args.save_true_labels else False
 
-    get_majority_results(data_path, output_path, extract_test,
-                         save_true_labels)
+    if args.majority_voting:
+        get_majority_results(data_path, output_path, extract_test,
+                             save_true_labels)
+
+    else:
+        get_weighted_results(data_path, output_path, extract_test,
+                             save_true_labels)
 
 
 if __name__ == '__main__':

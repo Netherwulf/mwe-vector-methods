@@ -30,13 +30,16 @@ def parse_args():
     parser.add_argument('--model_backend',
                         help='model backend - sk or tf',
                         type=str)
+    parser.add_argument('--embedding_size',
+                        help='size of the embedding vector',
+                        type=str)
 
     args = parser.parse_args()
 
     return args
 
 
-def load_sk_model(model_path):
+def load_sk_model(model_path, *kwargs):
     return pickle.load(open(model_path, 'rb'))
 
 
@@ -48,9 +51,14 @@ def get_sk_model_prediction(model, sample):
     return y_pred, y_pred_prob
 
 
-def load_tf_model(model_path):
+def load_tf_model(model_path, **kwargs):
+    if 'input_shape' in kwargs:
+        input_shape = int(kwargs['input_shape'])
+    else:
+        input_shape = 4 * 768
+
     # declare model structure
-    model = create_cnn_model(input_shape=(768 * 4, 1))
+    model = create_cnn_model(input_shape=(input_shape, 1))
 
     # load weights from checkpoint file
     model.load_weights(model_path)
@@ -60,12 +68,12 @@ def load_tf_model(model_path):
 
 def get_tf_model_prediction(model, sample):
     sample = np.array([
-        # elem
+        elem for elem in sample
         # for elem in np.concatenate([sample[:768 * 2], sample[768 * 3:]
         #                             ])  # for sentences containing MeWeX MWEs
-        elem for elem in np.concatenate([
-            sample[:768 * 2], sample[768 * 5:768 * 6], sample[768 * 7:768 * 8]
-        ])  # for polish PARSEME data
+        # elem for elem in np.concatenate([
+        #     sample[:768 * 2], sample[768 * 5:768 * 6], sample[768 * 7:768 * 8]
+        # ])  # for polish PARSEME data
     ])
 
     sample = np.reshape(sample, (1, sample.shape[0], 1))
@@ -79,10 +87,10 @@ def get_tf_model_prediction(model, sample):
     return y_pred, y_pred_prob
 
 
-def load_model(model_backend, model_path):
+def load_model(model_backend, model_path, input_shape=(4 * 768)):
     load_dict = {'sk': load_sk_model, 'tf': load_tf_model}
 
-    return load_dict[model_backend](model_path)
+    return load_dict[model_backend](model_path, input_shape=input_shape)
 
 
 def get_pred(model_backend, model, sample):
@@ -92,12 +100,12 @@ def get_pred(model_backend, model, sample):
 
 
 def get_predictions(model_path, data_path, output_path, column_idx,
-                    skip_column_idx, model_backend):
+                    skip_column_idx, model_backend, embedding_size):
     line_idx = 0
 
     skip_column_idx_list = [int(idx) for idx in skip_column_idx.split(',')]
 
-    model = load_model(model_backend, model_path)
+    model = load_model(model_backend, model_path, input_shape=embedding_size)
 
     with open(data_path, 'r',
               buffering=2000) as in_file, open(output_path,
@@ -108,8 +116,9 @@ def get_predictions(model_path, data_path, output_path, column_idx,
 
             if line_idx == 0:
                 column_names = [
-                    column_name for column_name in line_elems
-                ][:skip_column_idx_list[0]] + ['prediction', 'pred_prob']
+                    column_name for i, column_name in enumerate(line_elems)
+                    if i not in skip_column_idx_list
+                ] + ['prediction', 'pred_prob']
                 out_file.write('\t'.join(column_names) + '\n')
 
             else:
@@ -118,7 +127,9 @@ def get_predictions(model_path, data_path, output_path, column_idx,
                 ])
 
                 # check if there is an invalid embedding
-                if len(sample) != 9 * 768:  # 5 * 768
+                # 5 * 768 for sentences containing MeWeX MWEs
+                # 2 * 768 for mean embedding
+                if len(sample) != 2 * 768:
                     log_message(f'invalid sample size: {len(sample)}')
                     line_idx += 1
                     continue
@@ -126,9 +137,9 @@ def get_predictions(model_path, data_path, output_path, column_idx,
                 y_pred, y_pred_prob = get_pred(model_backend, model, sample)
 
                 values_to_save = [
-                    value for value in line_elems
-                ][:skip_column_idx_list[0]] + [str(y_pred),
-                                               str(y_pred_prob)]
+                    value for i, value in enumerate(line_elems)
+                    if i not in skip_column_idx_list
+                ] + [str(y_pred), str(y_pred_prob)]
 
                 out_file.write('\t'.join(values_to_save) + '\n')
 
@@ -147,9 +158,10 @@ def main():
     column_idx = args.column_idx
     skip_column_idx = args.skip_column_idx
     model_backend = args.model_backend
+    embedding_size = args.embedding_size
 
     get_predictions(model_path, data_path, output_path, column_idx,
-                    skip_column_idx, model_backend)
+                    skip_column_idx, model_backend, embedding_size)
 
 
 if __name__ == '__main__':
