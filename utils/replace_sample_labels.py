@@ -17,7 +17,7 @@ def parse_args():
                         type=str)
     parser.add_argument('--data_mwe_idx',
                         help='index of column containing MWE in data file',
-                        type=str)
+                        type=int)
     parser.add_argument('--label_idx',
                         help='index of column containing labels',
                         type=int)
