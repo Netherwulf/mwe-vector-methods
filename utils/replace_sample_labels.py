@@ -2,7 +2,7 @@ import argparse
 
 from datetime import datetime
 
-from utils import read_mwe, init_lemmatizer, lemmatize_single_mwe
+from utils.count_mwe_occurrences import read_mwe, init_lemmatizer, lemmatize_single_mwe
 
 
 def log_message(message):
@@ -73,8 +73,8 @@ def main():
     data_mwe_idx = args.data_mwe_idx
     label_idx = args.label_idx
     mwe_list_path = args.mwe_list_path
-    output_path = args.output_path
     mwe_col_idx = args.mwe_col_idx
+    output_path = args.output_path
 
     replace_sample_labels(data_path, data_mwe_idx, label_idx, mwe_list_path,
                           mwe_col_idx, output_path)
