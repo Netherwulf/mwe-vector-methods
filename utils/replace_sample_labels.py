@@ -50,12 +50,16 @@ def replace_sample_labels(data_path,
         for line in in_file:
             line_elems = line.strip().split(separator)
 
-            mwe = line_elems[data_mwe_idx]
+            if line_idx == 0:
+                line_elems = line_elems[1:]
 
-            lemmatized_mwe = lemmatize_single_mwe(mwe, lemmatizer)
+            else:
+                mwe = line_elems[data_mwe_idx]
 
-            if lemmatized_mwe in mwe_list:
-                line_elems[label_idx] = '0'
+                lemmatized_mwe = lemmatize_single_mwe(mwe, lemmatizer)
+
+                if lemmatized_mwe in mwe_list:
+                    line_elems[label_idx] = '0'
 
             out_file.write('\t'.join(line_elems) + '\n')
 
