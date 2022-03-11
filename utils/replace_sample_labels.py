@@ -1,6 +1,5 @@
 import argparse
-
-from datetime import datetime
+import datetime
 
 from utils.count_mwe_occurrences import read_mwe, init_lemmatizer, lemmatize_single_mwe
 
