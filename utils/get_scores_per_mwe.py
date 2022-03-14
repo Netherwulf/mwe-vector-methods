@@ -5,6 +5,7 @@ import numpy as np
 import pandas as pd
 
 from scipy import stats as s
+from sklearn.metrics import classification_report
 
 
 def log_message(message):
@@ -60,6 +61,12 @@ def get_majority_results(data_path, output_path, extract_test,
     if save_true_labels:
         output_columns += ['is_correct']
 
+        target_names = ['Incorrect MWE', 'Correct MWE']
+        print(
+            classification_report(mwe_df['is_correct'],
+                                  mwe_df['majority_pred_is_correct'],
+                                  target_names=target_names))
+
     mwe_df.to_csv(output_path, sep='\t', index=False, columns=output_columns)
 
 
@@ -101,6 +108,12 @@ def get_weighted_results(data_path, output_path, extract_test,
 
     if save_true_labels:
         output_columns += ['is_correct']
+
+        target_names = ['Incorrect MWE', 'Correct MWE']
+        print(
+            classification_report(mwe_df['is_correct'],
+                                  mwe_df['weighted_pred_is_correct'],
+                                  target_names=target_names))
 
     mwe_df.to_csv(output_path, sep='\t', index=False, columns=output_columns)
 

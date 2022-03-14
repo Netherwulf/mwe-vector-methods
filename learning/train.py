@@ -419,9 +419,9 @@ def main(args):
         )
 
     if 'undersampled' in args:
-        train_filepath = f'{train_filepath.split(".")[0]}_undersampled_ratio_1.3.tsv'
+        train_filepath = f'{train_filepath.split(".")[0]}_undersampled_ratio_1.3_fixed_nDD.tsv'
 
-        full_data_filepath = f'{full_data_filepath.split(".")[0]}_undersampled_ratio_1.3.tsv'
+        full_data_filepath = f'{full_data_filepath.split(".")[0]}_undersampled_ratio_1.3_fixed_nDD.tsv'
 
     if 'parseme' in args:
         storage_dir = os.path.join('storage', 'parseme', 'pl')
