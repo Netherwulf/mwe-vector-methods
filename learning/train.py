@@ -61,6 +61,7 @@ def limit_gpu_memory(memory_size):
             print(e)
 
 
+# not used in production
 def load_data(dataset_file):
     dataset = np.load(dataset_file)
 
@@ -77,6 +78,7 @@ def load_data(dataset_file):
     return X_train, X_test, y_train, y_test
 
 
+# not used in production
 def get_mwe(mwe_file, idx_list):
     with open(mwe_file, 'r', errors='replace') as in_file:
         content = in_file.readlines()
@@ -103,6 +105,7 @@ def get_mwe(mwe_file, idx_list):
         return mwe_list, mwe_dict, mwe_metadata
 
 
+# not used in production
 def create_empty_file(filepath):
     with open(filepath, 'w') as f:
         column_names_line = '\t'.join([
@@ -113,11 +116,13 @@ def create_empty_file(filepath):
         pass
 
 
+# not used in production
 def write_line_to_file(filepath, line):
     with open(filepath, 'a') as f:
         f.write(f'{line}\n')
 
 
+# move to utils
 def get_evaluation_report(y_true, y_pred, full_df, predictions_filepath,
                           evaluation_filepath):
     test_df = full_df[full_df['dataset_type'] == 'test']
@@ -151,6 +156,7 @@ def get_evaluation_report(y_true, y_pred, full_df, predictions_filepath,
     print(classification_report(y_true, y_pred, target_names=target_names))
 
 
+# fix (it is in utils in file with 'scores_per_mwe') and move to utils
 def get_majority_voting(y_pred, full_df, filepath):
     y_majority_pred = np.array([0 for _ in y_pred])
 
@@ -173,6 +179,7 @@ def get_majority_voting(y_pred, full_df, filepath):
     return y_majority_pred
 
 
+# fix and move to utils
 def get_weighted_voting(y_pred, y_pred_max_probs, full_df, filepath):
     y_majority_pred = np.array([0 for _ in y_pred])
 
@@ -205,6 +212,7 @@ def get_weighted_voting(y_pred, y_pred_max_probs, full_df, filepath):
     return y_majority_pred
 
 
+# fix and move to utils
 def get_treshold_voting(y_pred, y_pred_max_probs, full_df, class_tresholds,
                         filepath):
     y_majority_pred = np.array([0 for _ in y_pred])
@@ -241,6 +249,7 @@ def get_treshold_voting(y_pred, y_pred_max_probs, full_df, class_tresholds,
     return y_majority_pred
 
 
+# divide into multiple experiment scripts
 def main(args):
     gpu_memory_limit = 10240  # 4096 * 3
     # limit_gpu_memory(gpu_memory_limit)
