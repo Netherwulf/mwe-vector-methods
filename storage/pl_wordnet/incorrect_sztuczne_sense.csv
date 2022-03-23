@@ -1,0 +1,51 @@
+Synset_ID,synset,Sense_ID,Lemma,PoS
+53424,"(obiekt małej architektury 1* (wytw) [wytw] | )",76897,"obiekt małej architektury",2
+7709,"(drużyna sportowa 1* (grp) [grp] | )",104167,"drużyna sportowa",2
+8495,"(naczynie stołowe 1* (wytw) [wytw] | )",18402,"naczynie stołowe",2
+59609,"(pomieszczenie mieszkalne 1* (msc) [msc] | )",84931,"pomieszczenie mieszkalne",2
+105862,"(wytwór roślinny 1* (rz) [rz] | )",146532,"wytwór roślinny",2
+7078236,"(CZASOWNIK z klasy pomocniczej 1* (sp) [sp] | )",7078558,"CZASOWNIK z klasy pomocniczej",1
+3259,"(zbiór przepisów 1* (wytw) [wytw] | zbiór praw 1* (wytw))",11404,"zbiór przepisów",2
+3259,"(zbiór przepisów 1* (wytw) [wytw] | zbiór praw 1* (wytw))",11403,"zbiór praw",2
+7766,"(organ władzy 1* (grp) [grp] | )",17515,"organ władzy",2
+4713,"(stan fizyczny 1* (st) [st] | )",12139,"stan fizyczny",2
+4717,"(stan psychiczny 1* (st) [st] | )",12140,"stan psychiczny",2
+4721,"(roślina uprawna 1* (rsl) [rsl] | )",12141,"roślina uprawna",2
+4853,"(zakład gastronomiczny 1* (msc) [msc] | )",10989,"zakład gastronomiczny",2
+5361,"(zjawisko akustyczne 1* (zj) [zj] | )",12712,"zjawisko akustyczne",2
+5362,"(zjawisko astronomiczne 1* (zj) [zj] | )",12713,"zjawisko astronomiczne",2
+4949,"(drzewo liściaste 1* (rsl) [rsl] | )",12415,"drzewo liściaste",2
+4950,"(drzewo iglaste 1* (rsl) [rsl] | )",12416,"drzewo iglaste",2
+34779,"(własność sądów i decyzji 1* (umy) [umy] | )",53007,"własność sądów i decyzji",2
+5220,"(zakład usługowy 1* (msc) [msc] | )",12656,"zakład usługowy",2
+389435,"(przetwór mleczny 1* (jedz) [jedz] | )",619160,"przetwór mleczny",2
+5351,"(zjawisko naturalne 1 (zj) [zj] | )",11618,"zjawisko naturalne",2
+5353,"(zjawisko atmosferyczne 1* (zj) [zj] | )",12705,"zjawisko atmosferyczne",2
+5372,"(zjawisko nadprzyrodzone 1* (zj) [zj] | )",12719,"zjawisko nadprzyrodzone",2
+5404,"(stosunki czasowe 1* (czas) [czas] | )",12732,"stosunki czasowe",2
+5464,"(cecha fizyczna 1* (cech) [cech] | )",12781,"cecha fizyczna",2
+5479,"(właściwość zdarzenia, sytuacji 1* (cech) [cech] | )",12786,"właściwość zdarzenia, sytuacji",2
+5564,"(forma skupienia substancji 1* (cech) [cech] | )",12883,"forma skupienia substancji",2
+5565,"(substancja jadalna 1* (sbst) [sbst] | )",8576,"substancja jadalna",2
+5566,"(olej jadalny 1* (sbst) [sbst] | )",12884,"olej jadalny",2
+6771,"(człowiek, którego ocenia się pozytywnie 1* (os) [os] | )",16868,"człowiek, którego ocenia się pozytywnie",2
+5632,"(istota mitologiczna 1* (zw) [zw] | )",16317,"istota mitologiczna",2
+6772,"(człowiek charakteryzowany w odniesieniu do jego stanu majątkowego 1* (os) [os] | )",16869,"człowiek charakteryzowany w odniesieniu do jego stanu majątkowego",2
+5888,"(zakończyć stosunek pracy 1* (sp) [sp] | )",16426,"zakończyć stosunek pracy",1
+6770,"(człowiek, którego ocenia się negatywnie 1* (os) [os] | )",16867,"człowiek, którego ocenia się negatywnie",2
+5891,"(ponieść konsekwencje 2* (sp) [sp] | )",16429,"ponieść konsekwencje",1
+5892,"(wykonywać czynności prawne 1* (sp) [sp] | )",16430,"wykonywać czynności prawne",1
+5952,"(cecha otoczenia 1* (cech) [cech] | )",16453,"cecha otoczenia",2
+5953,"(cecha czynności 1* (cech) [cech] | )",62184,"cecha czynności",2
+244305,"(styl architektoniczny 1* (umy) [umy] | )",376856,"styl architektoniczny",2
+6256,"(pracownik oświaty 1* (os) [os] | oświatowiec 1* (os))",16567,"pracownik oświaty",2
+6379,"(pracownik służby zdrowia 1* (os) [os] | )",16669,"pracownik służby zdrowia",2
+6576,"(dział filozofii 1* (umy) [umy] | )",1476,"dział filozofii",2
+6773,"(człowiek charakteryzowany pod względem wieku 1* (os) [os] | )",16865,"człowiek charakteryzowany pod względem wieku",2
+6775,"(człowiek ze względu na relacje społeczne 1* (os) [os] | )",16870,"człowiek ze względu na relacje społeczne",2
+6776,"(człowiek ze względu na płeć 1* (os) [os] | )",16871,"człowiek ze względu na płeć",2
+6777,"(nazwa człowieka wyrażająca ambiwalentny stosunek do niego 1* (os) [os] | )",16872,"nazwa człowieka wyrażająca ambiwalentny stosunek do niego",2
+6778,"(nazwa człowieka uwzględniająca jego cechy 1* (os) [os] | )",16873,"nazwa człowieka uwzględniająca jego cechy",2
+6779,"(człowiek charakteryzowany ze względu na kwalifikacje 1* (os) [os] | )",16874,"człowiek charakteryzowany ze względu na kwalifikacje",2
+6797,"(człowiek ze względu na swoje zajęcie 1* (os) [os] | )",16866,"człowiek ze względu na swoje zajęcie",2
+6799,"(nauczyciel szkolny 1* (os) [os] | )",3916,"nauczyciel szkolny",2
