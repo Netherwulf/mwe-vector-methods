@@ -1,7 +1,7 @@
 import argparse
 import datetime
 
-from utils.count_mwe_occurrences import read_mwe, init_lemmatizer, lemmatize_single_mwe
+from utils.preprocessing.statistics.count_mwe_occurrences import read_mwe, init_lemmatizer, lemmatize_single_mwe
 
 
 def log_message(message):

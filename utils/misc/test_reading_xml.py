@@ -1,10 +1,10 @@
 import sys
 import xml.etree.ElementTree as ET
-from typing import List
+from typing import List, Tuple
 
 
 # read plain text from XML file
-def read_xml(filepath) -> (List, List):
+def read_xml(filepath) -> Tuple[List, List]:
     tree = ET.parse(filepath)
     sentences = tree.findall('.//sentence')
 

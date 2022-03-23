@@ -24,7 +24,7 @@ preprocessed_data/
 checkpoints/
 
 # embeddings dirs
-embeddings/
+storage/*/embeddings/
 
 # results dirs
 results/
