@@ -34,34 +34,60 @@ def get_lemma_list(mwe_list, lemmatizer):
     ])
 
 
-def find_valid_mwe(mwe, lemmatized_mwe_list, mwe_list, lemmatizer):
+def get_words_set(mwe_list):
+    words_2d_list = [[word for word in mwe.split(' ')] for mwe in mwe_list]
+
+    words_set = set([item for sublist in words_2d_list for item in sublist])
+
+    return words_set
+
+
+def get_min_edit_neighbour(word, words_set):
+    corrected_word = word
+    min_dist = 4
+
+    for candidate_word in words_set:
+        if (word[:-2] == candidate_word[:-2] and
+            (len(set(word[-2:]) - set(candidate_word[-2:])) +
+             len(set(candidate_word[-2:]) - set(word[-2:]))) < min_dist):
+            word = candidate_word
+
+            min_dist = len(set(word[-2:]) - set(candidate_word[-2:])) + len(
+                set(candidate_word[-2:]) - set(word[-2:]))
+
+            if min_dist == 1:
+                break
+
+    return corrected_word
+
+
+def get_mwe_min_edit_neighbour(mwe, words_set):
+    return ' '.join(
+        [get_min_edit_neighbour(word, words_set) for word in mwe.split(' ')])
+
+
+def find_valid_mwe(mwe, lemmatized_mwe_list, mwe_list, words_set, lemmatizer):
     valid_mwe = mwe
+
+    valid_mwe_found = False
 
     mwe_tuple = set(lemmatize_single_mwe(mwe, lemmatizer).split())
 
     for idx, valid_mwe_tuple in enumerate(lemmatized_mwe_list):
-        if mwe_tuple == valid_mwe_tuple:
-            valid_mwe = mwe_list[idx]
+        if mwe_tuple.issubset(valid_mwe_tuple):
+            if len(mwe_tuple) == len(valid_mwe_tuple):
+                valid_mwe = mwe_list[idx]
+            else:
+                valid_mwe = 'part of longer mwe'
+
+            valid_mwe_found = True
             break
+
+    if not valid_mwe_found:
+        valid_mwe = get_mwe_min_edit_neighbour(valid_mwe, words_set)
+        valid_mwe_found = True
 
     return valid_mwe
-
-
-def check_mwe_inclusion(mwe, lemmatized_mwe_list, lemmatizer):
-    if '.' in mwe:
-        return 0
-
-    mwe_validity = 1
-
-    mwe_tuple = set(lemmatize_single_mwe(mwe, lemmatizer).split())
-
-    for valid_mwe_tuple in lemmatized_mwe_list:
-        if (mwe_tuple.issubset(valid_mwe_tuple)
-                and len(mwe_tuple) < len(valid_mwe_tuple)):
-            mwe_validity = 0
-            break
-
-    return mwe_validity
 
 
 def fix_incorrect_mwe_candidates(data_path, mwe_list_path, output_filepath,
@@ -71,8 +97,6 @@ def fix_incorrect_mwe_candidates(data_path, mwe_list_path, output_filepath,
                           header=None,
                           names=['measure_value', 'mwe_type', 'mwe'])
 
-    data_df = data_df.drop_duplicates(subset=['mwe']).reset_index()
-
     mwe_df = pd.read_csv(mwe_list_path, sep='\t')
 
     mwe_list = mwe_df['lemma'].tolist()
@@ -80,30 +104,35 @@ def fix_incorrect_mwe_candidates(data_path, mwe_list_path, output_filepath,
     log_message('Lemmatizing MWE list...')
     lemmatized_mwe_list = get_lemma_list(mwe_list, lemmatizer)
 
-    log_message('Finding correct MWE substitution...')
+    # get set containing all words in the dataset
+    words_set = get_words_set(mwe_list)
+
+    log_message(
+        'Finding correct MWE substitution and checking for MWE inclusion...')
     data_df['corrected_mwe'] = data_df.progress_apply(
         lambda row: find_valid_mwe(row['mwe'], lemmatized_mwe_list, mwe_list,
-                                   lemmatizer),
+                                   words_set, lemmatizer),
         axis=1)
 
-    log_message('Checking MWE inclusion...')
-    data_df['valid_mwe'] = data_df.progress_apply(
-        lambda row: check_mwe_inclusion(row['mwe'], lemmatized_mwe_list,
-                                        lemmatizer),
-        axis=1)
+    data_df = data_df.loc[data_df['corrected_mwe'] != 'part of longer mwe']
+
+    data_df = pd.merge(data_df,
+                       mwe_df[['lemma', 'is_correct']],
+                       left_on='corrected_mwe',
+                       right_on='lemma',
+                       how='left')
+
+    # mark not found MWEs with -1
+    data_df['is_correct'] = data_df['is_correct'].fillna(-1.0)
 
     temp_columns = ['lemma', 'valid_mwe', 'index']
 
-    data_df = data_df.loc[data_df['valid_mwe'] == 1, [
+    data_df = data_df.loc[:, [
         col_name for col_name in data_df.columns
         if col_name not in temp_columns
     ]]
 
-    data_df = pd.merge(data_df,
-                       mwe_df[['lemma', 'is_correct']],
-                       left_on='mwe',
-                       right_on='lemma',
-                       how='left')
+    data_df = data_df.drop_duplicates(subset=['mwe'], ignore_index=True)
 
     data_df.to_csv(output_filepath, sep='\t', index=False)
 
