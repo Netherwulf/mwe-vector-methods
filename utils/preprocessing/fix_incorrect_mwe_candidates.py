@@ -84,7 +84,10 @@ def find_valid_mwe(mwe, lemmatized_mwe_list, mwe_list, words_set, lemmatizer):
             break
 
     if not valid_mwe_found:
+        old_mwe = valid_mwe
         valid_mwe = get_mwe_min_edit_neighbour(valid_mwe, words_set)
+        if old_mwe != valid_mwe:
+            log_message(f'old mwe: {old_mwe}\nnew mwe: {valid_mwe}')
         valid_mwe_found = True
 
     return valid_mwe
