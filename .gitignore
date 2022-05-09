@@ -26,6 +26,10 @@ checkpoints/
 # embeddings dirs
 storage/**/embeddings/
 
+# pack of TSV files containing lists of potentially non-lexicalized MWEs
+storage/kgr10/mewex/scaled_vector_association_measure_correct_mwe_best_f1_with_corrected_mwes_pl_wordnet_based_filtering/
+storage/kgr10/mewex/scaled_vector_association_measure_correct_mwe_best_f1_with_corrected_mwes_pl_wordnet_based_filtering.zip
+
 # results dirs
 results/
 

@@ -10,6 +10,16 @@ def init_lemmatizer():
     return morfeusz2.Morfeusz()  # initialize Morfeusz object
 
 
+# lemmatize single word
+def lemmatize_single_word(word, lemmatizer) -> str:
+    return str(lemmatizer.analyse(word)[0][2][1])
+
+
+# lemmatize words list
+def lemmatize_words_list(words_list, lemmatizer) -> List[str]:
+    return [lemmatize_single_word(word, lemmatizer) for word in words_list]
+
+
 # lemmatize single MWE
 def lemmatize_single_mwe(mwe, lemmatizer) -> str:
 
