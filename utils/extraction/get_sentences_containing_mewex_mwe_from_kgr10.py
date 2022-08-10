@@ -1,4 +1,5 @@
 import csv
+import os
 import string
 import sys
 import xml.etree.ElementTree as ET
@@ -228,8 +229,11 @@ def get_sentences_containing_mwe(output_file, mwe_list, lemmatized_mwes,
 
 
 def main(args):
-    mwes_filepath = 'scaled_vector_association_measure_correct_mwe_best_f1.tsv'
+    mwes_filepath = 'scaled_vector_association_measure_correct_mwe_best_f1_with_corrected_mwes_pl_wordnet_based_filtering.tsv'
+    output_dir = os.path.join('..', '..', 'storage', 'kgr10_containing_mewex_results', 'raw_data')
     base_output_file_name = 'kgr10_sentences_containing_MeWeX_mwe.tsv'
+
+    output_filepath = os.path.join(output_dir, base_output_file_name)
 
     print(f'{datetime.now().time()} - Reading MWE files and lemmatizing...')
 
@@ -241,6 +245,7 @@ def main(args):
 
     restricted_words_list = get_restricted_words_list()
 
+    # args is list of directories to search MWE occurrences inside
     for dir_index, dir_path in enumerate(args):
         print(f'{datetime.now().time()} - Reading files from {dir_path}')
         output_file = f'{base_output_file_name.split(".")[0]}_{dir_path.split("/")[-1]}.tsv'
