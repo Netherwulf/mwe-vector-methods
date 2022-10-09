@@ -123,8 +123,8 @@ def write_line_to_file(filepath, line):
 
 
 # move to utils
-def get_evaluation_report(y_true, y_pred, full_df, predictions_filepath,
-                          evaluation_filepath):
+def get_evaluation_report(y_true, y_pred, y_pred_probs, full_df,
+                          predictions_filepath, evaluation_filepath):
     test_df = full_df[full_df['dataset_type'] == 'test']
 
     columns_list = [
@@ -132,8 +132,11 @@ def get_evaluation_report(y_true, y_pred, full_df, predictions_filepath,
         if 'emb' not in column_name
     ]
 
+    y_pred_max_probs = [max(probs) for probs in y_pred_probs]
+
     report_df = test_df[columns_list]
     report_df['prediction'] = y_pred
+    report_df['prediction_prob'] = y_pred_max_probs
 
     target_names = ['Incorrect MWE', 'Correct MWE']
 
@@ -147,7 +150,7 @@ def get_evaluation_report(y_true, y_pred, full_df, predictions_filepath,
                                         output_dict=True,
                                         digits=4)
 
-    eval_df = pd.DataFrame(eval_report).transpose()
+    eval_df = pd.DataFrame(eval_report).transpose().round(4)
 
     print(f'Saving evaluation results to: {evaluation_filepath}')
 
@@ -427,6 +430,21 @@ def main(args):
             'sentences_containing_mwe_from_kgr10_group_0_embeddings_1_layers_incomplete_mwe_in_sent_with_splits.tsv'
         )
 
+    if 'kgr10_new_incorrect' in args:
+        storage_dir = os.path.join('storage', 'kgr10_containing_mewex_results')
+        data_dir = os.path.join('storage', 'kgr10_containing_mewex_results',
+                                'embeddings', 'transformer')
+
+        train_filepath = os.path.join(
+            data_dir,
+            'sentences_containing_mwe_from_kgr10_group_0_embeddings_1_layers_incomplete_mwe_in_sent_with_splits_undersampled_ratio_1_3_with_new_incorrect_mwe_with_splits_abs_prod_emb.tsv'
+        )
+
+        full_data_filepath = os.path.join(
+            data_dir,
+            'sentences_containing_mwe_from_kgr10_group_0_embeddings_1_layers_incomplete_mwe_in_sent_with_splits_undersampled_ratio_1_3_with_new_incorrect_mwe_with_splits_abs_prod_emb.tsv'
+        )
+
     if 'undersampled' in args:
         train_filepath = f'{train_filepath.split(".")[0]}_undersampled_ratio_1.3_fixed_nDD.tsv'
 
@@ -446,7 +464,9 @@ def main(args):
         os.mkdir(pred_results_dir)
 
     pred_results_filepath = os.path.join(
-        pred_results_dir, 'prediction_results_' + '_'.join(args) + '.tsv')
+        pred_results_dir,
+        f'{datetime.datetime.now().date()}_{datetime.datetime.now().strftime("%H:%M:%S")}_prediction_results_'
+        + '_'.join(args) + '.tsv')
 
     eval_results_dir = os.path.join(*data_dir.split('/')[:-2],
                                     'evaluation_results')
@@ -455,7 +475,9 @@ def main(args):
         os.mkdir(eval_results_dir)
 
     eval_results_filepath = os.path.join(
-        eval_results_dir, 'evaluation_results_' + '_'.join(args) + '.tsv')
+        eval_results_dir,
+        f'{datetime.datetime.now().date()}_{datetime.datetime.now().strftime("%H:%M:%S")}_evaluation_results_'
+        + '_'.join(args) + '.tsv')
 
     if 'smote' in args:
         train_filepath = os.path.join(
@@ -478,11 +500,15 @@ def main(args):
             data_dir, 'parseme_pl_embeddings_train_adasyn.tsv')
 
     print(f'{get_curr_time()} : Loading data...')
-    train_df = pd.read_csv(train_filepath, sep='\t', on_bad_lines='skip')
-    #    nrows=100)
+    train_df = pd.read_csv(train_filepath,
+                           sep='\t',
+                           on_bad_lines='skip',
+                           nrows=None)
 
-    full_df = pd.read_csv(full_data_filepath, sep='\t', on_bad_lines='skip')
-    #   nrows=100)
+    full_df = pd.read_csv(full_data_filepath,
+                          sep='\t',
+                          on_bad_lines='skip',
+                          nrows=None)
 
     if 'bnc' in args:
         train_df = train_df.dropna()
@@ -508,9 +534,14 @@ def main(args):
 
         y_train = train_df['is_correct'].tolist()
 
-    else:
-        num_train_samples = 200000
+    elif 'kgr10_new_incorrect' in args:
+        X_train = train_df[train_df['dataset_type'] ==
+                           'train']['abs_prod_emb'].tolist()
 
+        y_train = train_df[train_df['dataset_type'] ==
+                           'train']['is_correct'].tolist()
+
+    else:
         X_train = train_df[train_df['dataset_type'] ==
                            'train']['combined_embedding'].tolist()
 
@@ -524,7 +555,7 @@ def main(args):
             for embedding in X_train
         ])
 
-    elif 'bnc' not in args:
+    elif 'bnc' not in args and 'kgr10_new_incorrect' not in args:
         print(f'{get_curr_time()} : Ommiting difference vectors...')
         X_train = np.array([
             np.array([
@@ -541,10 +572,15 @@ def main(args):
 
     y_train = np.array([int(elem) for elem in y_train])
     print(f'{get_curr_time()} : Getting dev data...')
+
     X_dev = full_df[full_df['dataset_type'] ==
                     'dev']['combined_embedding'].tolist()
 
-    if 'bnc' not in args:
+    if 'kgr10_new_incorrect' in args:
+        X_dev = full_df[full_df['dataset_type'] ==
+                        'dev']['abs_prod_emb'].tolist()
+
+    if 'bnc' not in args or 'kgr10_new_incorrect' not in args:
         X_dev = np.array([
             np.array([
                 float(elem) for elem in (embedding.split(',')[:768 * 2] +
@@ -564,13 +600,18 @@ def main(args):
     X_test = full_df[full_df['dataset_type'] ==
                      'test']['combined_embedding'].tolist()
 
-    if 'bnc' not in args:
+    if 'kgr10_new_incorrect' in args:
+        X_test = full_df[full_df['dataset_type'] ==
+                         'test']['abs_prod_emb'].tolist()
+
+    if 'bnc' not in args or 'kgr10_new_incorrect' not in args:
         X_test = np.array([
             np.array([
                 float(elem) for elem in (embedding.split(',')[:768 * 2] +
                                          embedding.split(',')[768 * 3:])
             ]) for embedding in X_test
         ])
+
     else:
         X_test = np.array([
             np.array([float(elem) for elem in embedding.split(',')])
@@ -581,9 +622,9 @@ def main(args):
 
     y_test = np.array([int(elem) for elem in y_test])
 
-    X_train, y_train = shuffle(X_train, y_train)
-    X_dev, y_dev = shuffle(X_dev, y_dev)
-    X_test, y_test = shuffle(X_test, y_test)
+    # X_train, y_train = shuffle(X_train, y_train)
+    # X_dev, y_dev = shuffle(X_dev, y_dev)
+    # X_test, y_test = shuffle(X_test, y_test)
 
     # X_train_bad_embs = np.array(
     #     [i for i, emb in enumerate(X_train) if np.all((emb == 0.0))])
@@ -611,8 +652,11 @@ def main(args):
     #     [label for i, label in enumerate(y_test) if i not in X_test_bad_embs])
 
     print(f'X_train shape: {X_train.shape}',
+          f'y_train length: {len(y_train)}',
           f'X_dev shape: {X_dev.shape}',
+          f'y_dev length: {len(y_dev)}',
           f'X_test shape: {X_test.shape}',
+          f'y_test length: {len(y_test)}',
           sep='\n')
 
     if 'undersampling' in args:
@@ -649,7 +693,8 @@ def main(args):
                                           storage_dir,
                                           eval_only=eval_only,
                                           model_path=model_path,
-                                          input_shape=(X_train.shape[1], 1))
+                                          input_shape=(X_train.shape[1], 1),
+                                          num_epochs=20)
 
         y_pred_max_probs = [max(probs) for probs in y_pred_probs]
         print(f'{get_curr_time()} : Getting predictions on test set...')
@@ -690,15 +735,15 @@ def main(args):
                 print(
                     f'{get_curr_time()} : Generating and saving evaluation results...'
                 )
-                get_evaluation_report(y_test, y_pred, full_df,
+                get_evaluation_report(y_test, y_pred, y_pred_probs, full_df,
                                       pred_results_filepath,
                                       eval_results_filepath)
 
     else:
         print(
             f'{get_curr_time()} : Generating and saving evaluation results...')
-        get_evaluation_report(y_test, y_pred, full_df, pred_results_filepath,
-                              eval_results_filepath)
+        get_evaluation_report(y_test, y_pred, y_pred_probs, full_df,
+                              pred_results_filepath, eval_results_filepath)
 
 
 if __name__ == '__main__':

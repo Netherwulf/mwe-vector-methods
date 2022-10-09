@@ -153,7 +153,7 @@ def substitute_and_embed(sentence, old_word_id, new_word, tokenizer, model,
 
 
 def read_tsv(filepath, tokenizer, model, layers):
-    filepath_dir = os.path.join(os.path.join(*filepath.split('/')[:-2]),
+    filepath_dir = os.path.join('/', os.path.join(*filepath.split('/')[:-2]),
                                 'embeddings', 'transformer')
     filepath_name = filepath.split('/')[-1].split('.')[0]
 
@@ -210,17 +210,17 @@ def read_tsv(filepath, tokenizer, model, layers):
             # complete_mwe_in_sent = line_attributes[3]
 
             # MeWeX detected MWEs in KGR10 corpus sentence list column mapping
-            # mwe_type = 'null'
-            # mwe_lemma = line_attributes[1]
-            # first_word = line_attributes[4]
-            # first_word_id = int(line_attributes[3])
-            # second_word = line_attributes[7]
-            # second_word_id = int(line_attributes[6])
-            # mwe = line_attributes[0]
-            # sentence = line_attributes[11]
-            # is_correct = 'null'
-            # dataset_type = 'null'
-            # complete_mwe_in_sent = line_attributes[2]
+            mwe_type = 'null'
+            mwe_lemma = line_attributes[1]
+            first_word = line_attributes[4]
+            first_word_id = int(line_attributes[3])
+            second_word = line_attributes[7]
+            second_word_id = int(line_attributes[6])
+            mwe = line_attributes[0]
+            sentence = line_attributes[11]
+            is_correct = 'null'
+            dataset_type = 'null'
+            complete_mwe_in_sent = line_attributes[2]
 
             # PARSEME sentence list column mapping
             # mwe_type = line_attributes[0]
@@ -235,16 +235,16 @@ def read_tsv(filepath, tokenizer, model, layers):
             # complete_mwe_in_sent = '1'
 
             # BNC sentence list column mapping
-            mwe_type = f'{line_attributes[0]}+{line_attributes[1]}'
-            first_word = line_attributes[2]
-            first_word_id = int(line_attributes[4])
-            second_word = line_attributes[3]
-            second_word_id = int(line_attributes[5])
-            mwe = f'{line_attributes[2]} {line_attributes[3]}'
-            sentence = line_attributes[6]
-            is_correct = '0'
-            dataset_type = 'null'
-            complete_mwe_in_sent = '1'
+            # mwe_type = f'{line_attributes[0]}+{line_attributes[1]}'
+            # first_word = line_attributes[2]
+            # first_word_id = int(line_attributes[4])
+            # second_word = line_attributes[3]
+            # second_word_id = int(line_attributes[5])
+            # mwe = f'{line_attributes[2]} {line_attributes[3]}'
+            # sentence = line_attributes[6]
+            # is_correct = '0'
+            # dataset_type = 'null'
+            # complete_mwe_in_sent = '1'
 
             # complete MWE appears in the sentence
             if complete_mwe_in_sent == '1':
@@ -412,7 +412,7 @@ def read_tsv(filepath, tokenizer, model, layers):
 
 
 def main(args):
-    model_name = 'xlm-roberta-base'  # allegro/herbert-base-cased
+    model_name = 'allegro/herbert-base-cased'  # xlm-roberta-base
     layers = 1  # layers = 4
 
     layers = [layer_num for layer_num in range(-1 * layers - 1, -1, 1)

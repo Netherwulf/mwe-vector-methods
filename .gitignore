@@ -30,6 +30,9 @@ storage/**/embeddings/
 storage/kgr10/mewex/scaled_vector_association_measure_correct_mwe_best_f1_with_corrected_mwes_pl_wordnet_based_filtering/
 storage/kgr10/mewex/scaled_vector_association_measure_correct_mwe_best_f1_with_corrected_mwes_pl_wordnet_based_filtering.zip
 
+# list of MWE components occurrences in sentences in KGR10 Polish Corpus
+storage/kgr10_containing_mewex_results/raw_data/kgr10_sentences_containing_MeWeX_mwe_group_0_new_incorrect.tsv
+
 # results dirs
 results/
 

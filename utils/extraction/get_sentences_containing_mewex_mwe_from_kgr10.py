@@ -110,7 +110,7 @@ def get_restricted_words_list():
     return [
         'się', 'ja', 'ten', 'od', 'do', 'bez', 'beze', 'chyba', 'co', 'dla',
         'dzięki', 'dziela', 'gwoli', 'jako', 'kontra', 'krom', 'ku', 'miast',
-        'na', 'nad', 'nade', 'naokoło', 'o', 'z', 'po', 'w', 'we'
+        'na', 'nad', 'nade', 'naokoło', 'o', 'z', 'po', 'w', 'we', 'być'
     ] + list(string.punctuation)
 
 
@@ -179,8 +179,9 @@ def get_sentences_containing_mwe(output_file, mwe_list, lemmatized_mwes,
             # if lemma in restricted_words_list or word_in_complete_mwe_list[lemma_ind]:
             #     continue
 
-            # if word is a restricted word, then skip it
-            if lemma in restricted_words_list:
+            # if word is a restricted word or contains digits, then skip it
+            if lemma in restricted_words_list or any(char.isdigit()
+                                                     for char in lemma):
                 continue
 
             # check if word is part of complete MWE occurring in the sentence
@@ -229,11 +230,13 @@ def get_sentences_containing_mwe(output_file, mwe_list, lemmatized_mwes,
 
 
 def main(args):
-    mwes_filepath = 'scaled_vector_association_measure_correct_mwe_best_f1_with_corrected_mwes_pl_wordnet_based_filtering.tsv'
-    output_dir = os.path.join('..', '..', 'storage', 'kgr10_containing_mewex_results', 'raw_data')
-    base_output_file_name = 'kgr10_sentences_containing_MeWeX_mwe.tsv'
+    mwes_list_dir = os.path.join('..', '..', 'storage', 'kgr10', 'mewex')
+    mwes_file = 'scaled_vector_association_measure_correct_mwe_best_f1_with_corrected_mwes_pl_wordnet_based_filtering.tsv'
+    mwes_filepath = os.path.join(mwes_list_dir, mwes_file)
 
-    output_filepath = os.path.join(output_dir, base_output_file_name)
+    output_dir = os.path.join('..', '..', 'storage',
+                              'kgr10_containing_mewex_results', 'raw_data')
+    base_output_file_name = 'kgr10_sentences_containing_MeWeX_mwe.tsv'
 
     print(f'{datetime.now().time()} - Reading MWE files and lemmatizing...')
 
@@ -249,10 +252,11 @@ def main(args):
     for dir_index, dir_path in enumerate(args):
         print(f'{datetime.now().time()} - Reading files from {dir_path}')
         output_file = f'{base_output_file_name.split(".")[0]}_{dir_path.split("/")[-1]}.tsv'
+        output_filepath = os.path.join(output_dir, output_file)
 
-        create_empty_file(output_file)
+        create_empty_file(output_filepath)
         write_line_to_file(
-            output_file, '\t'.join([
+            output_filepath, '\t'.join([
                 'mwe', 'mwe_lemma', 'complete_mwe_in_sent', 'first_word_index',
                 'first_word_orth', 'first_word_lemma', 'second_word_index',
                 'second_word_orth', 'second_word_lemma', 'dir_index',
@@ -263,12 +267,12 @@ def main(args):
 
         for file_index, xml_path in enumerate(xml_paths):
             orths, lemmas = read_xml(xml_path)
-            get_sentences_containing_mwe(output_file, mwe_list,
+            get_sentences_containing_mwe(output_filepath, mwe_list,
                                          lemmatized_mwes, orths, lemmas,
                                          restricted_words_list, dir_index,
                                          file_index)
 
-            if file_index % 100000 == 0 and file_index > 0:
+            if file_index % 50_000 == 0 and file_index > 0:
                 print(
                     f'{datetime.now().time()} - Processed {file_index} files')
 

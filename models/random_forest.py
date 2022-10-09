@@ -44,15 +44,15 @@ def get_rf_model_pred(X_train, y_train, X_test):
 
     rf_model = train_rf_model(rf_model, X_train, y_train)
 
-    dir_name = os.path.join('storage', 'parseme', 'pl', 'checkpoints')
+    # dir_name = os.path.join('storage', 'parseme', 'pl', 'checkpoints')
 
-    if not os.path.exists(dir_name):
-        os.mkdir(dir_name)
+    # if not os.path.exists(dir_name):
+    #     os.mkdir(dir_name)
 
-    save_rf_model(
-        rf_model,
-        os.path.join('storage', 'parseme', 'pl', 'checkpoints',
-                     'rf_model.pkl'))
+    # save_rf_model(
+    #     rf_model,
+    #     os.path.join('storage', 'parseme', 'pl', 'checkpoints',
+    #                  'rf_model.pkl'))
 
     y_pred = get_rf_model_predictions(rf_model, X_test)
 

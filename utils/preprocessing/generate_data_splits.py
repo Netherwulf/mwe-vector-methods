@@ -12,7 +12,7 @@ def assign_data_splits(filepath):
 
     output_filename = f"{filepath.split('/')[-1].split('.')[0]}_with_splits.tsv"
 
-    output_filepath = os.path.join(output_dir, output_filename)
+    output_filepath = os.path.join(os.path.sep, output_dir, output_filename)
 
     print(
         f'{datetime.datetime.now().strftime("%H:%M:%S")} : Loading data from: {filepath}'

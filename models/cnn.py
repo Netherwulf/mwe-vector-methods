@@ -77,8 +77,9 @@ def get_dir_num(dir_path):
     if len(glob.glob(os.path.join(dir_path, 'checkpoint_*'))) != 0:
 
         for filepath in glob.glob(os.path.join(dir_path, 'checkpoint_*')):
-            if int(filepath.split('_')[1]) > last_dir_num:
-                last_dir_num = int(filepath.split('_')[1])
+            print(f'filepath: {filepath}')
+            if int(filepath.split('_')[-1]) > last_dir_num:
+                last_dir_num = int(filepath.split('_')[-1])
 
         return last_dir_num + 1
 
@@ -98,7 +99,7 @@ def train_cnn_model(model, X_train, y_train, X_dev, y_dev, epoch_num,
     if not os.path.exists(checkpoints_dir):
         os.mkdir(checkpoints_dir)
 
-    dir_name = os.path.join(dataset_dir, 'checkpoints',
+    dir_name = os.path.join(checkpoints_dir,
                             f'checkpoint_{get_dir_num(checkpoints_dir)}')
 
     os.mkdir(dir_name)
@@ -142,7 +143,8 @@ def get_cnn_model_pred(X_train,
                        dataset_dir,
                        eval_only=False,
                        model_path=None,
-                       input_shape=(900, 1)):
+                       input_shape=(900, 1),
+                       num_epochs=15):
     cnn_model = create_cnn_model(input_shape=input_shape)
 
     if eval_only:
@@ -150,7 +152,7 @@ def get_cnn_model_pred(X_train,
 
     else:
         cnn_model = train_cnn_model(cnn_model, X_train, y_train, X_dev, y_dev,
-                                    15, dataset_dir)  # 1000 epochs
+                                    num_epochs, dataset_dir)  # 1000 epochs
 
     y_pred = cnn_model.predict(X_test)
 

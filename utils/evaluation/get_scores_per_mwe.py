@@ -1,13 +1,11 @@
 import argparse
 import datetime
-import math
+import os
 
 import numpy as np
 import pandas as pd
 import spacy
 
-from nltk import pos_tag
-from scipy import stats as s
 from sklearn.metrics import classification_report
 
 
@@ -21,19 +19,9 @@ def parse_args():
     parser.add_argument('--data_path',
                         help='path to the file containing data',
                         type=str)
-    parser.add_argument('--output_path', help='path to output file', type=str)
-    parser.add_argument('--extract_test',
-                        action='store_true',
-                        help="extract test data split")
-    parser.add_argument('--save_true_labels',
-                        action='store_true',
-                        help="include column with true labels in output file")
     parser.add_argument('--save_mwe_types',
                         action='store_true',
                         help="include column with MWE types in output file")
-    parser.add_argument('--majority_voting',
-                        action='store_true',
-                        help="use majority voting instead of weighted voting")
 
     args = parser.parse_args()
 
@@ -50,89 +38,151 @@ def get_mwe_type(mwe, tagger):
     return '+'.join([token.pos_ for token in doc])
 
 
-def get_majority_results(data_path, output_path, extract_test,
-                         save_true_labels, save_mwe_types, tagger):
+def get_mwe_based_results(data_path, save_mwe_types, tagger):
     df = pd.read_csv(data_path, sep='\t')
 
-    if extract_test:
-        df = df[df['dataset_type'] == 'test']
+    # calculating majority voting
+    majority_pred_df = df.groupby(['mwe']).agg(
+        majority_pred_is_correct=('prediction',
+                                  lambda x: x.mode().tolist())).reset_index()
 
-    # mwe_weighted_pred_dict = {}
-    # mwe_count_dict = {}
-    mwe_type_dict = {}
-    log_message('grouping by majority vote')
-    majority_pred_df = df.groupby(
-        ['mwe']).agg(majority_pred_is_correct=('prediction',
-                                               pd.Series.mode)).reset_index()
-    log_message('grouping by count')
+    # counting number of occurrences
     count_df = df.groupby(['mwe']).agg(count=('prediction',
                                               'count')).reset_index()
 
     mwe_df = df.drop_duplicates(subset=['mwe'])
 
-    # df['majority_pred_is_correct'] = df['mwe'].map(mwe_weighted_pred_dict)
     mwe_df = mwe_df.merge(majority_pred_df[['mwe',
                                             'majority_pred_is_correct']],
                           on='mwe')
 
-    log_message('merging with count')
     mwe_df = mwe_df.merge(count_df[['mwe', 'count']], on='mwe')
-    # mwe_df['mwe_type'] = mwe_df.apply(
-    #     lambda row: get_mwe_type(row['mwe'], tagger), axis=1)
-    # df['count'] = df['mwe'].map(mwe_count_dict)
 
-    output_columns = ['mwe', 'majority_pred_is_correct']
+    mwe_df = mwe_df[mwe_df['majority_pred_is_correct'].str.len() == 1]
 
-    if save_true_labels:
-        output_columns += ['is_correct']
+    mwe_df['majority_pred_is_correct'] = mwe_df[
+        'majority_pred_is_correct'].apply(lambda x: x[0])
 
-        target_names = ['Incorrect MWE', 'Correct MWE']
-        print(
-            classification_report(mwe_df['is_correct'],
-                                  mwe_df['majority_pred_is_correct'],
-                                  target_names=target_names))
+    weighted_pred_df = get_weighted_results(df)
 
-    output_columns += ['count']
+    mwe_df = mwe_df.merge(weighted_pred_df[['mwe',
+                                            'weighted_pred_is_correct']],
+                          on='mwe')
 
+    output_columns = [
+        'mwe', 'majority_pred_is_correct', 'weighted_pred_is_correct',
+        'is_correct', 'count'
+    ]
+
+    target_names = ['Incorrect MWE', 'Correct MWE']
+
+    # majority voting evaluation results
+    eval_report = classification_report(mwe_df['is_correct'],
+                                        mwe_df['majority_pred_is_correct'],
+                                        target_names=target_names,
+                                        output_dict=True,
+                                        digits=4)
+
+    printable_eval_report = classification_report(
+        mwe_df['is_correct'],
+        mwe_df['majority_pred_is_correct'],
+        target_names=target_names,
+        digits=4)
+
+    print('Evaluation report for majority voting:',
+          printable_eval_report,
+          sep='\n')
+
+    eval_df = pd.DataFrame(eval_report).transpose().round(4)
+
+    eval_dir = os.path.join(*data_path.split('/')[:-2], 'evaluation_results')
+
+    if not os.path.exists(eval_dir):
+        os.makedirs(eval_dir)
+
+    majority_eval_filepath = os.path.join(
+        eval_dir,
+        f'{datetime.datetime.now().date()}_{datetime.datetime.now().strftime("%H:%M:%S")}_{data_path.split("/")[-1].split(".")[0]}_evaluation_majority.tsv'
+    )
+
+    print(
+        f'Saving majority-voting evaluation results to: {majority_eval_filepath}'
+    )
+
+    eval_df.to_csv(f'{majority_eval_filepath}', sep='\t')
+
+    # weighted voting evaluation results
+    eval_report = classification_report(mwe_df['is_correct'],
+                                        mwe_df['weighted_pred_is_correct'],
+                                        target_names=target_names,
+                                        output_dict=True,
+                                        digits=4)
+
+    printable_eval_report = classification_report(
+        mwe_df['is_correct'],
+        mwe_df['weighted_pred_is_correct'],
+        target_names=target_names,
+        digits=4)
+
+    print('Evaluation report for weighted voting:',
+          printable_eval_report,
+          sep='\n')
+
+    eval_df = pd.DataFrame(eval_report).transpose().round(4)
+
+    eval_dir = os.path.join(*data_path.split('/')[:-2], 'evaluation_results')
+
+    if not os.path.exists(eval_dir):
+        os.makedirs(eval_dir)
+
+    weighted_eval_filepath = os.path.join(
+        eval_dir,
+        f'{datetime.datetime.now().date()}_{datetime.datetime.now().strftime("%H:%M:%S")}_{data_path.split("/")[-1].split(".")[0]}_evaluation_weighted.tsv'
+    )
+
+    print(
+        f'Saving weighted-voting evaluation results to: {weighted_eval_filepath}'
+    )
+
+    eval_df.to_csv(f'{weighted_eval_filepath}', sep='\t')
+
+    # generating MWE types column
     if save_mwe_types:
+        mwe_type_dict = {}
+
         log_message('generating MWE types')
         for mwe in mwe_df['mwe'].tolist():
-            # predictions = [
-            #     y_pred for y_pred in df[df['mwe'] == mwe]['prediction'].tolist()
-            # ]
-            # if math.isnan(s.mode(predictions)[0]):
-            #     log_message(f'predictions: {predictions}')
-            # weighted_pred = int(s.mode(predictions)[0])
-
-            # mwe_weighted_pred_dict[mwe] = weighted_pred
-            # mwe_count_dict[mwe] = len(predictions)
             mwe_type_dict[mwe] = get_mwe_type(mwe, tagger)
 
         mwe_df['mwe_type'] = mwe_df['mwe'].map(mwe_type_dict)
         output_columns += ['mwe_type']
         log_message(f'MWE types generated')
 
-    mwe_df.to_csv(output_path, sep='\t', index=False, columns=output_columns)
+    predictions_filepath = os.path.join(
+        *data_path.split('/')[:-2], 'prediction_results',
+        f'{datetime.datetime.now().date()}_{datetime.datetime.now().strftime("%H:%M:%S")}_{data_path.split("/")[-1].split(".")[0]}_grouped_by_mwe.tsv'
+    )
+
+    mwe_df.to_csv(predictions_filepath,
+                  sep='\t',
+                  index=False,
+                  columns=output_columns)
 
 
-def get_weighted_results(data_path, output_path, extract_test,
-                         save_true_labels, save_mwe_types, tagger):
-    df = pd.read_csv(data_path, sep='\t')
-
-    if extract_test:
-        df = df[df['dataset_type'] == 'test']
+def get_weighted_results(df):
+    result_df = df.copy()
 
     mwe_weighted_pred_dict = {}
 
-    for mwe in df['mwe'].unique().tolist():
+    for mwe in result_df['mwe'].unique().tolist():
         predictions_with_probs = [
             (y_pred, y_pred_prob) for y_pred, y_pred_prob in zip(
-                df[df['mwe'] == mwe]['prediction'].tolist(), df[
-                    df['mwe'] == mwe]['pred_prob'].tolist())
+                result_df[result_df['mwe'] == mwe]['prediction'].tolist(),
+                result_df[result_df['mwe'] == mwe]['prediction_prob'].tolist())
         ]
 
         weights_per_class = [
-            0.0 for _ in range(len(df['prediction'].unique().tolist()))
+            0.0 for _ in range(len(result_df['prediction'].unique().tolist()))
         ]
 
         for class_id in range(len(weights_per_class)):
@@ -145,42 +195,23 @@ def get_weighted_results(data_path, output_path, extract_test,
 
         mwe_weighted_pred_dict[mwe] = weighted_pred
 
-    df['weighted_pred_is_correct'] = df['mwe'].map(mwe_weighted_pred_dict)
+    result_df['weighted_pred_is_correct'] = result_df['mwe'].map(
+        mwe_weighted_pred_dict)
 
-    mwe_df = df.drop_duplicates(subset=['mwe'])
+    result_df = result_df.drop_duplicates(subset=['mwe'])
 
-    output_columns = ['mwe', 'weighted_pred_is_correct']
-
-    if save_true_labels:
-        output_columns += ['is_correct']
-
-        target_names = ['Incorrect MWE', 'Correct MWE']
-        print(
-            classification_report(mwe_df['is_correct'],
-                                  mwe_df['weighted_pred_is_correct'],
-                                  target_names=target_names))
-
-    mwe_df.to_csv(output_path, sep='\t', index=False, columns=output_columns)
+    return result_df
 
 
 def main():
     args = parse_args()
 
     data_path = args.data_path
-    output_path = args.output_path
-    extract_test = True if args.extract_test else False
-    save_true_labels = True if args.save_true_labels else False
     save_mwe_types = True if args.save_mwe_types else False
 
     tagger = init_tagger()
 
-    if args.majority_voting:
-        get_majority_results(data_path, output_path, extract_test,
-                             save_true_labels, save_mwe_types, tagger)
-
-    else:
-        get_weighted_results(data_path, output_path, extract_test,
-                             save_true_labels, save_mwe_types, tagger)
+    get_mwe_based_results(data_path, save_mwe_types, tagger)
 
 
 if __name__ == '__main__':

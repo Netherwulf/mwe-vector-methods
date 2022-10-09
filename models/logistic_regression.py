@@ -6,11 +6,12 @@ from sklearn.linear_model import LogisticRegression
 
 def create_lr_model():
 
-    return LogisticRegression(random_state=0,
-                              max_iter=3000,
-                              verbose=1,
-                              class_weight='balanced',
-                              n_jobs=10)
+    return LogisticRegression(
+        random_state=0,
+        max_iter=3000,  # 1500
+        verbose=1,
+        class_weight='balanced',
+        n_jobs=10)
 
 
 def train_lr_model(model, X, y):
@@ -44,12 +45,12 @@ def get_lr_model_pred(X_train, y_train, X_test):
 
     lr_model = train_lr_model(lr_model, X_train, y_train)
 
-    dir_name = os.path.join('storage', 'parseme', 'pl', 'checkpoints')
+    # dir_name = os.path.join('storage', 'parseme', 'pl', 'checkpoints')
 
-    if not os.path.exists(dir_name):
-        os.mkdir(dir_name)
+    # if not os.path.exists(dir_name):
+    #     os.mkdir(dir_name)
 
-    save_lr_model(lr_model, os.path.join(dir_name, 'lr_model.pkl'))
+    # save_lr_model(lr_model, os.path.join(dir_name, 'lr_model.pkl'))
 
     y_pred = get_lr_model_predictions(lr_model, X_test)
 
