@@ -67,7 +67,7 @@ mistune==0.8.4
 morfeusz2 @ file:///data4/netherwulf/mwe-vector-methods/morfeusz2-1.99.1-20210919-cp35.cp36.cp37.cp38.cp39-abi3-linux_x86_64.whl
 nbclassic==0.3.4
 nbclient==0.5.9
-nbconvert==6.3.0
+nbconvert==6.5.1
 nbformat==5.1.3
 nest-asyncio==1.5.4
 notebook==6.4.6
